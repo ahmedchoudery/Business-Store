@@ -43,11 +43,11 @@ export default function HeroSection() {
                     animate="visible"
                     custom={1}
                 >
-                    I Build <span className="gradient-text">Fast, Modern</span>
+                    I Build <span className="gradient-text">High-Converting</span>
                     <br />
-                    React-Based Business
+                    Websites for
                     <br />
-                    Websites
+                    Local Businesses
                 </motion.h1>
 
                 <motion.p
@@ -57,9 +57,8 @@ export default function HeroSection() {
                     animate="visible"
                     custom={2}
                 >
-                    Helping <strong>coaching centers, gyms, real estate agents & local shops</strong> get
-                    stunning websites with contact forms, WhatsApp integration, and a design that converts
-                    visitors into customers.
+                    Stunning websites for <strong>Coaches, Gyms, Agents & Shops</strong>.
+                    Built to turn your visitors into customers with WhatsApp integration and modern design.
                 </motion.p>
 
                 <motion.div

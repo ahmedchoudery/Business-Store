@@ -35,10 +35,10 @@ const TARGETS = [
 ];
 
 const REASONS = [
-    { icon: <FiSmartphone size={20} />, text: 'Mobile-first, responsive design' },
-    { icon: <FiClock size={20} />, text: 'Fast turnaround — delivered on time' },
-    { icon: <FiDollarSign size={20} />, text: 'Affordable pricing for local businesses' },
-    { icon: <FiAward size={20} />, text: 'Clean, modern code you can expand later' },
+    { icon: <FiClock size={20} />, text: 'Fast delivery (24h-48h turnaround)' },
+    { icon: <FiSmartphone size={20} />, text: 'Clean, responsive mobile design' },
+    { icon: <FiAward size={20} />, text: 'Business‑focused solutions that sell' },
+    { icon: <FiAward size={20} />, text: 'Friendly, clear communication' },
 ];
 
 export default function WhyMeSection() {
@@ -63,8 +63,7 @@ export default function WhyMeSection() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.1 }}
                         >
-                            Built for <span className="gradient-text">Local Businesses</span>
-                            <br /> That Want to Win Online
+                            Why Choose <span className="gradient-text">AhmedDev?</span>
                         </motion.h2>
                         <motion.p
                             className="section-subtitle"
