@@ -11,12 +11,11 @@ const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923001234567';
 
 const SERVICES = [
     { value: '', label: 'Select a service...' },
-    { value: 'landing-page', label: '🚀 Landing Page' },
-    { value: 'business-website', label: '🏢 Business Website' },
-    { value: 'react-website', label: '⚛️ React Website' },
-    { value: 'responsive-design', label: '📱 Responsive Design' },
-    { value: 'speed-optimization', label: '⚡ Speed Optimization' },
-    { value: 'css-fixes', label: '🎨 CSS Bug Fixes' },
+    { value: 'bug-fixes', label: '🛠️ HTML/CSS/JS Bug Fixes' },
+    { value: 'responsive-design', label: '📱 Responsive Website Design' },
+    { value: 'landing-pages', label: '🚀 Landing Pages' },
+    { value: 'small-business', label: '🏢 Small Business Website' },
+    { value: 'portfolio', label: '🎨 Portfolio Website' },
     { value: 'other', label: '💬 Other / Discuss' },
 ];
 
