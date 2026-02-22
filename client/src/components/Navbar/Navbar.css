@@ -1,0 +1,125 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 16px 0;
+    transition: all 0.3s ease;
+}
+
+.navbar--scrolled {
+    padding: 10px 0;
+    background: rgba(7, 7, 15, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+.navbar__inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar__logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--color-white);
+    flex-shrink: 0;
+}
+
+.navbar__logo svg {
+    color: var(--color-primary);
+}
+
+.navbar__logo-accent {
+    color: var(--color-primary);
+}
+
+.navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: auto;
+}
+
+.navbar__link {
+    padding: 6px 16px;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-base);
+}
+
+.navbar__link:hover {
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.navbar__cta {
+    flex-shrink: 0;
+    padding: var(--space-2) var(--space-5);
+    font-size: var(--text-sm);
+}
+
+.navbar__hamburger {
+    display: none;
+    color: var(--color-text);
+    padding: 4px;
+    margin-left: auto;
+}
+
+.navbar__mobile {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 20px 20px;
+    background: rgba(13, 13, 26, 0.98);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--color-border);
+}
+
+.navbar__mobile-link {
+    padding: 12px 16px;
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+}
+
+.navbar__mobile-link:hover {
+    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 768px) {
+
+    .navbar__links,
+    .navbar__cta {
+        display: none;
+    }
+
+    .navbar__hamburger {
+        display: flex;
+    }
+
+    .navbar__mobile {
+        display: flex;
+    }
+
+    .navbar__mobile--open {
+        display: flex;
+    }
+
+    .navbar__mobile:not(.navbar__mobile--open) {
+        display: none;
+    }
+}

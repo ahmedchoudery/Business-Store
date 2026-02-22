@@ -1,0 +1,8 @@
+/* Reset any Vite defaults */
+#root {
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
