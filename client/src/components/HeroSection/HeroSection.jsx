@@ -57,8 +57,7 @@ export default function HeroSection() {
                     animate="visible"
                     custom={2}
                 >
-                    Stunning websites for <strong>Coaches, Gyms, Agents & Shops</strong>.
-                    Built to turn your visitors into customers with WhatsApp integration and modern design.
+                    Beautiful, functional websites that enhance your online presence and help your business succeed.
                 </motion.p>
 
                 <motion.div
