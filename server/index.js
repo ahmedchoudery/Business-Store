@@ -45,38 +45,36 @@ app.use(
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
 
-// --- REUSABLE ROUTER FOR PREFIX AGNOSTICISM ---
-const mainRouter = express.Router();
+// --- DIRECT ROUTES (No nested routers for maximum reliability) ---
 
-// Health Check
-mainRouter.get('/health', (req, res) => {
+// 1. Health & Resilience Diagnostic
+app.get(['/api/health', '/health', '/api'], (req, res) => {
     res.json({
         status: 'ok',
         mongo: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
         has_uri: !!process.env.MONGO_URI,
-        time: new Date().toISOString()
+        url_received: req.originalUrl,
+        path: req.path
     });
 });
 
-// Debug ENV (Sensitive but safe)
-mainRouter.get('/debug-env', (req, res) => {
+// 2. Environment Diagnostic
+app.get(['/api/debug-env', '/debug-env'], (req, res) => {
     res.json({
         has_mongo_uri: !!process.env.MONGO_URI,
         node_env: process.env.NODE_ENV,
-        keys: Object.keys(process.env).filter(k => k.includes('MONGO') || k.includes('AUTH') || k.includes('SECRET'))
+        keys: Object.keys(process.env).filter(k => k.includes('MONGO') || k.includes('URL') || k.includes('SECRET'))
     });
 });
 
-// Contact Routes
-mainRouter.use('/contact', require('./routes/contact'));
+// 3. Contact Submission (Mount to both variations)
+const contactRouter = require('./routes/contact');
+app.use('/api/contact', contactRouter);
+app.use('/contact', contactRouter);
 
-// --- MOUNTING ---
-app.use('/api', mainRouter);
-app.use('/', mainRouter);
-
-// 404 handler with consistent diagnostic keys
+// --- CATCH-ALL 404 ---
 app.use((req, res) => {
-    console.error(`404: ${req.method} ${req.originalUrl}`);
+    console.error(`ABSENT_ROUTE: ${req.method} ${req.originalUrl}`);
     res.status(404).json({
         success: false,
         message: 'Route not found',
@@ -84,7 +82,8 @@ app.use((req, res) => {
             method: req.method,
             originalUrl: req.originalUrl,
             url: req.url,
-            path: req.path
+            path: req.path,
+            advice: 'If hitting /api/contact fails, try /contact directly.'
         }
     });
 });
