@@ -63,9 +63,18 @@ apiRouter.use('/contact', require('./routes/contact'));
 app.use('/api', apiRouter);
 app.use('/', apiRouter);
 
-// 404 handler (moved to after mounting the router)
+// 404 handler (with path tracing for debugging)
 app.use((req, res) => {
-    res.status(404).json({ success: false, message: 'Route not found' });
+    res.status(404).json({
+        success: false,
+        message: 'Route not found',
+        debug: {
+            method: req.method,
+            path: req.path,
+            url: req.url,
+            originalUrl: req.originalUrl,
+        },
+    });
 });
 
 // Global error handler
