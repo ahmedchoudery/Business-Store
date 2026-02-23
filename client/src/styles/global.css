@@ -84,7 +84,9 @@
 /* ═══════════════════════════════════════
    RESET & BASE
 ══════════════════════════════════════ */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -104,7 +106,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-img, video {
+img,
+video {
   max-width: 100%;
   display: block;
 }
@@ -121,7 +124,8 @@ button {
   font-family: inherit;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -262,6 +266,7 @@ ul, ol {
   background: linear-gradient(135deg, rgba(108, 99, 255, 0.04), transparent 60%);
   opacity: 0;
   transition: opacity var(--transition-base);
+  pointer-events: none;
 }
 
 .card:hover::before {
@@ -337,13 +342,16 @@ select.form-control option {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--color-bg);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--color-surface-2);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-primary-dark);
 }
@@ -355,9 +363,11 @@ select.form-control option {
   .section-title {
     font-size: var(--text-3xl);
   }
+
   .section {
     padding: var(--space-16) 0;
   }
+
   .container {
     padding: 0 var(--space-4);
   }
@@ -367,6 +377,7 @@ select.form-control option {
   .section-title {
     font-size: var(--text-2xl);
   }
+
   .btn-lg {
     padding: var(--space-3) var(--space-6);
     font-size: var(--text-base);
