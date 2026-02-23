@@ -43,6 +43,10 @@ router.post('/', contactValidationRules, validate, async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Server error. Please try again later.',
+            debug: {
+                name: error.name,
+                message: error.message
+            }
         });
     }
 });
