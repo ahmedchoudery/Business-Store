@@ -13,22 +13,15 @@
             }
         }
     ],
-    "routes": [
+    "rewrites": [
         {
-            "src": "/api/(.*)",
-            "dest": "server/index.js"
+            "source": "/api/:path*",
+            "destination": "/server/index.js"
         },
         {
-            "handle": "filesystem"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "client/$1"
-        },
-        {
-            "src": "/(.*)",
-            "status": 200,
-            "dest": "client/index.html"
+            "source": "/(.*)",
+            "destination": "/client/$1"
         }
-    ]
+    ],
+    "cleanUrls": true
 }
