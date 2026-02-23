@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Contact = require('../models/Contact');
 const { contactValidationRules, validate } = require('../middleware/validate');
+const connectDB = require('../config/db');
+const mongoose = require('mongoose');
 
 // @route   POST /api/contact
 // @desc    Submit a contact/lead form
