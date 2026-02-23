@@ -3,11 +3,14 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const connectDB = require('./config/db');
+const mongoose = require('mongoose'); // Moved mongoose import to the top
 
 const app = express();
 
-// Connect Database
-connectDB();
+// Connect Database (Non-blocking but with logging)
+connectDB().catch(err => {
+    console.error('Initial DB Connection failed:', err.message);
+});
 
 // Security middleware
 app.use(helmet());
@@ -18,24 +21,18 @@ const allowedOrigins = [
     'http://localhost:3000',
     'https://business-store.vercel.app',
     'https://business-store-six.vercel.app',
-    process.env.FRONTEND_URL,
+    'https://business-store-ahmedchoudery.vercel.app' // Common Vercel pattern
 ].filter(Boolean);
 
 app.use(
     cors({
         origin: (origin, callback) => {
             // Allow requests with no origin (mobile apps, curl, etc.)
-            if (!origin || allowedOrigins.includes(origin)) {
+            // Allow listed origins or any vercel.app subdomain
+            if (!origin || allowedOrigins.includes(origin) || (origin && origin.endsWith('.vercel.app'))) {
                 callback(null, true);
                 return;
             }
-
-            // Allow any vercel.app subdomain
-            if (origin && origin.endsWith('.vercel.app')) {
-                callback(null, true);
-                return;
-            }
-
             callback(new Error('Not allowed by CORS'));
         },
         methods: ['GET', 'POST', 'OPTIONS'],
@@ -48,29 +45,34 @@ app.use(
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
 
-// Routes
-const contactRouter = require('./routes/contact');
-const mongoose = require('mongoose');
+// --- DIAGNOSTICS & HEALTH ---
 
-// Enhanced Health Check for Production Debugging
-app.get(['/', '/api', '/api/health'], (req, res) => {
+// Simple Health Check
+app.get('/api/health', (req, res) => {
     res.json({
         status: 'ok',
-        message: 'Business Store API is running 🚀',
-        env: {
-            hasMongoUri: !!process.env.MONGO_URI,
-            nodeEnv: process.env.NODE_ENV
-        },
-        diagnostics: {
-            database: {
-                status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
-                code: mongoose.connection.readyState
-            }
-        }
+        mongo: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+        time: new Date().toISOString()
     });
 });
 
-// Explicit mounting for reliable Vercel path mapping
+// Safe ENV Debugger (Does NOT show values, only if they exist)
+app.get('/api/debug-env', (req, res) => {
+    res.json({
+        has_mongo_uri: !!process.env.MONGO_URI,
+        has_admin_secret: !!process.env.ADMIN_SECRET,
+        node_env: process.env.NODE_ENV,
+        port: process.env.PORT || 5000,
+        keys: Object.keys(process.env).filter(key =>
+            key.includes('MONGO') || key.includes('PORT') || key.includes('URL') || key.includes('SECRET')
+        )
+    });
+});
+
+// --- ROUTES ---
+const contactRouter = require('./routes/contact');
+
+// Mount routes explicitly
 app.use('/api/contact', contactRouter);
 app.use('/contact', contactRouter);
 
