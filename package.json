@@ -13,6 +13,9 @@
     "engines": {
         "node": "20.x"
     },
+    "devDependencies": {
+        "shx": "^0.3.4"
+    },
     "scripts": {
         "install:client": "cd client && npm install",
         "build:client": "cd client && npm run build",
