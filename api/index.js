@@ -56,18 +56,6 @@ app.get(['/api/health', '/health', '/api'], async (req, res) => {
     });
 });
 
-// 2. Smoke Test & Baseline
-app.get(['/api/smoke', '/smoke'], (req, res) => {
-    res.json({
-        message: 'Express Backend: OK 🚀',
-        time: new Date().toISOString(),
-        env: {
-            node: process.version,
-            has_mongo: !!process.env.MONGO_URI
-        }
-    });
-});
-
 // 2. Environment Diagnostic
 app.get(['/api/debug-env', '/debug-env'], (req, res) => {
     res.json({
