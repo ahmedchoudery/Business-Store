@@ -50,18 +50,61 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 const contactRouter = require('./routes/contact');
+const mongoose = require('mongoose');
 
-// Health Check
-app.get(['/', '/api'], (req, res) => {
-    res.json({ status: 'ok', message: 'Business Store API is running 🚀' });
+// Enhanced Health Check for Production Debugging
+app.get(['/', '/api', '/api/health'], (req, res) => {
+    res.json({
+        status: 'ok',
+        message: 'Business Store API is running 🚀',
+        version: '1.2.0',
+        diagnostics: {
+            database: {
+                status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+                code: mongoose.connection.readyState,
+                host: mongoose.connection.host || 'none'
+            },
+            request: {
+                method: req.method,
+                originalUrl: req.originalUrl,
+                baseUrl: req.baseUrl,
+                path: req.path,
+                protocol: req.protocol,
+                hostname: req.hostname,
+                headers: {
+                    'host': req.headers['host'],
+                    'x-forwarded-for': req.headers['x-forwarded-for'],
+                    'user-agent': req.headers['user-agent']
+                }
+            }
+        }
+    });
 });
 
-// Mounting contact routes to multiple paths for Vercel compatibility
-app.use(['/api/contact', '/contact'], contactRouter);
+// Explicit mounting for reliable Vercel path mapping
+app.use('/api/contact', contactRouter);
+app.use('/contact', contactRouter);
 
-// 404 handler
+// 404 handler with deep path tracing
 app.use((req, res) => {
-    res.status(404).json({ success: false, message: 'Route not found' });
+    console.error(`404 Not Found: ${req.method} ${req.originalUrl}`);
+    res.status(404).json({
+        success: false,
+        message: 'Route not found',
+        diagnostics: {
+            received: {
+                method: req.method,
+                url: req.url,
+                path: req.path,
+                originalUrl: req.originalUrl,
+                headers: {
+                    'host': req.headers['host'],
+                    'x-forwarded-proto': req.headers['x-forwarded-proto']
+                }
+            },
+            help: 'Try /api/contact or /contact directly. Ensure your frontend VITE_API_URL is correct.'
+        }
+    });
 });
 
 // Global error handler

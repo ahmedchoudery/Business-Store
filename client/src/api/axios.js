@@ -24,10 +24,16 @@ api.interceptors.response.use(
             error.message ||
             'Something went wrong';
 
-        // Append debug info if available (helpful for diagnosing Vercel 500s)
-        if (error.response?.data?.debug) {
+        // Append debug info if available (helpful for diagnosing Vercel 500s/404s)
+        if (error.response?.data?.diagnostics) {
+            const diag = error.response.data.diagnostics;
+            message += ` [Diag: ${diag.received?.method} ${diag.received?.originalUrl || diag.request?.originalUrl}]`;
+        } else if (error.response?.data?.debug) {
             const { name, message: debugMsg } = error.response.data.debug;
             message += ` (${name}: ${debugMsg})`;
+        } else if (error.config?.url) {
+            // If no server-side debug info, at least show where we tried to go
+            message += ` [Target: ${error.config.url}]`;
         }
 
         return Promise.reject({ ...error, userMessage: message });
