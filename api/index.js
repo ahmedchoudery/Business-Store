@@ -7,6 +7,9 @@ const mongoose = require('mongoose'); // Moved mongoose import to the top
 
 const app = express();
 
+// SUPER EARLY PING (Test if Express even loads)
+app.get('/api/ping', (req, res) => res.send('pong 🏓'));
+
 // Connect Database (Non-blocking but with logging)
 connectDB().catch(err => {
     console.error('Initial DB Connection failed:', err.message);
