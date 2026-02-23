@@ -10,7 +10,13 @@
         "helmet": "^7.1.0",
         "mongoose": "^8.4.1"
     },
+    "engines": {
+        "node": "20.x"
+    },
     "scripts": {
-        "build": "cd client && npm install && npm run build"
+        "install:client": "cd client && npm install",
+        "build:client": "cd client && npm run build",
+        "build": "npm run install:client && npm run build:client",
+        "start": "node api/index.js"
     }
 }
