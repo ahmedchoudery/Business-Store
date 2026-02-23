@@ -48,33 +48,20 @@ app.use(
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
 
-// API Router
-const apiRouter = express.Router();
+// Routes
+const contactRouter = require('./routes/contact');
 
-// Health check inside apiRouter
-apiRouter.get('/', (req, res) => {
+// Health Check
+app.get(['/', '/api'], (req, res) => {
     res.json({ status: 'ok', message: 'Business Store API is running 🚀' });
 });
 
-// Routes inside apiRouter
-apiRouter.use('/contact', require('./routes/contact'));
+// Mounting contact routes to multiple paths for Vercel compatibility
+app.use(['/api/contact', '/contact'], contactRouter);
 
-// Mount apiRouter to both /api and / to handle Vercel routing variations
-app.use('/api', apiRouter);
-app.use('/', apiRouter);
-
-// 404 handler (with path tracing for debugging)
+// 404 handler
 app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: 'Route not found',
-        debug: {
-            method: req.method,
-            path: req.path,
-            url: req.url,
-            originalUrl: req.originalUrl,
-        },
-    });
+    res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 // Global error handler

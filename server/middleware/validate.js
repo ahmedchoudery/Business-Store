@@ -19,12 +19,11 @@ const contactValidationRules = [
     body('service')
         .notEmpty().withMessage('Please select a service')
         .isIn([
-            'landing-page',
-            'business-website',
-            'react-website',
+            'bug-fixes',
             'responsive-design',
-            'speed-optimization',
-            'css-fixes',
+            'landing-pages',
+            'small-business',
+            'portfolio',
             'other',
         ]).withMessage('Invalid service selected'),
 
