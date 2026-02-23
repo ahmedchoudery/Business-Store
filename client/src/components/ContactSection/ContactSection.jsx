@@ -33,7 +33,7 @@ export default function ContactSection() {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            await api.post('/api/contact', data);
+            await api.post('contact', data);
             setSubmitted(true);
             reset();
             toast.success("Message sent! I'll get back to you within 24 hours. 🎉");

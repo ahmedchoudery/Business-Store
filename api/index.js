@@ -65,20 +65,22 @@ app.get(['/api/debug-env', '/debug-env'], (req, res) => {
     });
 });
 
-// 3. Contact Submission
+// 3. Contact Submission (Standard & Safety variations)
 const contactRouter = require('./routes/contact');
-app.use('/api/contact', contactRouter);
-app.use('/contact', contactRouter);
+app.use(['/api/contact', '/contact', '/api/api/contact'], contactRouter);
 
 // --- CATCH-ALL 404 ---
 app.use((req, res) => {
+    console.error(`ABSENT_ROUTE: ${req.method} ${req.url} (Original: ${req.originalUrl})`);
     res.status(404).json({
         success: false,
         message: 'Route not found',
         diagnostics: {
             method: req.method,
+            path: req.path,
+            url: req.url,
             originalUrl: req.originalUrl,
-            advice: 'If hitting /api/contact fails, try /contact directly.'
+            advice: 'Standard route is /api/contact. If using /api prefix twice, it will still work now.'
         }
     });
 });
