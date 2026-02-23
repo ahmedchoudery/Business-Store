@@ -27,7 +27,7 @@ api.interceptors.response.use(
         // Append debug info if available (helpful for diagnosing Vercel 500s/404s)
         if (error.response?.data?.diagnostics) {
             const diag = error.response.data.diagnostics;
-            message += ` [Diag: ${diag.received?.method} ${diag.received?.originalUrl || diag.request?.originalUrl}]`;
+            message += ` [Diag: ${diag.method} ${diag.originalUrl || diag.url}]`;
         } else if (error.response?.data?.debug) {
             const { name, message: debugMsg } = error.response.data.debug;
             message += ` (${name}: ${debugMsg})`;

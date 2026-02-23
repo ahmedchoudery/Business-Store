@@ -41,10 +41,14 @@ app.use(
     })
 );
 
+// Body parser
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: false }));
+
 // --- REUSABLE ROUTER FOR PREFIX AGNOSTICISM ---
 const mainRouter = express.Router();
 
-// Health Check (Responsive to /health, /api/health, etc.)
+// Health Check
 mainRouter.get('/health', (req, res) => {
     res.json({
         status: 'ok',
@@ -67,19 +71,20 @@ mainRouter.get('/debug-env', (req, res) => {
 mainRouter.use('/contact', require('./routes/contact'));
 
 // --- MOUNTING ---
-// Mount to both /api and / to ensure Vercel routes always find a home
 app.use('/api', mainRouter);
 app.use('/', mainRouter);
 
-// 404 handler (Catch-all for anything not matched by mainRouter)
+// 404 handler with consistent diagnostic keys
 app.use((req, res) => {
+    console.error(`404: ${req.method} ${req.originalUrl}`);
     res.status(404).json({
         success: false,
         message: 'Route not found',
         diagnostics: {
-            url: req.originalUrl,
             method: req.method,
-            tip: 'Try /api/contact or /contact directly'
+            originalUrl: req.originalUrl,
+            url: req.url,
+            path: req.path
         }
     });
 });
