@@ -11,7 +11,7 @@ const NAV_LINKS = [
     { label: 'Contact', href: '#contact' },
 ];
 
-const WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMBER || '923001234567';
+const WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043';
 
 export default function Footer() {
     const year = new Date().getFullYear();

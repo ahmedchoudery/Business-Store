@@ -7,7 +7,7 @@ import { BsWhatsapp } from 'react-icons/bs';
 import api from '../../api/axios';
 import './ContactSection.css';
 
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923001234567';
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043';
 
 const SERVICES = [
     { value: '', label: 'Select a service...' },
@@ -83,7 +83,7 @@ export default function ContactSection() {
                                 <FiMail size={18} /> <span>ahmedchoudery30@gmail.com</span>
                             </div>
                             <div className="contact__detail">
-                                <BsWhatsapp size={18} /> <span>+92 300 1234567</span>
+                                <BsWhatsapp size={18} /> <span>+92 317 4307043</span>
                             </div>
                             <div className="contact__detail">
                                 <span>⌚</span> <span>Response within 24 hours</span>

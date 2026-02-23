@@ -58,6 +58,8 @@
 
 .contact__form-card {
     padding: var(--space-8);
+    position: relative;
+    z-index: 5;
 }
 
 .contact__form-title {

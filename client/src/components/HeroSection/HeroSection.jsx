@@ -3,7 +3,7 @@ import { FiArrowRight } from 'react-icons/fi';
 import { BsWhatsapp } from 'react-icons/bs';
 import './HeroSection.css';
 
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923001234567';
+const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043';
 const WHATSAPP_MSG = encodeURIComponent(
     "Hi Ahmed! I saw your website and I'm interested in getting a website built for my business. Can we discuss?"
 );
