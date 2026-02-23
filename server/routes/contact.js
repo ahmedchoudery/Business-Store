@@ -31,6 +31,15 @@ router.post('/', contactValidationRules, validate, async (req, res) => {
         });
     } catch (error) {
         console.error('Contact submit error:', error);
+
+        // Handle Mongoose validation errors specifically
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({
+                success: false,
+                message: Object.values(error.errors).map(val => val.message).join(', ')
+            });
+        }
+
         res.status(500).json({
             success: false,
             message: 'Server error. Please try again later.',
