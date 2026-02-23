@@ -18,11 +18,18 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        const message =
+        let message =
             error.response?.data?.message ||
             error.response?.data?.errors?.[0]?.message ||
             error.message ||
             'Something went wrong';
+
+        // Append debug info if available (helpful for diagnosing Vercel 500s)
+        if (error.response?.data?.debug) {
+            const { name, message: debugMsg } = error.response.data.debug;
+            message += ` (${name}: ${debugMsg})`;
+        }
+
         return Promise.reject({ ...error, userMessage: message });
     }
 );
