@@ -1,16 +1,13 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const connectDB = require('./config/db');
-const mongoose = require('mongoose'); // Moved mongoose import to the top
 
 const app = express();
 
 // SUPER EARLY PING (Test if Express even loads)
 app.get('/api/ping', (req, res) => res.send('pong 🏓'));
 
-// 1. Health & Resilience Diagnostic
+// --- ISOLATED TEST ROUTES ---
 app.get(['/api/health', '/health', '/api'], (req, res) => {
     res.json({
         status: 'isolated_test',
