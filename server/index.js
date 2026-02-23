@@ -57,25 +57,14 @@ app.get(['/', '/api', '/api/health'], (req, res) => {
     res.json({
         status: 'ok',
         message: 'Business Store API is running 🚀',
-        version: '1.2.0',
+        env: {
+            hasMongoUri: !!process.env.MONGO_URI,
+            nodeEnv: process.env.NODE_ENV
+        },
         diagnostics: {
             database: {
                 status: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
-                code: mongoose.connection.readyState,
-                host: mongoose.connection.host || 'none'
-            },
-            request: {
-                method: req.method,
-                originalUrl: req.originalUrl,
-                baseUrl: req.baseUrl,
-                path: req.path,
-                protocol: req.protocol,
-                hostname: req.hostname,
-                headers: {
-                    'host': req.headers['host'],
-                    'x-forwarded-for': req.headers['x-forwarded-for'],
-                    'user-agent': req.headers['user-agent']
-                }
+                code: mongoose.connection.readyState
             }
         }
     });
@@ -85,34 +74,28 @@ app.get(['/', '/api', '/api/health'], (req, res) => {
 app.use('/api/contact', contactRouter);
 app.use('/contact', contactRouter);
 
-// 404 handler with deep path tracing
+// 404 handler
 app.use((req, res) => {
-    console.error(`404 Not Found: ${req.method} ${req.originalUrl}`);
     res.status(404).json({
         success: false,
         message: 'Route not found',
         diagnostics: {
-            received: {
-                method: req.method,
-                url: req.url,
-                path: req.path,
-                originalUrl: req.originalUrl,
-                headers: {
-                    'host': req.headers['host'],
-                    'x-forwarded-proto': req.headers['x-forwarded-proto']
-                }
-            },
-            help: 'Try /api/contact or /contact directly. Ensure your frontend VITE_API_URL is correct.'
+            url: req.originalUrl,
+            method: req.method
         }
     });
 });
 
 // Global error handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error('SERVER_ERROR:', err);
     res.status(err.status || 500).json({
         success: false,
         message: err.message || 'Internal Server Error',
+        debug: {
+            name: err.name,
+            message: err.message
+        }
     });
 });
 
