@@ -17,6 +17,7 @@ const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
     'https://business-store.vercel.app',
+    'https://business-store-six.vercel.app',
     process.env.FRONTEND_URL,
 ].filter(Boolean);
 
@@ -26,9 +27,16 @@ app.use(
             // Allow requests with no origin (mobile apps, curl, etc.)
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true);
-            } else {
-                callback(new Error('Not allowed by CORS'));
+                return;
             }
+
+            // Allow any vercel.app subdomain
+            if (origin && origin.endsWith('.vercel.app')) {
+                callback(null, true);
+                return;
+            }
+
+            callback(new Error('Not allowed by CORS'));
         },
         methods: ['GET', 'POST', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'x-admin-secret'],
