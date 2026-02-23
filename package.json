@@ -16,7 +16,7 @@
     "scripts": {
         "install:client": "cd client && npm install",
         "build:client": "cd client && npm run build",
-        "build": "npm run install:client && npm run build:client",
+        "build": "npm run install:client && npm run build:client && rm -rf dist && mkdir dist && cp -r client/dist/* dist/",
         "start": "node api/index.js"
     }
 }

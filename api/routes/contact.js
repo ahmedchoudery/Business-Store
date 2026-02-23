@@ -7,7 +7,20 @@ const { contactValidationRules, validate } = require('../middleware/validate');
 // @desc    Submit a contact/lead form
 // @access  Public
 router.post('/', contactValidationRules, validate, async (req, res) => {
-    // Immediate Readiness Check
+    // Ensure we are connected (Serverless cold start handling)
+    if (require('mongoose').connection.readyState !== 1) {
+        try {
+            await connectDB();
+        } catch (err) {
+            return res.status(503).json({
+                success: false,
+                message: 'Database connection failed. Please check your MONGO_URI.',
+                debug: { error: err.message }
+            });
+        }
+    }
+
+    // Final check
     if (!process.env.MONGO_URI || require('mongoose').connection.readyState !== 1) {
         return res.status(503).json({
             success: false,
