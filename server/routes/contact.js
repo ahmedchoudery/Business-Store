@@ -7,6 +7,18 @@ const { contactValidationRules, validate } = require('../middleware/validate');
 // @desc    Submit a contact/lead form
 // @access  Public
 router.post('/', contactValidationRules, validate, async (req, res) => {
+    // Immediate Readiness Check
+    if (!process.env.MONGO_URI || require('mongoose').connection.readyState !== 1) {
+        return res.status(503).json({
+            success: false,
+            message: 'Database not ready. Please verify your MONGO_URI in Vercel settings.',
+            debug: {
+                has_uri: !!process.env.MONGO_URI,
+                db_state: require('mongoose').connection.readyState
+            }
+        });
+    }
+
     try {
         const { name, email, phone, service, message } = req.body;
 

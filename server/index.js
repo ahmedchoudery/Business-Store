@@ -41,49 +41,45 @@ app.use(
     })
 );
 
-// Body parser
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: false }));
+// --- REUSABLE ROUTER FOR PREFIX AGNOSTICISM ---
+const mainRouter = express.Router();
 
-// --- DIAGNOSTICS & HEALTH ---
-
-// Simple Health Check
-app.get('/api/health', (req, res) => {
+// Health Check (Responsive to /health, /api/health, etc.)
+mainRouter.get('/health', (req, res) => {
     res.json({
         status: 'ok',
         mongo: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+        has_uri: !!process.env.MONGO_URI,
         time: new Date().toISOString()
     });
 });
 
-// Safe ENV Debugger (Does NOT show values, only if they exist)
-app.get('/api/debug-env', (req, res) => {
+// Debug ENV (Sensitive but safe)
+mainRouter.get('/debug-env', (req, res) => {
     res.json({
         has_mongo_uri: !!process.env.MONGO_URI,
-        has_admin_secret: !!process.env.ADMIN_SECRET,
         node_env: process.env.NODE_ENV,
-        port: process.env.PORT || 5000,
-        keys: Object.keys(process.env).filter(key =>
-            key.includes('MONGO') || key.includes('PORT') || key.includes('URL') || key.includes('SECRET')
-        )
+        keys: Object.keys(process.env).filter(k => k.includes('MONGO') || k.includes('AUTH') || k.includes('SECRET'))
     });
 });
 
-// --- ROUTES ---
-const contactRouter = require('./routes/contact');
+// Contact Routes
+mainRouter.use('/contact', require('./routes/contact'));
 
-// Mount routes explicitly
-app.use('/api/contact', contactRouter);
-app.use('/contact', contactRouter);
+// --- MOUNTING ---
+// Mount to both /api and / to ensure Vercel routes always find a home
+app.use('/api', mainRouter);
+app.use('/', mainRouter);
 
-// 404 handler
+// 404 handler (Catch-all for anything not matched by mainRouter)
 app.use((req, res) => {
     res.status(404).json({
         success: false,
         message: 'Route not found',
         diagnostics: {
             url: req.originalUrl,
-            method: req.method
+            method: req.method,
+            tip: 'Try /api/contact or /contact directly'
         }
     });
 });
