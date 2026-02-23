@@ -1,20 +1,28 @@
 const mongoose = require('mongoose');
 
+// Cache the connection to prevent unnecessary re-connects
+let isConnecting = false;
+
 const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+  if (isConnecting) return;
+
   try {
     if (!process.env.MONGO_URI) {
-      throw new Error('MONGO_URI is not defined in the environment variables');
+      console.warn('⚠️ MONGO_URI is missing from environment variables.');
+      return;
     }
 
-    if (mongoose.connection.readyState >= 1) return;
-
-    const conn = await mongoose.connect(process.env.MONGO_URI);
+    isConnecting = true;
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 5000, // Fail fast if IP is blocked
+    });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`❌ MongoDB connection error: ${error.message}`);
-    // Do not process.exit in serverless environments like Vercel
-    // Just rethrow or let the app handle the disconnected state
-    throw error;
+    // Do not re-throw here to prevent process crashes in serverless
+  } finally {
+    isConnecting = false;
   }
 };
 
