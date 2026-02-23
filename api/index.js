@@ -10,51 +10,11 @@ const app = express();
 // SUPER EARLY PING (Test if Express even loads)
 app.get('/api/ping', (req, res) => res.send('pong 🏓'));
 
-// Connect Database (Non-blocking but with logging)
-connectDB().catch(err => {
-    console.error('Initial DB Connection failed:', err.message);
-});
-
-// Security middleware
-app.use(helmet());
-
-// CORS — allow Vercel frontend + localhost dev
-const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://business-store.vercel.app',
-    'https://business-store-six.vercel.app',
-    'https://business-store-ahmedchoudery.vercel.app' // Common Vercel pattern
-].filter(Boolean);
-
-app.use(
-    cors({
-        origin: (origin, callback) => {
-            // Allow requests with no origin (mobile apps, curl, etc.)
-            // Allow listed origins or any vercel.app subdomain
-            if (!origin || allowedOrigins.includes(origin) || (origin && origin.endsWith('.vercel.app'))) {
-                callback(null, true);
-                return;
-            }
-            callback(new Error('Not allowed by CORS'));
-        },
-        methods: ['GET', 'POST', 'OPTIONS'],
-        allowedHeaders: ['Content-Type', 'x-admin-secret'],
-        credentials: true,
-    })
-);
-
-// Body parser
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: false }));
-
-// --- DIRECT ROUTES (No nested routers for maximum reliability) ---
-
 // 1. Health & Resilience Diagnostic
 app.get(['/api/health', '/health', '/api'], (req, res) => {
     res.json({
-        status: 'ok',
-        mongo: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+        status: 'isolated_test',
+        mongo: 'disabled',
         has_uri: !!process.env.MONGO_URI,
         url_received: req.originalUrl,
         path: req.path
@@ -70,10 +30,12 @@ app.get(['/api/debug-env', '/debug-env'], (req, res) => {
     });
 });
 
-// 3. Contact Submission (Mount to both variations)
+// 3. Contact Submission (DISABLED FOR ISOLATION)
+/*
 const contactRouter = require('./routes/contact');
 app.use('/api/contact', contactRouter);
 app.use('/contact', contactRouter);
+*/
 
 // --- CATCH-ALL 404 ---
 app.use((req, res) => {
