@@ -120,15 +120,18 @@ export default function ContactSection() {
 
                                 <div className="contact__row">
                                     <div className="form-group">
-                                        <label className="form-label">
+                                        <label className="form-label" htmlFor="name">
                                             <FiUser size={14} /> Full Name *
                                         </label>
                                         <input
+                                            id="name"
                                             type="text"
+                                            autoComplete="name"
                                             className={`form-control ${errors.name ? 'error' : ''}`}
                                             placeholder="e.g. Ahmed Ali"
                                             {...register('name', {
                                                 required: 'Name is required',
+                                                minLength: { value: 2, message: 'Name must be at least 2 characters' },
                                                 maxLength: { value: 100, message: 'Name is too long' },
                                             })}
                                         />
@@ -138,11 +141,13 @@ export default function ContactSection() {
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label">
+                                        <label className="form-label" htmlFor="phone">
                                             <FiPhone size={14} /> Phone / WhatsApp *
                                         </label>
                                         <input
+                                            id="phone"
                                             type="tel"
+                                            autoComplete="tel"
                                             className={`form-control ${errors.phone ? 'error' : ''}`}
                                             placeholder="e.g. 03001234567"
                                             {...register('phone', {
@@ -160,11 +165,13 @@ export default function ContactSection() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label className="form-label">
+                                    <label className="form-label" htmlFor="email">
                                         <FiMail size={14} /> Email Address *
                                     </label>
                                     <input
+                                        id="email"
                                         type="email"
+                                        autoComplete="email"
                                         className={`form-control ${errors.email ? 'error' : ''}`}
                                         placeholder="e.g. you@example.com"
                                         {...register('email', {
@@ -181,8 +188,9 @@ export default function ContactSection() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label className="form-label">Service Needed *</label>
+                                    <label className="form-label" htmlFor="service">Service Needed *</label>
                                     <select
+                                        id="service"
                                         className={`form-control ${errors.service ? 'error' : ''}`}
                                         {...register('service', { required: 'Please select a service' })}
                                     >
@@ -198,15 +206,17 @@ export default function ContactSection() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label className="form-label">
+                                    <label className="form-label" htmlFor="message">
                                         <FiMessageSquare size={14} /> Your Message *
                                     </label>
                                     <textarea
+                                        id="message"
                                         className={`form-control ${errors.message ? 'error' : ''}`}
                                         rows={4}
                                         placeholder="Tell me about your business, what you need, and your budget..."
                                         {...register('message', {
                                             required: 'Message is required',
+                                            minLength: { value: 10, message: 'Message must be at least 10 characters' },
                                             maxLength: { value: 1000, message: 'Message too long (max 1000 chars)' },
                                         })}
                                     />

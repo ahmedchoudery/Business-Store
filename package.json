@@ -13,8 +13,12 @@
     "engines": {
         "node": "20.x"
     },
+    "devDependencies": {
+        "shx": "^0.4.0"
+    },
     "scripts": {
-        "build": "cd client && npm install && npm run build",
+        "install-all": "npm install && cd client && npm install",
+        "build": "cd client && npm install && npm run build && cd .. && npx shx cp -r client/dist/* .",
         "start": "node api/index.js"
     }
 }
