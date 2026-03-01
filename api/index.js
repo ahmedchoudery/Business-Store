@@ -7,9 +7,13 @@ const connectDB = require('./config/db');
 
 const app = express();
 
+/**
+ * Vercel Entry Point - api/index.js
+ * 
+ * This file handles all requests starting with /api (as per vercel.json rewrites).
+ */
+
 // ─── DB Connection ────────────────────────────────────────────────────────────
-// FIX: connectDB was never called at startup in the api entry point, causing
-// all contact-form submissions to fail with 503 (readyState !== 1).
 connectDB().catch((err) => {
     console.error('Initial DB connection failed:', err.message);
 });
@@ -29,7 +33,6 @@ const ALLOWED_ORIGINS = [
 app.use(
     cors({
         origin: (origin, callback) => {
-            // Allow: no-origin requests (curl, Postman), whitelisted origins, any *.vercel.app
             if (!origin || ALLOWED_ORIGINS.includes(origin) || origin.endsWith('.vercel.app')) {
                 return callback(null, true);
             }
@@ -58,8 +61,7 @@ app.get(['/api/health', '/health', '/api'], (req, res) => {
     });
 });
 
-// Environment diagnostic — PROTECTED: only accessible with admin secret
-// FIX: previously exposed env key names publicly (security risk)
+// Environment diagnostic — PROTECTED
 app.get(['/api/debug-env', '/debug-env'], (req, res) => {
     const secret = req.headers['x-admin-secret'];
     if (!secret || secret !== process.env.ADMIN_SECRET) {
@@ -74,30 +76,29 @@ app.get(['/api/debug-env', '/debug-env'], (req, res) => {
     });
 });
 
-// Contact form routes
-// FIX: removed '/api/api/contact' — was a workaround for a routing bug that no longer exists
+// ─── MOUNT ROUTERS ────────────────────────────────────────────────────────────
+// FIX: To avoid 404s due to path resolution between Vercel rewrites and Express,
+// we mount the routes at BOTH the prefixed and non-prefixed paths.
 const contactRouter = require('./routes/contact');
 app.use('/api/contact', contactRouter);
 app.use('/contact', contactRouter);
 
 // ─── 404 Catch-all ────────────────────────────────────────────────────────────
+// If a request falls through to here, it means no route matched.
 app.use((req, res) => {
     console.error(`ABSENT_ROUTE: ${req.method} ${req.originalUrl}`);
     res.status(404).json({
         success: false,
-        message: 'Route not found',
+        message: 'Route not found. Check if you are hitting /api/contact.',
         diagnostics: {
             method: req.method,
             originalUrl: req.originalUrl,
-            url: req.url,
             path: req.path,
         },
     });
 });
 
 // ─── Global Error Handler ─────────────────────────────────────────────────────
-// FIX: debug block now only included in non-production environments to avoid
-// leaking internal error details to end users.
 app.use((err, req, res, next) => {
     console.error('SERVER_ERROR:', err);
     const response = {
@@ -111,7 +112,6 @@ app.use((err, req, res, next) => {
 });
 
 // ─── Server Startup (local dev only) ─────────────────────────────────────────
-// On Vercel, only the exported `app` is used; the listen block is skipped.
 if (require.main === module) {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`🚀 Local server running on port ${PORT}`));
