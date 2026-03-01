@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { RiCodeSSlashLine } from 'react-icons/ri';
+import { scrollToSection } from '../../utils/scrollTo'; // shared utility
 import './Navbar.css';
 
 const NAV_LINKS = [
@@ -17,19 +18,15 @@ export default function Navbar() {
 
     useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', handler);
+        window.addEventListener('scroll', handler, { passive: true }); // passive for perf
         return () => window.removeEventListener('scroll', handler);
     }, []);
 
+    // Delegates to shared utility so all scroll behaviour is consistent
     const handleNavClick = (e, href) => {
         e.preventDefault();
         setMenuOpen(false);
-        const el = document.querySelector(href);
-        if (el) {
-            const offset = 80;
-            const top = el.getBoundingClientRect().top + window.scrollY - offset;
-            window.scrollTo({ top, behavior: 'smooth' });
-        }
+        scrollToSection(href);
     };
 
     return (
@@ -65,11 +62,12 @@ export default function Navbar() {
                     Hire Me
                 </a>
 
-                {/* Mobile hamburger */}
+                {/* Mobile hamburger — aria-expanded for screen reader support */}
                 <button
                     className="navbar__hamburger"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                    aria-label="Toggle menu"
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    aria-label="Toggle navigation menu"
+                    aria-expanded={menuOpen}
                 >
                     {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
                 </button>

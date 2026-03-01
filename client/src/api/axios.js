@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+/**
+ * Shared Axios instance — all API calls in the app should use this.
+ * baseURL falls back to '/api' so relative paths work on both local dev
+ * (via Vite proxy) and on Vercel (via vercel.json rewrites).
+ */
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL || '/api',
     headers: {
@@ -8,35 +13,30 @@ const api = axios.create({
     timeout: 10000,
 });
 
-// Request interceptor
+// ─── Request Interceptor ──────────────────────────────────────────────────────
+// Placeholder for future auth token injection (e.g. Authorization header).
 api.interceptors.request.use(
     (config) => config,
     (error) => Promise.reject(error)
 );
 
-// Response interceptor
+// ─── Response Interceptor ─────────────────────────────────────────────────────
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        let message =
+        // Build a user-friendly message from the server's response
+        const userMessage =
             error.response?.data?.message ||
             error.response?.data?.errors?.[0]?.message ||
             error.message ||
             'Something went wrong';
 
-        // Append debug info if available (helpful for diagnosing Vercel 500s/404s)
-        if (error.response?.data?.diagnostics) {
-            const diag = error.response.data.diagnostics;
-            message += ` [Diag: ${diag.method} ${diag.originalUrl || diag.url}]`;
-        } else if (error.response?.data?.debug) {
-            const { name, message: debugMsg } = error.response.data.debug;
-            message += ` (${name}: ${debugMsg})`;
-        } else if (error.config?.url) {
-            // If no server-side debug info, at least show where we tried to go
-            message += ` [Target: ${error.config.url}]`;
-        }
+        // FIX: Instead of spreading the Error/AxiosError (which loses the prototype
+        // chain and stack trace), attach userMessage as a property on the
+        // original error object so instanceof checks and stack traces still work.
+        error.userMessage = userMessage;
 
-        return Promise.reject({ ...error, userMessage: message });
+        return Promise.reject(error);
     }
 );
 

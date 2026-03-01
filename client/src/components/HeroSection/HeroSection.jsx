@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { FiArrowRight } from 'react-icons/fi';
 import { BsWhatsapp } from 'react-icons/bs';
+import { scrollToSection } from '../../utils/scrollTo'; // shared utility with navbar offset
 import './HeroSection.css';
 
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043';
@@ -72,7 +73,7 @@ export default function HeroSection() {
                         className="btn btn-primary btn-lg"
                         onClick={(e) => {
                             e.preventDefault();
-                            document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                            scrollToSection('#contact'); // uses 80px offset to clear sticky navbar
                         }}
                     >
                         Get a Free Quote <FiArrowRight />
