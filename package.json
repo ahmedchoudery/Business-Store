@@ -14,9 +14,7 @@
         "node": "20.x"
     },
     "scripts": {
-        "install:client": "cd client && npm install",
-        "build:client": "cd client && npm run build",
-        "build": "npm run install:client && npm run build:client",
+        "build": "cd client && npm install && npm run build",
         "start": "node api/index.js"
     }
 }
