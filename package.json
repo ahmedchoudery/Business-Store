@@ -14,7 +14,7 @@
         "node": "20.x"
     },
     "scripts": {
-        "build": "cd client && npm install && npm run build && cd .. && rm -rf public && mkdir public && cp -r client/dist/* public/",
+        "build": "npm install --prefix client && npm run build --prefix client",
         "start": "node api/index.js"
     }
 }

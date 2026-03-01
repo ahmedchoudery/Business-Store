@@ -21,8 +21,11 @@ connectDB().catch((err) => {
     console.error('Initial DB connection failed:', err.message);
 });
 
-// ─── Security & CORS ──────────────────────────────────────────────────────────
-app.use(helmet());
+// ─── Security Middleware ──────────────────────────────────────────────────────
+// Relax helmet for now to ensure it doesn't block frontend assets via CSP
+app.use(helmet({
+    contentSecurityPolicy: false,
+}));
 
 const ALLOWED_ORIGINS = [
     'http://localhost:5173',
