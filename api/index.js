@@ -8,20 +8,22 @@ const connectDB = require('./config/db');
 const app = express();
 
 /**
- * Vercel Entry Point - api/index.js
- * 
- * This file handles all requests starting with /api (as per vercel.json rewrites).
+ * ─── Vercel Diagnostic Logging ──────────────────────────────────────────────
+ * This will help us see EXACTLY what path Express is receiving.
  */
+app.use((req, res, next) => {
+    console.log(`[DEBUG] ${req.method} ${req.url} | Path: ${req.path}`);
+    next();
+});
 
 // ─── DB Connection ────────────────────────────────────────────────────────────
 connectDB().catch((err) => {
     console.error('Initial DB connection failed:', err.message);
 });
 
-// ─── Security Middleware ──────────────────────────────────────────────────────
+// ─── Security & CORS ──────────────────────────────────────────────────────────
 app.use(helmet());
 
-// ─── CORS ─────────────────────────────────────────────────────────────────────
 const ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://localhost:3000',
@@ -44,74 +46,57 @@ app.use(
     })
 );
 
-// ─── Body Parsers ─────────────────────────────────────────────────────────────
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
 
-// ─── Routes ───────────────────────────────────────────────────────────────────
+// ─── BULLETPROOF ROUTING ──────────────────────────────────────────────────────
+const contactRouter = require('./routes/contact');
 
-// Health check — reports DB connectivity
+// We mount at BOTH root and /api prefixes. 
+// This covers cases where Vercel rewrites to /api/index.js 
+// AND cases where Express sees the /api prefix.
+const mainRouter = express.Router();
+mainRouter.use('/contact', contactRouter);
+
+app.use('/api', mainRouter);
+app.use('/', mainRouter);
+
+// Health check
 app.get(['/api/health', '/health', '/api'], (req, res) => {
     res.json({
         status: 'ok',
         mongo: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
         has_uri: !!process.env.MONGO_URI,
-        url_received: req.originalUrl,
+        url: req.url,
         path: req.path,
     });
 });
 
-// Environment diagnostic — PROTECTED
-app.get(['/api/debug-env', '/debug-env'], (req, res) => {
-    const secret = req.headers['x-admin-secret'];
-    if (!secret || secret !== process.env.ADMIN_SECRET) {
-        return res.status(401).json({ success: false, message: 'Unauthorized' });
-    }
-    res.json({
-        has_mongo_uri: !!process.env.MONGO_URI,
-        node_env: process.env.NODE_ENV,
-        keys: Object.keys(process.env).filter(
-            (k) => k.includes('MONGO') || k.includes('URL') || k.includes('SECRET')
-        ),
-    });
-});
-
-// ─── MOUNT ROUTERS ────────────────────────────────────────────────────────────
-// FIX: To avoid 404s due to path resolution between Vercel rewrites and Express,
-// we mount the routes at BOTH the prefixed and non-prefixed paths.
-const contactRouter = require('./routes/contact');
-app.use('/api/contact', contactRouter);
-app.use('/contact', contactRouter);
-
 // ─── 404 Catch-all ────────────────────────────────────────────────────────────
-// If a request falls through to here, it means no route matched.
 app.use((req, res) => {
-    console.error(`ABSENT_ROUTE: ${req.method} ${req.originalUrl}`);
+    console.error(`ABSENT_ROUTE: ${req.method} ${req.url}`);
     res.status(404).json({
         success: false,
-        message: 'Route not found. Check if you are hitting /api/contact.',
-        diagnostics: {
+        message: 'Route not found in Express. Verify you are hitting /api/contact',
+        debug: {
             method: req.method,
-            originalUrl: req.originalUrl,
+            url: req.url,
             path: req.path,
+            originalUrl: req.originalUrl
         },
     });
 });
 
-// ─── Global Error Handler ─────────────────────────────────────────────────────
+// ─── Error Handler ────────────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
     console.error('SERVER_ERROR:', err);
-    const response = {
+    res.status(err.status || 500).json({
         success: false,
         message: err.message || 'Internal Server Error',
-    };
-    if (process.env.NODE_ENV !== 'production') {
-        response.debug = { name: err.name, message: err.message };
-    }
-    res.status(err.status || 500).json(response);
+        debug: process.env.NODE_ENV !== 'production' ? { name: err.name, message: err.message } : undefined
+    });
 });
 
-// ─── Server Startup (local dev only) ─────────────────────────────────────────
 if (require.main === module) {
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`🚀 Local server running on port ${PORT}`));
