@@ -3,16 +3,16 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const connectDB = require('./config/db');
+const connectDB = require('../backend/config/db');
 
 const app = express();
 
 /**
  * ─── Core Backend Logic (Vercel Entry Point) ──────────────────────────────────
  * 
- * This is the single source of truth for the Business-Store backend. 
- * It is used directly by Vercel serverless functions and imported by the 
- * local dev server (server/index.js).
+ * Vercel uses this file directly as a serverless function.
+ * All logic is imported from the /backend folder to avoid Vercel 
+ * misidentifying subfolders as individual functions.
  */
 
 // ─── DB Connection ────────────────────────────────────────────────────────────
@@ -55,7 +55,7 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
 
 // ─── Main API Routes ──────────────────────────────────────────────────────────
-const contactRouter = require('./routes/contact');
+const contactRouter = require('../backend/routes/contact');
 
 const mainRouter = express.Router();
 mainRouter.use('/contact', contactRouter);
