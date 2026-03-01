@@ -2,6 +2,18 @@
     "name": "business-store-monorepo",
     "version": "1.0.0",
     "private": true,
+    "description": "Premium Business Store Project with Clean Architecture",
+    "engines": {
+        "node": "20.x"
+    },
+    "scripts": {
+        "install:all": "npm install && cd client && npm install",
+        "build": "cd client && npm install && npm run build",
+        "dev:server": "node --watch server/index.js",
+        "dev:client": "cd client && npm run dev",
+        "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+        "start": "node api/index.js"
+    },
     "dependencies": {
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
@@ -10,11 +22,8 @@
         "helmet": "^7.1.0",
         "mongoose": "^8.4.1"
     },
-    "engines": {
-        "node": "20.x"
-    },
-    "scripts": {
-        "build": "npm install --prefix client && npm run build --prefix client",
-        "start": "node api/index.js"
+    "devDependencies": {
+        "concurrently": "^8.2.2",
+        "shx": "^0.4.0"
     }
 }
