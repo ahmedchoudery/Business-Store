@@ -33,9 +33,9 @@ export default function ContactSection() {
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            // FIX: corrected path from 'contact' → '/contact' (missing leading slash
-            // caused Axios to treat it as a relative URL in some environments)
-            await api.post('/contact', data);
+            // FIX: removed leading slash. Axios with baseURL '/api' resolves 
+            // 'contact' to '/api/contact', but resolves '/contact' to just '/contact'.
+            await api.post('contact', data);
             setSubmitted(true);
             reset();
             toast.success("Message sent! I'll get back to you within 24 hours. 🎉");
