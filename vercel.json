@@ -6,8 +6,12 @@
             "destination": "/api/index.js"
         },
         {
+            "source": "/assets/:path*",
+            "destination": "/public/assets/:path*"
+        },
+        {
             "source": "/((?!api).*)*",
-            "destination": "/index.html"
+            "destination": "/public/index.html"
         }
     ],
     "cleanUrls": true
