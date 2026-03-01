@@ -7,7 +7,7 @@
         },
         {
             "source": "/((?!api).*)*",
-            "destination": "/index.html"
+            "destination": "/client/dist/$1"
         }
     ],
     "cleanUrls": true

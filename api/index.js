@@ -57,15 +57,11 @@ app.use(express.urlencoded({ extended: false }));
 // ─── Main API Routes ──────────────────────────────────────────────────────────
 const contactRouter = require('./routes/contact');
 
-/**
- * Unified Router Mounting
- * Supports both /api/contact (frontend default) and /contact (legacy/fallback).
- */
 const mainRouter = express.Router();
 mainRouter.use('/contact', contactRouter);
 
+// API logic mounted strictly under /api
 app.use('/api', mainRouter);
-app.use('/', mainRouter);
 
 // Health check — Used for monitoring and Vercel warmups
 app.get(['/api/health', '/health', '/api'], (req, res) => {
