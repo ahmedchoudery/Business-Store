@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Contact = require('../models/Contact');
-const { contactValidationRules, validate } = require('../middleware/validate');
+const { contactValidationRules, validate } = require('../logic/validate');
 
 const router = express.Router();
 
