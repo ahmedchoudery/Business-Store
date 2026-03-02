@@ -1,18 +1,6 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "api/index.js",
-            "use": "@vercel/node"
-        },
-        {
-            "src": "package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "client/dist"
-            }
-        }
-    ],
+    "public": true,
     "rewrites": [
         {
             "source": "/api/:path*",
@@ -22,5 +10,8 @@
             "source": "/((?!api).*)*",
             "destination": "/index.html"
         }
-    ]
+    ],
+    "framework": "vite",
+    "installCommand": "npm run install:all",
+    "buildCommand": "npm run build"
 }
