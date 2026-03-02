@@ -7,14 +7,16 @@ const connectDB = async () => {
   if (mongoose.connection.readyState >= 1) return;
   if (isConnecting) return;
 
+  const dbUri = process.env.MONGODB_URI || process.env.MONGO_URI;
+
   try {
-    if (!process.env.MONGO_URI) {
-      console.warn('⚠️ MONGO_URI is missing from environment variables.');
+    if (!dbUri) {
+      console.warn('⚠️ MongoDB connection URI is missing from environment variables (tried MONGODB_URI and MONGO_URI).');
       return;
     }
 
     isConnecting = true;
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    const conn = await mongoose.connect(dbUri, {
       serverSelectionTimeoutMS: 5000, // Fail fast if IP is blocked
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
