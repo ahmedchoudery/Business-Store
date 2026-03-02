@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const connectDB = require('./backend/config/db');
+const connectDB = require('../backend-logic/config/db');
 
 const app = express();
 
@@ -55,7 +55,7 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
 
 // ─── Main API Routes ──────────────────────────────────────────────────────────
-const contactRouter = require('./backend/routes/contact');
+const contactRouter = require('../backend-logic/routes/contact');
 
 const mainRouter = express.Router();
 mainRouter.use('/contact', contactRouter);
