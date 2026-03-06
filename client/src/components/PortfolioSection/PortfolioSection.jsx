@@ -4,12 +4,13 @@ import './PortfolioSection.css';
 
 const PROJECTS = [
     {
-        title: 'FitLife Gym Website',
-        category: 'Fitness Studio',
-        desc: 'Full responsive website with trainer profiles, class schedule, gallery, and WhatsApp inquiry button.',
-        tags: ['React', 'Responsive', 'WhatsApp'],
+        title: 'Falak Halls & Events',
+        category: 'Marriage Hall',
+        desc: 'A grand marriage hall and event venue featuring luxury decor, catering services, interactive gallery, and direct booking inquiries.',
+        tags: ['React', 'Marriage Hall', 'WhatsApp'],
+        link: 'https://falak-marriage-hall.vercel.app/',
         gradient: 'linear-gradient(135deg, #ef4444, #f59e0b)',
-        emoji: '🏋️',
+        emoji: '🕌',
     },
     {
         title: 'Star Coaching Academy',
@@ -84,20 +85,33 @@ export default function PortfolioSection() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
                         >
-                            <div
-                                className="portfolio__thumbnail"
-                                style={{ background: project.gradient }}
+                            <a
+                                href={project.link || '#'}
+                                target={project.link ? "_blank" : "_self"}
+                                rel="noopener noreferrer"
+                                className="portfolio__link-wrapper"
                             >
-                                <span className="portfolio__emoji">{project.emoji}</span>
-                                <div className="portfolio__overlay">
-                                    <span className="portfolio__view">
-                                        <FiExternalLink /> View Project
-                                    </span>
+                                <div
+                                    className="portfolio__thumbnail"
+                                    style={{ background: project.gradient }}
+                                >
+                                    <span className="portfolio__emoji">{project.emoji}</span>
+                                    <div className="portfolio__overlay">
+                                        <span className="portfolio__view">
+                                            <FiExternalLink /> View Project
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                             <div className="portfolio__body">
                                 <span className="portfolio__category">{project.category}</span>
-                                <h3 className="portfolio__title">{project.title}</h3>
+                                <h3 className="portfolio__title">
+                                    {project.link ? (
+                                        <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                            {project.title}
+                                        </a>
+                                    ) : project.title}
+                                </h3>
                                 <p className="portfolio__desc">{project.desc}</p>
                                 <div className="services__tags">
                                     {project.tags.map((t) => (

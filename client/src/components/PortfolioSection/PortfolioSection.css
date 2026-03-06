@@ -111,3 +111,18 @@
         grid-template-columns: 1fr;
     }
 }
+
+.portfolio__link-wrapper {
+    text-decoration: none;
+    display: block;
+}
+
+.portfolio__title a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.portfolio__title a:hover {
+    color: var(--color-primary);
+}
