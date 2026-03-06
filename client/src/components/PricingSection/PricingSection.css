@@ -5,8 +5,11 @@
 .pricing__header {
     margin-bottom: var(--space-12);
     max-width: 600px;
+    margin-inline: auto;
+    text-align: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: var(--space-4);
 }
 
@@ -22,6 +25,7 @@
     flex-direction: column;
     gap: var(--space-4);
     position: relative;
+    overflow: visible;
 }
 
 .pricing__card--popular {

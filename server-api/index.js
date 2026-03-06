@@ -10,9 +10,8 @@ const app = express();
 /**
  * ─── Core Backend Logic (Vercel Entry Point) ──────────────────────────────────
  * 
- * Vercel uses this file directly as a serverless function. [Updated: 2026-03-02]
- * All logic is imported from the /_server folder to avoid Vercel 
- * misidentifying subfolders as individual functions.
+ * Vercel uses this file as a serverless function entry point.
+ * All business logic is imported from the /backend-logic folder.
  */
 
 // ─── DB Connection ────────────────────────────────────────────────────────────

@@ -42,11 +42,13 @@
     color: var(--color-primary);
 }
 
+/* ── Centered nav links ─────────────────────────── */
 .navbar__links {
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    margin-left: auto;
+    flex: 1;
+    justify-content: center;
 }
 
 .navbar__link {

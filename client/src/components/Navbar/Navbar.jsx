@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { RiCodeSSlashLine } from 'react-icons/ri';
-import { scrollToSection } from '../../utils/scrollTo'; // shared utility
+import { scrollToSection } from '../../utils/scrollTo';
 import './Navbar.css';
 
 const NAV_LINKS = [
     { label: 'Services', href: '#services' },
-    { label: 'Why Me', href: '#why-me' },
+    { label: 'About Me', href: '#about' },
     { label: 'Portfolio', href: '#portfolio' },
     { label: 'Pricing', href: '#pricing' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Contact Us', href: '#contact' },
 ];
 
 export default function Navbar() {
@@ -18,11 +18,10 @@ export default function Navbar() {
 
     useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', handler, { passive: true }); // passive for perf
+        window.addEventListener('scroll', handler, { passive: true });
         return () => window.removeEventListener('scroll', handler);
     }, []);
 
-    // Delegates to shared utility so all scroll behaviour is consistent
     const handleNavClick = (e, href) => {
         e.preventDefault();
         setMenuOpen(false);
@@ -32,13 +31,11 @@ export default function Navbar() {
     return (
         <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
             <div className="container navbar__inner">
-                {/* Logo */}
                 <a href="#hero" className="navbar__logo" onClick={(e) => handleNavClick(e, '#hero')}>
                     <RiCodeSSlashLine size={24} />
                     <span>Ahmed<span className="navbar__logo-accent">Dev</span></span>
                 </a>
 
-                {/* Desktop Links */}
                 <ul className="navbar__links">
                     {NAV_LINKS.map((link) => (
                         <li key={link.label}>
@@ -53,16 +50,14 @@ export default function Navbar() {
                     ))}
                 </ul>
 
-                {/* CTA */}
                 <a
                     href="#contact"
                     className="btn btn-primary navbar__cta"
                     onClick={(e) => handleNavClick(e, '#contact')}
                 >
-                    Hire Me
+                    Get Started
                 </a>
 
-                {/* Mobile hamburger — aria-expanded for screen reader support */}
                 <button
                     className="navbar__hamburger"
                     onClick={() => setMenuOpen((prev) => !prev)}
@@ -73,7 +68,6 @@ export default function Navbar() {
                 </button>
             </div>
 
-            {/* Mobile Menu */}
             <div className={`navbar__mobile ${menuOpen ? 'navbar__mobile--open' : ''}`}>
                 {NAV_LINKS.map((link) => (
                     <a
@@ -91,7 +85,7 @@ export default function Navbar() {
                     style={{ width: '100%', justifyContent: 'center', marginTop: '8px' }}
                     onClick={(e) => handleNavClick(e, '#contact')}
                 >
-                    Hire Me
+                    Get Started
                 </a>
             </div>
         </nav>

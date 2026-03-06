@@ -5,6 +5,8 @@
 .services__header {
     margin-bottom: var(--space-12);
     max-width: 600px;
+    margin-inline: auto;
+    text-align: center;
 }
 
 .services__grid {

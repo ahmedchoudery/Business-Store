@@ -1,19 +1,19 @@
 import { motion } from 'framer-motion';
 import {
-    FiAward, FiClock, FiSmartphone,
+    FiAward, FiClock, FiSmartphone, FiHeart,
 } from 'react-icons/fi';
 import './WhyMeSection.css';
 
 const REASONS = [
-    { icon: <FiClock size={20} />, text: 'Fast delivery (24h-48h turnaround)' },
-    { icon: <FiSmartphone size={20} />, text: 'Clean, responsive mobile design' },
-    { icon: <FiAward size={20} />, text: 'Business‑focused solutions that sell' },
-    { icon: <FiAward size={20} />, text: 'Friendly, clear communication' },
+    { icon: <FiClock size={20} />, text: 'Fast delivery — 24h to 48h turnaround' },
+    { icon: <FiSmartphone size={20} />, text: 'Clean, responsive mobile-first design' },
+    { icon: <FiAward size={20} />, text: 'Business-focused solutions that convert' },
+    { icon: <FiHeart size={20} />, text: 'Friendly, clear communication throughout' },
 ];
 
 export default function WhyMeSection() {
     return (
-        <section id="why-me" className="section why">
+        <section id="about" className="section why">
             <div className="container">
                 <div className="why__content">
                     <motion.span
@@ -23,7 +23,7 @@ export default function WhyMeSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
-                        🎯 Values
+                        👤 About Me
                     </motion.span>
                     <motion.h2
                         className="section-title"
@@ -41,7 +41,7 @@ export default function WhyMeSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                        You focus on running your business. I'll make sure the internet works for you.
+                        You focus on running your business — I'll make sure the internet works for you.
                     </motion.p>
 
                     <motion.ul
