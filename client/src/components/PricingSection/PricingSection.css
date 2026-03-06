@@ -20,7 +20,7 @@
     align-items: start;
 }
 
-.pricing__card {
+.card.pricing__card {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
