@@ -11,7 +11,7 @@ const PROJECTS = [
         link: 'https://falak-marriage-hall.vercel.app/',
         gradient: 'linear-gradient(135deg, #ef4444, #f59e0b)',
         emoji: '🕌',
-        image: '/3.jpeg',
+        image: '/1.jpeg',
     },
     {
         title: 'Star Coaching Academy',
