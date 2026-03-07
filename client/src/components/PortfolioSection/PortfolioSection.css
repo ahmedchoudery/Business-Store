@@ -47,6 +47,17 @@
     transform: scale(1.1);
 }
 
+.portfolio__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.portfolio__card:hover .portfolio__image {
+    transform: scale(1.05);
+}
+
 .portfolio__overlay {
     position: absolute;
     inset: 0;

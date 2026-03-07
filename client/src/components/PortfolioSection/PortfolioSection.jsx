@@ -11,6 +11,7 @@ const PROJECTS = [
         link: 'https://falak-marriage-hall.vercel.app/',
         gradient: 'linear-gradient(135deg, #ef4444, #f59e0b)',
         emoji: '🕌',
+        image: '/3.jpeg',
     },
     {
         title: 'Star Coaching Academy',
@@ -95,7 +96,11 @@ export default function PortfolioSection() {
                                     className="portfolio__thumbnail"
                                     style={{ background: project.gradient }}
                                 >
-                                    <span className="portfolio__emoji">{project.emoji}</span>
+                                    {project.image ? (
+                                        <img src={project.image} alt={project.title} className="portfolio__image" />
+                                    ) : (
+                                        <span className="portfolio__emoji">{project.emoji}</span>
+                                    )}
                                     <div className="portfolio__overlay">
                                         <span className="portfolio__view">
                                             <FiExternalLink /> View Project
