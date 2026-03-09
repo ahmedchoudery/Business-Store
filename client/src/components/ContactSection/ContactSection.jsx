@@ -10,12 +10,11 @@ import './ContactSection.css';
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043';
 
 const SERVICES = [
-    { value: '', label: 'Select a service...' },
-    { value: 'bug-fixes', label: '🛠️ HTML/CSS/JS Bug Fixes' },
-    { value: 'responsive-design', label: '📱 Responsive Website Design' },
-    { value: 'landing-pages', label: '🚀 Landing Pages' },
-    { value: 'small-business', label: '🏢 Small Business Website' },
-    { value: 'portfolio', label: '🎨 Portfolio Website' },
+    { value: '', label: 'Select a project type...' },
+    { value: 'business-website', label: '🏢 Business Website Development' },
+    { value: 'landing-page', label: '🚀 Landing Page Design' },
+    { value: 'website-redesign', label: '♻️ Website Redesign' },
+    { value: 'performance-optimization', label: '⚡ Website Performance Optimization' },
     { value: 'other', label: '💬 Other / Discuss' },
 ];
 
@@ -188,11 +187,11 @@ export default function ContactSection() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label className="form-label" htmlFor="service">Service Needed *</label>
+                                    <label className="form-label" htmlFor="service">Project Type *</label>
                                     <select
                                         id="service"
                                         className={`form-control ${errors.service ? 'error' : ''}`}
-                                        {...register('service', { required: 'Please select a service' })}
+                                        {...register('service', { required: 'Please select a project type' })}
                                     >
                                         {SERVICES.map((s) => (
                                             <option key={s.value} value={s.value} disabled={s.value === ''}>

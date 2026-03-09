@@ -6,15 +6,19 @@
     z-index: 1000;
     padding: 16px 0;
     transition: all 0.3s ease;
+    background: radial-gradient(circle at top, rgba(148, 163, 248, 0.12), transparent 55%);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
 }
 
 .navbar--scrolled {
     padding: 10px 0;
-    background: rgba(7, 7, 15, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    background: rgba(7, 7, 15, 0.88);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.6);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.75);
 }
 
 .navbar__inner {
@@ -71,6 +75,32 @@
     font-size: var(--text-sm);
 }
 
+.navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto;
+}
+
+.navbar__theme-toggle {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    transition: all var(--transition-base);
+}
+
+.navbar__theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
 .navbar__hamburger {
     display: none;
     color: var(--color-text);
@@ -105,7 +135,8 @@
 @media (max-width: 768px) {
 
     .navbar__links,
-    .navbar__cta {
+    .navbar__cta,
+    .navbar__theme-toggle {
         display: none;
     }
 

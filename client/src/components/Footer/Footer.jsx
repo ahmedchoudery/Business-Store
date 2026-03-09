@@ -30,6 +30,7 @@ export default function Footer() {
                         <RiCodeSSlashLine size={22} />
                         <span>Ahmed<span className="footer__logo-accent">Dev</span></span>
                     </a>
+                    <h4 className="footer__heading footer__heading--brand">About AhmedDev</h4>
                     <p className="footer__tagline">
                         Building fast, modern websites for local businesses across Pakistan.
                     </p>
@@ -87,42 +88,21 @@ export default function Footer() {
                 </div>
 
                 <div>
-                    <h4 className="footer__heading">Services</h4>
+                    <h4 className="footer__heading">Contact Information</h4>
                     <ul className="footer__links">
-                        {[
-                            'Landing Pages',
-                            'Business Websites',
-                            'React Development',
-                            'Responsive Design',
-                            'Speed Optimization',
-                            'CSS Bug Fixes',
-                        ].map((s) => (
-                            <li key={s}>
-                                <a href="#services" className="footer__link" onClick={(e) => handleClick(e, '#services')}>
-                                    {s}
-                                </a>
-                            </li>
-                        ))}
+                        <li>
+                            <span className="footer__link">Email: ahmedchoudery30@gmail.com</span>
+                        </li>
+                        <li>
+                            <span className="footer__link">WhatsApp: +92 317 4307043</span>
+                        </li>
+                        <li>
+                            <span className="footer__link">Based in Pakistan, working worldwide.</span>
+                        </li>
                     </ul>
                 </div>
 
-                <div>
-                    <h4 className="footer__heading">Industries</h4>
-                    <ul className="footer__links">
-                        {[
-                            '🏋️ Gym & Fitness Studios',
-                            '📚 Coaching Centers',
-                            '🏠 Real Estate Agents',
-                            '🛍️ Local Shops',
-                            '🧘 Wellness Studios',
-                            '🏥 Clinics & Services',
-                        ].map((s) => (
-                            <li key={s}>
-                                <span className="footer__link">{s}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <div />
             </div>
 
             <div className="footer__bottom">

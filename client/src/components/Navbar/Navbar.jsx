@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu, FiX, FiSun, FiMoon } from 'react-icons/fi';
 import { RiCodeSSlashLine } from 'react-icons/ri';
 import { scrollToSection } from '../../utils/scrollTo';
 import './Navbar.css';
@@ -12,9 +12,12 @@ const NAV_LINKS = [
     { label: 'Contact Us', href: '#contact' },
 ];
 
+const THEME_KEY = 'ahmeddev-theme';
+
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [theme, setTheme] = useState('dark');
 
     useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 20);
@@ -22,10 +25,34 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handler);
     }, []);
 
+    useEffect(() => {
+        // Initialize theme from localStorage or system preference
+        const stored = typeof window !== 'undefined' ? localStorage.getItem(THEME_KEY) : null;
+        let initial = stored || 'dark';
+
+        if (!stored && window.matchMedia) {
+            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            initial = prefersLight ? 'light' : 'dark';
+        }
+
+        setTheme(initial);
+        document.documentElement.setAttribute('data-theme', initial === 'light' ? 'light' : 'dark');
+    }, []);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        document.documentElement.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
+        localStorage.setItem(THEME_KEY, theme);
+    }, [theme]);
+
     const handleNavClick = (e, href) => {
         e.preventDefault();
         setMenuOpen(false);
         scrollToSection(href);
+    };
+
+    const toggleTheme = () => {
+        setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
     };
 
     return (
@@ -50,22 +77,33 @@ export default function Navbar() {
                     ))}
                 </ul>
 
-                <a
-                    href="#contact"
-                    className="btn btn-primary navbar__cta"
-                    onClick={(e) => handleNavClick(e, '#contact')}
-                >
-                    Get Started
-                </a>
+                <div className="navbar__actions">
+                    <button
+                        type="button"
+                        className="navbar__theme-toggle"
+                        onClick={toggleTheme}
+                        aria-label={`Activate ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                    >
+                        {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
+                    </button>
 
-                <button
-                    className="navbar__hamburger"
-                    onClick={() => setMenuOpen((prev) => !prev)}
-                    aria-label="Toggle navigation menu"
-                    aria-expanded={menuOpen}
-                >
-                    {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-                </button>
+                    <a
+                        href="#contact"
+                        className="btn btn-primary navbar__cta"
+                        onClick={(e) => handleNavClick(e, '#contact')}
+                    >
+                        Get Started
+                    </a>
+
+                    <button
+                        className="navbar__hamburger"
+                        onClick={() => setMenuOpen((prev) => !prev)}
+                        aria-label="Toggle navigation menu"
+                        aria-expanded={menuOpen}
+                    >
+                        {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+                    </button>
+                </div>
             </div>
 
             <div className={`navbar__mobile ${menuOpen ? 'navbar__mobile--open' : ''}`}>

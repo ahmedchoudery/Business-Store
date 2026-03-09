@@ -1,5 +1,6 @@
 .footer {
-    background: var(--color-bg-2);
+    background: radial-gradient(circle at top, rgba(245, 158, 11, 0.08), transparent 55%),
+        var(--color-bg-2);
     border-top: 1px solid var(--color-border);
     padding-top: var(--space-16);
 }
@@ -27,11 +28,11 @@
 }
 
 .footer__logo svg {
-    color: var(--color-primary);
+    color: var(--color-accent-light);
 }
 
 .footer__logo-accent {
-    color: var(--color-primary);
+    color: var(--color-accent-light);
 }
 
 .footer__tagline {
@@ -61,18 +62,22 @@
 
 .footer__social:hover {
     color: var(--color-white);
-    border-color: var(--color-primary);
-    background: var(--color-primary-glow);
+    border-color: var(--color-accent-light);
+    background: var(--color-accent-glow);
 }
 
 .footer__heading {
     font-family: var(--font-display);
     font-size: var(--text-sm);
     font-weight: 700;
-    color: var(--color-white);
+    color: var(--color-accent-light);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-bottom: var(--space-4);
+}
+
+.footer__heading--brand {
+    margin-top: var(--space-3);
 }
 
 .footer__links {

@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import {
     FiLayout,
@@ -9,42 +8,36 @@ import {
     FiCheckCircle,
     FiShoppingBag,
 } from 'react-icons/fi';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import './ServicesSection.css';
 
 const SERVICES = [
     {
-        icon: <FiCheckCircle size={28} />,
-        title: 'HTML/CSS/JS Bug Fixes',
-        desc: 'I will fix your broken website layout, cross-browser issues, and JavaScript errors in 24 hours.',
-        tags: ['24h Delivery', 'Layout Fix', 'JS Debug'],
-        color: '#ec4899',
+        icon: <FiShoppingBag size={28} />,
+        title: 'Business Website Development',
+        desc: 'Full websites tailored for local businesses with clear service pages, contact options, and calls-to-action that convert visitors into leads.',
+        tags: ['Multi-page', 'Lead-Focused', 'WhatsApp'],
+        color: '#10b981',
     },
     {
         icon: <FiSmartphone size={28} />,
-        title: 'Responsive Website Design',
-        desc: 'I will make your website mobile-friendly and responsive, ensuring it looks perfect on every screen.',
-        tags: ['Mobile-First', 'Auto-Scaling', 'UI/UX'],
+        title: 'Landing Page Design',
+        desc: 'Single-page, high-converting landing pages built for campaigns, product launches, and special offers.',
+        tags: ['Conversion Focused', 'Modern UI', 'Copy Guidance'],
         color: 'var(--color-primary)',
     },
     {
         icon: <FiLayout size={28} />,
-        title: 'Landing Pages',
-        desc: 'I will build a modern, high-converting landing page for your business or product launching.',
-        tags: ['Conversion', 'Fast-Load', 'Modern UI'],
+        title: 'Website Redesign',
+        desc: 'Transform outdated or underperforming sites into fast, modern experiences without losing your existing content or SEO.',
+        tags: ['Modernization', 'UX Upgrade', 'Brand Refresh'],
         color: '#f59e0b',
     },
     {
-        icon: <FiShoppingBag size={28} />,
-        title: 'Small Business Website',
-        desc: 'I will create a 4-page website with WhatsApp integration, Google Maps, and basic SEO setup.',
-        tags: ['Complete SEO', 'Maps', 'WhatsApp'],
-        color: '#10b981',
-    },
-    {
         icon: <FiCode size={28} />,
-        title: 'Portfolio Website',
-        desc: 'I will design a clean, professional portfolio or resume website for you to showcase your work.',
-        tags: ['Personal Brand', 'Modern Design', 'Portfolio'],
+        title: 'Website Performance Optimization',
+        desc: 'Speed audits and optimizations so your site loads quickly, ranks better in search, and feels snappy on mobile data.',
+        tags: ['Core Web Vitals', 'Lazy Loading', 'Code Cleanup'],
         color: '#06b6d4',
     },
 ];
@@ -61,7 +54,7 @@ const cardVariants = {
 
 export default function ServicesSection() {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: '-100px' });
+    const { visible } = useScrollReveal({ threshold: 0.3 });
 
     return (
         <section id="services" className="section services">
@@ -102,7 +95,7 @@ export default function ServicesSection() {
                     className="services__grid"
                     variants={containerVariants}
                     initial="hidden"
-                    animate={isInView ? 'visible' : 'hidden'}
+                    animate={visible ? 'visible' : 'hidden'}
                 >
                     {SERVICES.map((service, i) => (
                         <motion.div key={i} className="card services__card" variants={cardVariants}>

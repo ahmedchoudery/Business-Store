@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import {
-    FiAward, FiClock, FiSmartphone, FiHeart,
+    FiAward, FiClock, FiSmartphone, FiCode,
 } from 'react-icons/fi';
 import './WhyMeSection.css';
 
 const REASONS = [
-    { icon: <FiClock size={20} />, text: 'Fast delivery — 24h to 48h turnaround' },
-    { icon: <FiSmartphone size={20} />, text: 'Clean, responsive mobile-first design' },
-    { icon: <FiAward size={20} />, text: 'Business-focused solutions that convert' },
-    { icon: <FiHeart size={20} />, text: 'Friendly, clear communication throughout' },
+    { icon: <FiClock size={20} />, text: 'Fast Website Performance' },
+    { icon: <FiSmartphone size={20} />, text: 'Mobile-First Design' },
+    { icon: <FiAward size={20} />, text: 'SEO Friendly Structure' },
+    { icon: <FiCode size={20} />, text: 'Clean and Maintainable Code' },
 ];
 
 export default function WhyMeSection() {

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiExternalLink } from 'react-icons/fi';
+import { FiExternalLink, FiGithub } from 'react-icons/fi';
 import './PortfolioSection.css';
 
 const PROJECTS = [
@@ -7,8 +7,10 @@ const PROJECTS = [
         title: 'Falak Halls & Events',
         category: 'Marriage Hall',
         desc: 'A grand marriage hall and event venue featuring luxury decor, catering services, interactive gallery, and direct booking inquiries.',
-        tags: ['React', 'Marriage Hall', 'WhatsApp'],
+        tags: ['Business Website', 'Booking', 'WhatsApp'],
+        stack: ['React', 'CSS', 'JavaScript'],
         link: 'https://falak-marriage-hall.vercel.app/',
+        github: 'https://github.com/ahmedchoudery/falak-marriage-hall',
         gradient: 'linear-gradient(135deg, #ef4444, #f59e0b)',
         emoji: '🕌',
         image: '/1.jpeg',
@@ -17,7 +19,8 @@ const PROJECTS = [
         title: 'Star Coaching Academy',
         category: 'Coaching Center',
         desc: 'Modern landing page showcasing courses, results & fee structure with lead capture form.',
-        tags: ['Landing Page', 'Forms', 'MongoDB'],
+        tags: ['Landing Page', 'Lead Capture'],
+        stack: ['React', 'CSS', 'JavaScript'],
         gradient: 'linear-gradient(135deg, #6c63ff, #06b6d4)',
         emoji: '📚',
     },
@@ -25,7 +28,8 @@ const PROJECTS = [
         title: 'Premier Real Estate',
         category: 'Real Estate Agent',
         desc: 'Property showcase site with listings, agent profile, photo gallery, and direct WhatsApp contact.',
-        tags: ['React', 'Gallery', 'WhatsApp'],
+        tags: ['Property Listings', 'Gallery', 'WhatsApp'],
+        stack: ['React', 'CSS', 'JavaScript'],
         gradient: 'linear-gradient(135deg, #f59e0b, #10b981)',
         emoji: '🏠',
     },
@@ -34,6 +38,7 @@ const PROJECTS = [
         category: 'Local Business',
         desc: 'Clean static business site with menu, contact form, Google Maps embed, and mobile-first design.',
         tags: ['Static Site', 'Responsive', 'SEO'],
+        stack: ['HTML', 'CSS', 'JavaScript'],
         gradient: 'linear-gradient(135deg, #ec4899, #f59e0b)',
         emoji: '🥐',
     },
@@ -41,7 +46,8 @@ const PROJECTS = [
         title: 'Yoga & Wellness Studio',
         category: 'Health & Wellness',
         desc: 'Calming, premium website with class bookings, instructor bio, testimonials, and newsletter.',
-        tags: ['React', 'Booking', 'Animations'],
+        tags: ['Booking', 'Animations'],
+        stack: ['React', 'CSS', 'JavaScript'],
         gradient: 'linear-gradient(135deg, #10b981, #06b6d4)',
         emoji: '🧘',
     },
@@ -49,13 +55,33 @@ const PROJECTS = [
         title: 'TechTutor Institute',
         category: 'Coaching Center',
         desc: 'Course catalog site with individual course pages, student portal link, and parent contact form.',
-        tags: ['React', 'Multi-page', 'CMS'],
+        tags: ['Multi-page', 'CMS'],
+        stack: ['React', 'CSS', 'JavaScript'],
         gradient: 'linear-gradient(135deg, #6c63ff, #ec4899)',
         emoji: '💻',
     },
 ];
 
+const FILTERS = [
+    { label: 'All', value: 'all' },
+    { label: 'Websites', value: 'websites' },
+    { label: 'Landing Pages', value: 'landing' },
+    { label: 'React Projects', value: 'react' },
+    { label: 'UI Designs', value: 'ui' },
+];
+
 export default function PortfolioSection() {
+    const [filter, setFilter] = useState('all');
+
+    const filteredProjects = PROJECTS.filter((project) => {
+        if (filter === 'all') return true;
+        if (filter === 'websites') return project.category !== 'UI Design';
+        if (filter === 'landing') return project.tags.includes('Landing Page') || project.tags.includes('Landing');
+        if (filter === 'react') return project.stack?.includes('React');
+        if (filter === 'ui') return project.category === 'UI Design';
+        return true;
+    });
+
     return (
         <section id="portfolio" className="section portfolio">
             <div className="container">
@@ -66,7 +92,7 @@ export default function PortfolioSection() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
-                    <span className="section-label">🎨 My Work</span>
+                    <span className="section-label">🎨 Featured Projects</span>
                     <h2 className="section-title">
                         Projects That <span className="gradient-text">Speak Results</span>
                     </h2>
@@ -76,8 +102,21 @@ export default function PortfolioSection() {
                     </p>
                 </motion.div>
 
+                <div className="portfolio__filters">
+                    {FILTERS.map((f) => (
+                        <button
+                            key={f.value}
+                            type="button"
+                            className={`portfolio__filter ${filter === f.value ? 'portfolio__filter--active' : ''}`}
+                            onClick={() => setFilter(f.value)}
+                        >
+                            {f.label}
+                        </button>
+                    ))}
+                </div>
+
                 <div className="portfolio__grid">
-                    {PROJECTS.map((project, i) => (
+                    {filteredProjects.map((project, i) => (
                         <motion.div
                             key={i}
                             className="card portfolio__card"
@@ -118,10 +157,46 @@ export default function PortfolioSection() {
                                     ) : project.title}
                                 </h3>
                                 <p className="portfolio__desc">{project.desc}</p>
-                                <div className="services__tags">
-                                    {project.tags.map((t) => (
-                                        <span key={t} className="services__tag">{t}</span>
-                                    ))}
+
+                                {project.stack && (
+                                    <p className="portfolio__stack">
+                                        Tech stack:{' '}
+                                        <span>
+                                            {project.stack.join(' · ')}
+                                        </span>
+                                    </p>
+                                )}
+
+                                <div className="portfolio__footer">
+                                    <div className="services__tags">
+                                        {project.tags.map((t) => (
+                                            <span key={t} className="services__tag">{t}</span>
+                                        ))}
+                                    </div>
+                                    <div className="portfolio__buttons">
+                                        {project.link && (
+                                            <a
+                                                href={project.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="btn btn-outline portfolio__btn"
+                                            >
+                                                <FiExternalLink size={16} />
+                                                Live Demo
+                                            </a>
+                                        )}
+                                        {project.github && (
+                                            <a
+                                                href={project.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="btn btn-outline portfolio__btn"
+                                            >
+                                                <FiGithub size={16} />
+                                                GitHub
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
