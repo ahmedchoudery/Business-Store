@@ -35,6 +35,7 @@ export default function Navbar() {
             initial = prefersLight ? 'light' : 'dark';
         }
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTheme(initial);
         document.documentElement.setAttribute('data-theme', initial === 'light' ? 'light' : 'dark');
     }, []);

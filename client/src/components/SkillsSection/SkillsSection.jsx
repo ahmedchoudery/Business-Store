@@ -36,7 +36,7 @@ export default function SkillsSection() {
         </motion.div>
 
         <div ref={ref} className="skills__grid">
-          {SKILLS.map((skill, index) => (
+          {SKILLS.map((skill) => (
             <div key={skill.name} className="skills__item">
               <div className="skills__top">
                 <span className="skills__name">{skill.name}</span>
