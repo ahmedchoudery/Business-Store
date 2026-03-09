@@ -66,6 +66,15 @@
     overflow: hidden;
 }
 
+.portfolio__thumbnail--tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.25s ease-out;
+}
+
+.portfolio__card:hover .portfolio__thumbnail--tilt {
+    transform: translateY(-4px) scale(1.02);
+}
+
 .portfolio__emoji {
     font-size: 4rem;
     filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));

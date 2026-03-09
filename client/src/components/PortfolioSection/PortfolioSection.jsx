@@ -133,7 +133,7 @@ export default function PortfolioSection() {
                                 className="portfolio__link-wrapper"
                             >
                                 <div
-                                    className="portfolio__thumbnail"
+                                    className="portfolio__thumbnail portfolio__thumbnail--tilt"
                                     style={{ background: project.gradient }}
                                 >
                                     {project.image ? (

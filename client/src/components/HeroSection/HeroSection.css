@@ -70,6 +70,10 @@
     padding: var(--space-20) 0;
 }
 
+.hero .container {
+    max-width: 1320px;
+}
+
 .hero__layout {
     display: grid;
     grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
@@ -93,6 +97,22 @@
     letter-spacing: -0.02em;
 }
 
+.hero__title--3d {
+    letter-spacing: 0.02em;
+    text-shadow:
+        0 1px 0 rgba(15, 23, 42, 0.95),
+        0 12px 30px rgba(15, 23, 42, 0.9),
+        0 0 40px rgba(99, 102, 241, 0.4);
+}
+
+.hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    transition: transform 0.25s ease-out;
+    will-change: transform;
+}
+
 .hero__subtitle {
     font-size: var(--text-xl);
     color: var(--color-text-muted);
@@ -109,6 +129,36 @@
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
+}
+
+.hero__highlights {
+    margin-top: var(--space-4);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    transition: transform 0.25s ease-out;
+}
+
+.hero__highlight-card {
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8);
+}
+
+.hero__highlight-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: 4px;
+}
+
+.hero__highlight-card p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.6;
 }
 
 .hero__proof {
@@ -155,97 +205,17 @@
     justify-content: center;
 }
 
-.hero__mockup {
+.hero__canvas {
     width: 100%;
-    max-width: 420px;
-    border-radius: 24px;
-    background: radial-gradient(circle at top left, rgba(108, 99, 255, 0.35), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.3), transparent 55%),
-        var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-card), var(--shadow-glow);
+    max-width: 460px;
+    aspect-ratio: 4 / 3;
+    border-radius: 32px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
     overflow: hidden;
-    backdrop-filter: blur(18px);
-}
-
-.hero__mockup-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 16px;
-    background: linear-gradient(90deg, rgba(15, 23, 42, 0.9), rgba(30, 64, 175, 0.8));
-}
-
-.hero__mockup-dots {
-    display: flex;
-    gap: 6px;
-}
-
-.hero__mockup-dots span {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: rgba(148, 163, 184, 0.8);
-}
-
-.hero__mockup-url {
-    font-size: var(--text-xs);
-    color: rgba(226, 232, 240, 0.9);
-}
-
-.hero__mockup-body {
-    padding: 20px 20px 22px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-}
-
-.hero__mockup-hero h3 {
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    color: #f9fafb;
-    margin-bottom: 6px;
-}
-
-.hero__mockup-hero p {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    line-height: 1.6;
-}
-
-.hero__mockup-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: rgba(15, 23, 42, 0.7);
-    border: 1px solid rgba(248, 250, 252, 0.2);
-    font-size: var(--text-xs);
-    color: #facc15;
-    margin-bottom: 10px;
-}
-
-.hero__mockup-metrics {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-4);
-}
-
-.hero__mockup-metrics > div {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.hero__mockup-metric-value {
-    font-weight: 700;
-    color: #f9fafb;
-}
-
-.hero__mockup-metric-label {
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+    background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.4), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.35), transparent 60%),
+        #020617;
 }
 
 @keyframes blobFloat {
@@ -291,16 +261,16 @@
 
     .hero__proof {
         gap: var(--space-4);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
 
     .hero__proof-divider {
         display: none;
     }
 
-    .hero__proof {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-4);
+    .hero__highlights {
+        grid-template-columns: 1fr;
     }
 }
 

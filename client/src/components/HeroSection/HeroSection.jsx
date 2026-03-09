@@ -1,12 +1,9 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiArrowRight } from 'react-icons/fi';
 import { scrollToSection } from '../../utils/scrollTo'; // shared utility with navbar offset
+import Hero3DCanvas from './Hero3DCanvas';
 import './HeroSection.css';
-
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043';
-const WHATSAPP_MSG = encodeURIComponent(
-    "Hi Ahmed! I saw your website and I'm interested in getting a website built for my business. Can we discuss?"
-);
 
 const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -18,6 +15,18 @@ const fadeUp = {
 };
 
 export default function HeroSection() {
+    const [parallax, setParallax] = useState({ x: 0, y: 0 });
+
+    const handleParallaxMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        setParallax({
+            x: x * 12,
+            y: y * 6,
+        });
+    };
+
     return (
         <section id="hero" className="hero">
             {/* Animated background blobs */}
@@ -25,70 +34,84 @@ export default function HeroSection() {
             <div className="hero__blob hero__blob--2" aria-hidden="true" />
             <div className="hero__grid" aria-hidden="true" />
 
-            <div className="container hero__inner">
+            <div
+                className="container hero__inner"
+                onMouseMove={handleParallaxMove}
+            >
                 <div className="hero__layout">
                     <div className="hero__left">
-                        <motion.span
-                            className="section-label"
+                        <motion.div
+                            className="hero__text"
+                            style={{
+                                transform: `translate3d(${parallax.x * 0.6}px, ${parallax.y * 0.6}px, 0)`,
+                            }}
                             variants={fadeUp}
                             initial="hidden"
                             animate="visible"
                             custom={0}
                         >
-                            🚀 Open for Projects
-                        </motion.span>
+                            <span className="section-label">
+                                🚀 Open for Projects
+                            </span>
 
-                        <motion.h1
-                            className="hero__title"
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate="visible"
-                            custom={1}
-                        >
-                            I Build <span className="gradient-text">High-Converting</span>
-                            <br />
-                            Websites for
-                            <br />
-                            Local Businesses
-                        </motion.h1>
+                            <h1 className="hero__title hero__title--3d">
+                                I Build <span className="gradient-text">High-Converting</span>
+                                <br />
+                                Websites for
+                                <br />
+                                Local Businesses
+                            </h1>
 
-                        <motion.p
-                            className="hero__subtitle"
-                            variants={fadeUp}
-                            initial="hidden"
-                            animate="visible"
-                            custom={2}
-                        >
-                            Fast, modern, mobile-first websites that help businesses attract more customers.
-                        </motion.p>
+                            <p className="hero__subtitle">
+                                Fast, modern, mobile-first websites that help businesses attract more customers.
+                            </p>
+
+                            <div className="hero__ctas">
+                                <a
+                                    href="#portfolio"
+                                    className="btn btn-primary btn-lg"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        scrollToSection('#portfolio');
+                                    }}
+                                >
+                                    View My Work <FiArrowRight />
+                                </a>
+                                <a
+                                    href="#contact"
+                                    className="btn btn-outline btn-lg"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        scrollToSection('#contact');
+                                    }}
+                                >
+                                    Get a Free Quote
+                                </a>
+                            </div>
+                        </motion.div>
 
                         <motion.div
-                            className="hero__ctas"
+                            className="hero__highlights"
+                            style={{
+                                transform: `translate3d(${parallax.x}px, ${parallax.y}px, 0)`,
+                            }}
                             variants={fadeUp}
                             initial="hidden"
                             animate="visible"
-                            custom={3}
+                            custom={3.5}
                         >
-                            <a
-                                href="#portfolio"
-                                className="btn btn-primary btn-lg"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    scrollToSection('#portfolio');
-                                }}
-                            >
-                                View My Work <FiArrowRight />
-                            </a>
-                            <a
-                                href="#contact"
-                                className="btn btn-outline btn-lg"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    scrollToSection('#contact');
-                                }}
-                            >
-                                Get a Free Quote
-                            </a>
+                            <div className="hero__highlight-card">
+                                <span className="hero__highlight-label">Conversion-focused layouts</span>
+                                <p>Designed to turn visitors into leads for local businesses.</p>
+                            </div>
+                            <div className="hero__highlight-card">
+                                <span className="hero__highlight-label">Done-for-you websites</span>
+                                <p>From copy to deployment, I handle the full launch for you.</p>
+                            </div>
+                            <div className="hero__highlight-card">
+                                <span className="hero__highlight-label">Fast & mobile-first</span>
+                                <p>Optimized for speed, SEO, and WhatsApp inquiries.</p>
+                            </div>
                         </motion.div>
 
                         {/* Social proof bar */}
@@ -128,33 +151,7 @@ export default function HeroSection() {
                         animate="visible"
                         custom={4.5}
                     >
-                        <div className="hero__mockup">
-                            <div className="hero__mockup-header">
-                                <div className="hero__mockup-dots">
-                                    <span />
-                                    <span />
-                                    <span />
-                                </div>
-                                <span className="hero__mockup-url">ahmeddev.studio</span>
-                            </div>
-                            <div className="hero__mockup-body">
-                                <div className="hero__mockup-hero">
-                                    <span className="hero__mockup-badge">Featured Project</span>
-                                    <h3>Falak Halls &amp; Events</h3>
-                                    <p>High-converting website for a luxury events and marriage hall business.</p>
-                                </div>
-                                <div className="hero__mockup-metrics">
-                                    <div>
-                                        <span className="hero__mockup-metric-value">+45%</span>
-                                        <span className="hero__mockup-metric-label">More inquiries</span>
-                                    </div>
-                                    <div>
-                                        <span className="hero__mockup-metric-value">1.2s</span>
-                                        <span className="hero__mockup-metric-label">Page load</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Hero3DCanvas />
                     </motion.div>
                 </div>
             </div>

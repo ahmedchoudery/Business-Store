@@ -1,0 +1,45 @@
+.cta {
+  background: radial-gradient(circle at top, rgba(129, 140, 248, 0.24), transparent 60%),
+    linear-gradient(145deg, #020617, #020617 40%, #111827 100%);
+}
+
+.cta__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+
+.cta__content {
+  max-width: 520px;
+}
+
+.cta__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--color-white);
+}
+
+.cta__subtitle {
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+}
+
+.cta__button {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .cta__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cta__button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
