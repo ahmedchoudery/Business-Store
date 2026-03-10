@@ -1,209 +1,226 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FiExternalLink, FiGithub } from 'react-icons/fi';
-import './PortfolioSection.css';
-
-const PROJECTS = [
+const projects = [
     {
+        id: 1,
         title: 'Falak Halls & Events',
-        category: 'Marriage Hall',
-        desc: 'A grand marriage hall and event venue featuring luxury decor, catering services, interactive gallery, and direct booking inquiries.',
-        tags: ['Business Website', 'Booking', 'WhatsApp'],
-        stack: ['React', 'CSS', 'JavaScript'],
-        link: 'https://falak-marriage-hall.vercel.app/',
-        github: 'https://github.com/ahmedchoudery/falak-marriage-hall',
-        gradient: 'linear-gradient(135deg, #ef4444, #f59e0b)',
-        emoji: '🕌',
-        image: '/1.jpeg',
+        category: 'Wedding Hall',
+        desc: 'A stunning venue showcase website with gallery, booking inquiries, and WhatsApp integration for Pakistan\'s premier wedding hall.',
+        tags: ['React', 'SEO', 'WhatsApp CTA', 'Gallery'],
+        url: 'https://falak-marriage-hall.vercel.app/',
+        featured: true,
+        stats: [{ label: 'Booking Inquiries', value: '+65%' }, { label: 'Page Speed', value: '96/100' }],
+        color: '#FF4D6D',
     },
     {
-        title: 'Star Coaching Academy',
-        category: 'Coaching Center',
-        desc: 'Modern landing page showcasing courses, results & fee structure with lead capture form.',
-        tags: ['Landing Page', 'Lead Capture'],
-        stack: ['React', 'CSS', 'JavaScript'],
-        gradient: 'linear-gradient(135deg, #6c63ff, #06b6d4)',
-        emoji: '📚',
+        id: 2,
+        title: 'Spice Route Restaurant',
+        category: 'Food & Dining',
+        desc: 'Online menu, table reservations, and Google Maps integration for a family restaurant in Lahore.',
+        tags: ['Next.js', 'SEO', 'Maps API'],
+        url: '#portfolio',
+        featured: false,
+        color: '#FFB800',
     },
     {
-        title: 'Premier Real Estate',
-        category: 'Real Estate Agent',
-        desc: 'Property showcase site with listings, agent profile, photo gallery, and direct WhatsApp contact.',
-        tags: ['Property Listings', 'Gallery', 'WhatsApp'],
-        stack: ['React', 'CSS', 'JavaScript'],
-        gradient: 'linear-gradient(135deg, #f59e0b, #10b981)',
-        emoji: '🏠',
+        id: 3,
+        title: 'Noor Boutique',
+        category: 'Fashion & Retail',
+        desc: 'E-commerce store for a ladies clothing brand with product catalog, size guide, and WhatsApp order system.',
+        tags: ['E-Commerce', 'Product Catalog', 'Mobile'],
+        url: '#portfolio',
+        featured: false,
+        color: '#A78BFA',
     },
     {
-        title: 'City Bakery Shop',
-        category: 'Local Business',
-        desc: 'Clean static business site with menu, contact form, Google Maps embed, and mobile-first design.',
-        tags: ['Static Site', 'Responsive', 'SEO'],
-        stack: ['HTML', 'CSS', 'JavaScript'],
-        gradient: 'linear-gradient(135deg, #ec4899, #f59e0b)',
-        emoji: '🥐',
+        id: 4,
+        title: 'CityMed Clinic',
+        category: 'Healthcare',
+        desc: 'Patient appointment booking system with doctor profiles, services listing, and location map.',
+        tags: ['Booking System', 'Responsive', 'SEO'],
+        url: '#portfolio',
+        featured: false,
+        color: '#00FFA3',
     },
-    {
-        title: 'Yoga & Wellness Studio',
-        category: 'Health & Wellness',
-        desc: 'Calming, premium website with class bookings, instructor bio, testimonials, and newsletter.',
-        tags: ['Booking', 'Animations'],
-        stack: ['React', 'CSS', 'JavaScript'],
-        gradient: 'linear-gradient(135deg, #10b981, #06b6d4)',
-        emoji: '🧘',
-    },
-    {
-        title: 'TechTutor Institute',
-        category: 'Coaching Center',
-        desc: 'Course catalog site with individual course pages, student portal link, and parent contact form.',
-        tags: ['Multi-page', 'CMS'],
-        stack: ['React', 'CSS', 'JavaScript'],
-        gradient: 'linear-gradient(135deg, #6c63ff, #ec4899)',
-        emoji: '💻',
-    },
-];
+]
 
-const FILTERS = [
-    { label: 'All', value: 'all' },
-    { label: 'Websites', value: 'websites' },
-    { label: 'Landing Pages', value: 'landing' },
-    { label: 'React Projects', value: 'react' },
-    { label: 'UI Designs', value: 'ui' },
-];
-
-export default function PortfolioSection() {
-    const [filter, setFilter] = useState('all');
-
-    const filteredProjects = PROJECTS.filter((project) => {
-        if (filter === 'all') return true;
-        if (filter === 'websites') return project.category !== 'UI Design';
-        if (filter === 'landing') return project.tags.includes('Landing Page') || project.tags.includes('Landing');
-        if (filter === 'react') return project.stack?.includes('React');
-        if (filter === 'ui') return project.category === 'UI Design';
-        return true;
-    });
+export default function Portfolio() {
+    const featured = projects.find(p => p.featured)
+    const grid = projects.filter(p => !p.featured)
 
     return (
-        <section id="portfolio" className="section portfolio">
+        <section id="portfolio">
             <div className="container">
-                <motion.div
-                    className="portfolio__header"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <span className="section-label">🎨 Featured Projects</span>
+                {/* Header */}
+                <div style={{ marginBottom: '60px' }}>
+                    <div className="section-label">My Work</div>
                     <h2 className="section-title">
-                        Projects That <span className="gradient-text">Speak Results</span>
+                        Real Results for<br />
+                        <span className="text-accent">Real Businesses</span>
                     </h2>
                     <p className="section-subtitle">
-                        A selection of websites built for local businesses — each one designed to convert
-                        visitors into real customers.
+                        Every project is built with purpose — to help Pakistani businesses attract
+                        more customers and grow their revenue online.
                     </p>
-                </motion.div>
+                </div>
 
-                <div className="portfolio__filters">
-                    {FILTERS.map((f) => (
-                        <button
-                            key={f.value}
-                            type="button"
-                            className={`portfolio__filter ${filter === f.value ? 'portfolio__filter--active' : ''}`}
-                            onClick={() => setFilter(f.value)}
-                        >
-                            {f.label}
-                        </button>
+                {/* Featured Project */}
+                <div style={{
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius-lg)',
+                    overflow: 'hidden',
+                    marginBottom: '24px',
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    minHeight: '380px',
+                }} className="featured-project">
+                    {/* Visual */}
+                    <div style={{
+                        background: `linear-gradient(135deg, #1a0010, #0d0022)`,
+                        position: 'relative',
+                        overflow: 'hidden',
+                        minHeight: '280px',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                        {/* Browser mockup */}
+                        <div style={{
+                            width: '85%', background: '#0C0C20',
+                            borderRadius: '10px', overflow: 'hidden',
+                            boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                        }}>
+                            <div style={{
+                                padding: '10px 14px',
+                                background: '#141430',
+                                display: 'flex', alignItems: 'center', gap: '6px',
+                                borderBottom: '1px solid rgba(255,255,255,0.06)',
+                            }}>
+                                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#FF5F57' }} />
+                                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#FFBD2E' }} />
+                                <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#28CA41' }} />
+                                <div style={{
+                                    flex: 1, background: '#0C0C1A', borderRadius: '4px',
+                                    padding: '3px 10px', fontSize: '0.65rem', color: 'var(--text-muted)',
+                                    marginLeft: '8px',
+                                }}>falak-marriage-hall.vercel.app</div>
+                            </div>
+                            <div style={{
+                                height: '160px',
+                                background: 'linear-gradient(160deg, #1a0016 0%, #0a0030 100%)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                flexDirection: 'column', gap: '10px',
+                            }}>
+                                <div style={{ fontSize: '2rem' }}>💍</div>
+                                <div style={{ fontFamily: 'var(--font-head)', fontSize: '1rem', fontWeight: '700', color: '#FF4D6D', letterSpacing: '0.05em' }}>FALAK HALLS & EVENTS</div>
+                                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Premium Wedding Venue · Gujrat, Pakistan</div>
+                            </div>
+                        </div>
+                        {/* Glow */}
+                        <div style={{
+                            position: 'absolute', inset: 0,
+                            background: 'radial-gradient(circle at 50% 50%, rgba(255,77,109,0.1) 0%, transparent 70%)',
+                            pointerEvents: 'none',
+                        }} />
+                    </div>
+
+                    {/* Content */}
+                    <div style={{ padding: '44px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+                            <span style={{
+                                fontSize: '0.72rem', fontWeight: '700', letterSpacing: '0.1em',
+                                background: 'rgba(255,77,109,0.15)', color: '#FF4D6D',
+                                border: '1px solid rgba(255,77,109,0.25)',
+                                padding: '4px 10px', borderRadius: '4px',
+                            }}>FEATURED PROJECT</span>
+                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{featured.category}</span>
+                        </div>
+
+                        <h3 style={{ fontFamily: 'var(--font-head)', fontSize: '1.9rem', fontWeight: '800', marginBottom: '14px' }}>
+                            {featured.title}
+                        </h3>
+
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.7', marginBottom: '24px' }}>
+                            {featured.desc}
+                        </p>
+
+                        {/* Stats */}
+                        <div style={{ display: 'flex', gap: '24px', marginBottom: '28px' }}>
+                            {featured.stats.map(s => (
+                                <div key={s.label}>
+                                    <div style={{ fontFamily: 'var(--font-head)', fontSize: '1.5rem', fontWeight: '800', color: '#FF4D6D' }}>{s.value}</div>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{s.label}</div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Tags */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '28px' }}>
+                            {featured.tags.map(t => (
+                                <span key={t} style={{
+                                    fontSize: '0.75rem', padding: '4px 10px',
+                                    background: 'rgba(0,229,255,0.08)', color: 'var(--accent)',
+                                    border: '1px solid var(--border)', borderRadius: '4px',
+                                }}>{t}</span>
+                            ))}
+                        </div>
+
+                        <a href={featured.url} target="_blank" rel="noopener noreferrer"
+                            className="btn btn-ghost" style={{ width: 'fit-content' }}>
+                            View Live Site ↗
+                        </a>
+                    </div>
+                </div>
+
+                {/* Project Grid */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px', marginBottom: '48px' }}>
+                    {grid.map(p => (
+                        <div key={p.id} className="card" style={{ padding: '28px', position: 'relative', overflow: 'hidden' }}>
+                            <div style={{
+                                position: 'absolute', top: 0, left: 0, right: 0, height: '3px',
+                                background: `linear-gradient(to right, ${p.color}, transparent)`,
+                            }} />
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+                                <span style={{
+                                    fontSize: '0.7rem', fontWeight: '600', letterSpacing: '0.08em',
+                                    color: p.color, background: `${p.color}15`,
+                                    border: `1px solid ${p.color}25`, padding: '3px 8px', borderRadius: '4px',
+                                }}>{p.category}</span>
+                            </div>
+                            <h3 style={{ fontFamily: 'var(--font-head)', fontSize: '1.1rem', fontWeight: '700', marginBottom: '8px' }}>{p.title}</h3>
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: '1.6', marginBottom: '18px' }}>{p.desc}</p>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
+                                {p.tags.map(t => (
+                                    <span key={t} style={{
+                                        fontSize: '0.7rem', padding: '3px 8px',
+                                        background: 'rgba(255,255,255,0.04)', color: 'var(--text-muted)',
+                                        border: '1px solid var(--border-subtle)', borderRadius: '4px',
+                                    }}>{t}</span>
+                                ))}
+                            </div>
+                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>Coming Soon</span>
+                        </div>
                     ))}
                 </div>
 
-                <div className="portfolio__grid">
-                    {filteredProjects.map((project, i) => (
-                        <motion.div
-                            key={i}
-                            className="card portfolio__card"
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                        >
-                            <a
-                                href={project.link || '#'}
-                                target={project.link ? "_blank" : "_self"}
-                                rel="noopener noreferrer"
-                                className="portfolio__link-wrapper"
-                            >
-                                <div
-                                    className="portfolio__thumbnail portfolio__thumbnail--tilt"
-                                    style={{ background: project.gradient }}
-                                >
-                                    {project.image ? (
-                                        <img src={project.image} alt={project.title} className="portfolio__image" />
-                                    ) : (
-                                        <span className="portfolio__emoji">{project.emoji}</span>
-                                    )}
-                                    <div className="portfolio__overlay">
-                                        <span className="portfolio__view">
-                                            <FiExternalLink /> View Project
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div className="portfolio__body">
-                                <span className="portfolio__category">{project.category}</span>
-                                <h3 className="portfolio__title">
-                                    {project.link ? (
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                            {project.title}
-                                        </a>
-                                    ) : project.title}
-                                </h3>
-                                <p className="portfolio__desc">{project.desc}</p>
-
-                                {project.stack && (
-                                    <p className="portfolio__stack">
-                                        Tech stack:{' '}
-                                        <span>
-                                            {project.stack.join(' · ')}
-                                        </span>
-                                    </p>
-                                )}
-
-                                <div className="portfolio__footer">
-                                    <div className="services__tags">
-                                        {project.tags.map((t) => (
-                                            <span key={t} className="services__tag">{t}</span>
-                                        ))}
-                                    </div>
-                                    <div className="portfolio__buttons">
-                                        {project.link && (
-                                            <a
-                                                href={project.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="btn btn-outline portfolio__btn"
-                                            >
-                                                <FiExternalLink size={16} />
-                                                Live Demo
-                                            </a>
-                                        )}
-                                        {project.github && (
-                                            <a
-                                                href={project.github}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="btn btn-outline portfolio__btn"
-                                            >
-                                                <FiGithub size={16} />
-                                                GitHub
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                {/* CTA */}
+                <div style={{ textAlign: 'center' }}>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: '16px', fontSize: '0.95rem' }}>
+                        Want to be my next featured project?
+                    </p>
+                    <a href="https://wa.me/923001234567?text=Hi%20Ahmed%2C%20I%27d%20like%20a%20website%20for%20my%20business"
+                        target="_blank" rel="noopener noreferrer"
+                        className="btn btn-primary">
+                        Start Your Project →
+                    </a>
                 </div>
             </div>
+
+            <style>{`
+        @media (max-width: 768px) {
+          .featured-project {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
         </section>
-    );
+    )
 }

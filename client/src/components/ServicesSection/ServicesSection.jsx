@@ -1,126 +1,156 @@
-import { motion } from 'framer-motion';
-import { useRef } from 'react';
-import {
-    FiLayout,
-    FiSmartphone,
-    FiZap,
-    FiCode,
-    FiCheckCircle,
-    FiShoppingBag,
-} from 'react-icons/fi';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
-import './ServicesSection.css';
-
-const SERVICES = [
+const services = [
     {
-        icon: <FiShoppingBag size={28} />,
-        title: 'Business Website Development',
-        desc: 'Full websites tailored for local businesses with clear service pages, contact options, and calls-to-action that convert visitors into leads.',
-        tags: ['Multi-page', 'Lead-Focused', 'WhatsApp'],
-        color: '#10b981',
+        icon: '🖥️',
+        title: 'Business Website',
+        desc: 'A professional website that builds trust with your customers and keeps your business open 24/7 online.',
+        tags: ['5–8 Pages', 'Mobile-First', 'Contact Form'],
+        color: '#00E5FF',
     },
     {
-        icon: <FiSmartphone size={28} />,
-        title: 'Landing Page Design',
-        desc: 'Single-page, high-converting landing pages built for campaigns, product launches, and special offers.',
-        tags: ['Conversion Focused', 'Modern UI', 'Copy Guidance'],
-        color: 'var(--color-primary)',
+        icon: '🛒',
+        title: 'E-Commerce Store',
+        desc: 'Sell your products online with a secure, easy-to-manage store. Accept payments and track orders.',
+        tags: ['Product Catalog', 'Cart & Checkout', 'Inventory'],
+        color: '#FF4D6D',
     },
     {
-        icon: <FiLayout size={28} />,
-        title: 'Website Redesign',
-        desc: 'Transform outdated or underperforming sites into fast, modern experiences without losing your existing content or SEO.',
-        tags: ['Modernization', 'UX Upgrade', 'Brand Refresh'],
-        color: '#f59e0b',
+        icon: '🚀',
+        title: 'Landing Page',
+        desc: 'High-converting single-page sites built for ads, campaigns, and lead generation. More clicks = more sales.',
+        tags: ['1-Page Design', 'CTA Focused', 'Fast Load'],
+        color: '#00FFA3',
     },
     {
-        icon: <FiCode size={28} />,
-        title: 'Website Performance Optimization',
-        desc: 'Speed audits and optimizations so your site loads quickly, ranks better in search, and feels snappy on mobile data.',
-        tags: ['Core Web Vitals', 'Lazy Loading', 'Code Cleanup'],
-        color: '#06b6d4',
+        icon: '🔍',
+        title: 'SEO Optimization',
+        desc: 'Rank higher on Google Pakistan. Get found by local customers when they search for your services.',
+        tags: ['Keyword Research', 'On-Page SEO', 'Google Analytics'],
+        color: '#FFB800',
     },
-];
+    {
+        icon: '📱',
+        title: 'Mobile-First Design',
+        desc: 'Over 80% of Pakistani internet users browse on mobile. Your site will look perfect on every screen size.',
+        tags: ['Responsive', 'Touch-Friendly', 'Fast on 4G'],
+        color: '#A78BFA',
+    },
+    {
+        icon: '🔧',
+        title: 'Website Maintenance',
+        desc: 'Keep your site updated, secure, and fast. Monthly care plans so you never worry about your website again.',
+        tags: ['Monthly Updates', 'Security Scans', 'Backups'],
+        color: '#F97316',
+    },
+]
 
-const containerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.1 } },
-};
-
-const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-};
-
-export default function ServicesSection() {
-    const ref = useRef(null);
-    const { visible } = useScrollReveal({ threshold: 0.3 });
-
+export default function Services() {
     return (
-        <section id="services" className="section services">
+        <section id="services" style={{ background: 'var(--bg-secondary)' }}>
             <div className="container">
-                <div className="services__header">
-                    <motion.span
-                        className="section-label"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        💼 What I Offer
-                    </motion.span>
-                    <motion.h2
-                        className="section-title"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                    >
-                        Services That <span className="gradient-text">Grow Your Business</span>
-                    </motion.h2>
-                    <motion.p
-                        className="section-subtitle"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                    >
-                        Every service is tailored for local businesses who want to look professional online
-                        and start converting visitors into paying customers.
-                    </motion.p>
+                {/* Header */}
+                <div style={{ marginBottom: '60px' }}>
+                    <div className="section-label">What I Offer</div>
+                    <h2 className="section-title">
+                        Services Built for<br />
+                        <span className="text-accent">Pakistani Businesses</span>
+                    </h2>
+                    <p className="section-subtitle">
+                        Everything your business needs to thrive online — from a simple website
+                        to a full e-commerce store with SEO built in from day one.
+                    </p>
                 </div>
 
-                <motion.div
-                    ref={ref}
-                    className="services__grid"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate={visible ? 'visible' : 'hidden'}
-                >
-                    {SERVICES.map((service, i) => (
-                        <motion.div key={i} className="card services__card" variants={cardVariants}>
-                            <div
-                                className="services__icon"
-                                style={{
-                                    color: service.color,
-                                    background: `${service.color}18`,
-                                }}
-                            >
-                                {service.icon}
-                            </div>
-                            <h3 className="services__title">{service.title}</h3>
-                            <p className="services__desc">{service.desc}</p>
-                            <div className="services__tags">
-                                {service.tags.map((tag) => (
-                                    <span key={tag} className="services__tag">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        </motion.div>
+                {/* Services Grid */}
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                    gap: '20px',
+                }}>
+                    {services.map((s, i) => (
+                        <ServiceCard key={s.title} service={s} delay={i * 0.05} />
                     ))}
-                </motion.div>
+                </div>
+
+                {/* Bottom CTA */}
+                <div style={{
+                    marginTop: '56px',
+                    padding: '40px',
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius-lg)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '24px',
+                    flexWrap: 'wrap',
+                }}>
+                    <div>
+                        <h3 style={{ fontFamily: 'var(--font-head)', fontSize: '1.4rem', marginBottom: '6px' }}>
+                            Not sure what you need?
+                        </h3>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                            Tell me about your business and I'll recommend the right solution.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/923001234567?text=Hi%20Ahmed%2C%20I%20need%20help%20choosing%20a%20service"
+                        target="_blank" rel="noopener noreferrer"
+                        className="btn btn-primary">
+                        Get a Free Consultation →
+                    </a>
+                </div>
             </div>
         </section>
-    );
+    )
+}
+
+function ServiceCard({ service: s }) {
+    return (
+        <div className="card" style={{ padding: '32px', position: 'relative', overflow: 'hidden' }}>
+            {/* Glow spot */}
+            <div style={{
+                position: 'absolute', top: '-20px', right: '-20px',
+                width: '100px', height: '100px',
+                background: `radial-gradient(circle, ${s.color}20 0%, transparent 70%)`,
+                pointerEvents: 'none',
+                transition: 'var(--transition)',
+            }} />
+
+            {/* Icon */}
+            <div style={{
+                fontSize: '2.2rem',
+                width: '56px', height: '56px',
+                background: `${s.color}15`,
+                border: `1px solid ${s.color}30`,
+                borderRadius: '12px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                marginBottom: '20px',
+            }}>{s.icon}</div>
+
+            <h3 style={{
+                fontFamily: 'var(--font-head)',
+                fontSize: '1.15rem', fontWeight: '700',
+                marginBottom: '10px', color: 'var(--text-primary)',
+            }}>{s.title}</h3>
+
+            <p style={{
+                color: 'var(--text-secondary)',
+                fontSize: '0.9rem', lineHeight: '1.65',
+                marginBottom: '20px',
+            }}>{s.desc}</p>
+
+            {/* Tags */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {s.tags.map(tag => (
+                    <span key={tag} style={{
+                        fontSize: '0.72rem', fontWeight: '600',
+                        padding: '4px 10px', borderRadius: '4px',
+                        background: `${s.color}12`,
+                        color: s.color,
+                        border: `1px solid ${s.color}25`,
+                        letterSpacing: '0.04em',
+                    }}>{tag}</span>
+                ))}
+            </div>
+        </div>
+    )
 }

@@ -1,249 +1,214 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { motion } from 'framer-motion';
-import toast from 'react-hot-toast';
-import { FiSend, FiUser, FiMail, FiPhone, FiMessageSquare } from 'react-icons/fi';
-import { BsWhatsapp } from 'react-icons/bs';
-import api from '../../api/axios';
-import './ContactSection.css';
+import { useState } from 'react'
 
-const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043';
+const contactMethods = [
+    { icon: '💬', label: 'WhatsApp', value: '+92 300 1234567', sub: 'Fastest response', color: '#25D366', href: 'https://wa.me/923001234567' },
+    { icon: '📧', label: 'Email', value: 'ahmedchoudery30@gmail.com', sub: 'Within 24 hours', color: '#00E5FF', href: 'mailto:ahmedchoudery30@gmail.com' },
+    { icon: '💻', label: 'GitHub', value: 'github.com/ahmedchoudery', sub: 'View my code', color: '#A78BFA', href: 'https://github.com/ahmedchoudery' },
+]
 
-const SERVICES = [
-    { value: '', label: 'Select a project type...' },
-    { value: 'business-website', label: '🏢 Business Website Development' },
-    { value: 'landing-page', label: '🚀 Landing Page Design' },
-    { value: 'website-redesign', label: '♻️ Website Redesign' },
-    { value: 'performance-optimization', label: '⚡ Website Performance Optimization' },
-    { value: 'other', label: '💬 Other / Discuss' },
-];
+export default function Contact() {
+    const [form, setForm] = useState({ name: '', phone: '', business: '', message: '', budget: '' })
+    const [submitted, setSubmitted] = useState(false)
 
-export default function ContactSection() {
-    const [loading, setLoading] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
+    const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm({ mode: 'onBlur' });
-
-    const onSubmit = async (data) => {
-        setLoading(true);
-        try {
-            // FIX: removed leading slash. Axios with baseURL '/api' resolves 
-            // 'contact' to '/api/contact', but resolves '/contact' to just '/contact'.
-            await api.post('contact', data);
-            setSubmitted(true);
-            reset();
-            toast.success("Message sent! I'll get back to you within 24 hours. 🎉");
-        } catch (err) {
-            const msg = err.userMessage || 'Failed to send message. Please try WhatsApp instead.';
-            toast.error(msg);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const handleWhatsApp = (e) => {
+        e.preventDefault()
+        if (!form.name || !form.message) return
+        const msg = encodeURIComponent(
+            `Hi Ahmed! I'm ${form.name}${form.business ? ` from ${form.business}` : ''}.\n\n${form.message}${form.budget ? `\n\nBudget: PKR ${form.budget}` : ''}${form.phone ? `\n\nMy number: ${form.phone}` : ''}`
+        )
+        window.open(`https://wa.me/923001234567?text=${msg}`, '_blank')
+        setSubmitted(true)
+    }
 
     return (
-        <section id="contact" className="section contact">
-            <div className="contact__bg-blob" aria-hidden="true" />
+        <section id="contact" style={{ background: 'var(--bg-secondary)' }}>
             <div className="container">
-                <div className="contact__layout">
-                    {/* Left info panel */}
-                    <motion.div
-                        className="contact__info"
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <span className="section-label">📬 Get In Touch</span>
-                        <h2 className="section-title">
-                            Let's Build <span className="gradient-text">Something Great</span>
-                        </h2>
-                        <p className="section-subtitle" style={{ marginBottom: '2rem' }}>
-                            Ready to take your business online? Fill the form and I'll respond within 24
-                            hours. Or just ping me on WhatsApp — I'm usually online!
-                        </p>
+                {/* Header */}
+                <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                    <div className="section-label" style={{ justifyContent: 'center' }}>Get In Touch</div>
+                    <h2 className="section-title" style={{ textAlign: 'center' }}>
+                        Ready to Grow<br />
+                        <span className="text-accent">Your Business Online?</span>
+                    </h2>
+                    <p className="section-subtitle" style={{ margin: '0 auto' }}>
+                        Fill out the form below and your message will open directly in WhatsApp.
+                        I typically respond within 2 hours.
+                    </p>
+                </div>
 
-                        <a
-                            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                                "Hi Ahmed! I want to discuss a website project."
-                            )}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-whatsapp btn-lg contact__whatsapp"
-                        >
-                            <BsWhatsapp size={22} /> Chat on WhatsApp Now
-                        </a>
-
-                        <div className="contact__details">
-                            <div className="contact__detail">
-                                <FiMail size={18} /> <span>ahmedchoudery30@gmail.com</span>
-                            </div>
-                            <div className="contact__detail">
-                                <BsWhatsapp size={18} /> <span>+92 317 4307043</span>
-                            </div>
-                            <div className="contact__detail">
-                                <span>⌚</span> <span>Response within 24 hours</span>
-                            </div>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1.6fr',
+                    gap: '40px',
+                    alignItems: 'start',
+                }} className="contact-grid">
+                    {/* Left: Contact methods */}
+                    <div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '32px' }}>
+                            {contactMethods.map(c => (
+                                <a key={c.label} href={c.href} target="_blank" rel="noopener noreferrer"
+                                    style={{ textDecoration: 'none' }}
+                                    onMouseEnter={e => e.currentTarget.firstChild.style.borderColor = c.color}
+                                    onMouseLeave={e => e.currentTarget.firstChild.style.borderColor = 'var(--border-subtle)'}>
+                                    <div style={{
+                                        display: 'flex', alignItems: 'center', gap: '14px',
+                                        background: 'var(--bg-card)', border: '1px solid var(--border-subtle)',
+                                        borderRadius: 'var(--radius)', padding: '18px 20px',
+                                        transition: 'var(--transition)',
+                                    }}>
+                                        <div style={{
+                                            width: '44px', height: '44px', borderRadius: '10px',
+                                            background: `${c.color}15`, border: `1px solid ${c.color}25`,
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            fontSize: '1.2rem', flexShrink: 0,
+                                        }}>{c.icon}</div>
+                                        <div>
+                                            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '2px' }}>{c.label}</div>
+                                            <div style={{ fontWeight: '600', fontSize: '0.9rem', color: 'var(--text-primary)' }}>{c.value}</div>
+                                            <div style={{ fontSize: '0.75rem', color: c.color }}>{c.sub}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            ))}
                         </div>
-                    </motion.div>
 
-                    {/* Right form */}
-                    <motion.div
-                        className="card contact__form-card"
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                    >
-                        {submitted ? (
-                            <div className="contact__success">
-                                <div className="contact__success-icon">✅</div>
-                                <h3>Message Sent!</h3>
-                                <p>Thank you! I'll get back to you within 24 hours.</p>
-                                <button
-                                    className="btn btn-outline"
-                                    onClick={() => setSubmitted(false)}
-                                    style={{ marginTop: '1rem' }}
-                                >
-                                    Send Another Message
-                                </button>
+                        {/* Process */}
+                        <div style={{
+                            background: 'var(--bg-card)', border: '1px solid var(--border-subtle)',
+                            borderRadius: 'var(--radius)', padding: '24px',
+                        }}>
+                            <h4 style={{ fontFamily: 'var(--font-head)', fontWeight: '700', marginBottom: '16px', fontSize: '0.95rem' }}>
+                                How It Works
+                            </h4>
+                            {[
+                                { n: '01', title: 'You reach out', desc: 'Tell me about your business and goals' },
+                                { n: '02', title: 'Free consultation', desc: 'We discuss requirements and pricing' },
+                                { n: '03', title: 'Build & deliver', desc: 'I build your site and hand it over' },
+                            ].map(step => (
+                                <div key={step.n} style={{ display: 'flex', gap: '12px', marginBottom: '14px' }}>
+                                    <div style={{
+                                        width: '28px', height: '28px', borderRadius: '50%',
+                                        background: 'var(--accent-dim)', border: '1px solid var(--border)',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        fontSize: '0.65rem', fontWeight: '800', color: 'var(--accent)',
+                                        flexShrink: 0,
+                                    }}>{step.n}</div>
+                                    <div>
+                                        <div style={{ fontWeight: '600', fontSize: '0.875rem' }}>{step.title}</div>
+                                        <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>{step.desc}</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Right: Form */}
+                    {submitted ? (
+                        <div style={{
+                            background: 'var(--bg-card)', border: '1px solid rgba(0,255,163,0.2)',
+                            borderRadius: 'var(--radius-lg)', padding: '60px 40px',
+                            textAlign: 'center',
+                        }}>
+                            <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🎉</div>
+                            <h3 style={{ fontFamily: 'var(--font-head)', fontSize: '1.4rem', marginBottom: '10px' }}>
+                                WhatsApp Opened!
+                            </h3>
+                            <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>
+                                Your message is ready to send. I'll reply within 2 hours.
+                            </p>
+                            <button className="btn btn-ghost" onClick={() => setSubmitted(false)}>
+                                Send Another Message
+                            </button>
+                        </div>
+                    ) : (
+                        <form onSubmit={handleWhatsApp} style={{
+                            background: 'var(--bg-card)',
+                            border: '1px solid var(--border-subtle)',
+                            borderRadius: 'var(--radius-lg)',
+                            padding: '40px',
+                        }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+                                <FormField label="Your Name *" name="name" value={form.name} onChange={handleChange} placeholder="Muhammad Ali" required />
+                                <FormField label="WhatsApp Number" name="phone" value={form.phone} onChange={handleChange} placeholder="+92 300 0000000" />
                             </div>
-                        ) : (
-                            <form onSubmit={handleSubmit(onSubmit)} className="contact__form" noValidate>
-                                <h3 className="contact__form-title">Send a Message</h3>
-
-                                <div className="contact__row">
-                                    <div className="form-group">
-                                        <label className="form-label" htmlFor="name">
-                                            <FiUser size={14} /> Full Name *
-                                        </label>
-                                        <input
-                                            id="name"
-                                            type="text"
-                                            autoComplete="name"
-                                            className={`form-control ${errors.name ? 'error' : ''}`}
-                                            placeholder="e.g. Ahmed Ali"
-                                            {...register('name', {
-                                                required: 'Name is required',
-                                                minLength: { value: 2, message: 'Name must be at least 2 characters' },
-                                                maxLength: { value: 100, message: 'Name is too long' },
-                                            })}
-                                        />
-                                        {errors.name && (
-                                            <span className="form-error">⚠ {errors.name.message}</span>
-                                        )}
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label className="form-label" htmlFor="phone">
-                                            <FiPhone size={14} /> Phone / WhatsApp *
-                                        </label>
-                                        <input
-                                            id="phone"
-                                            type="tel"
-                                            autoComplete="tel"
-                                            className={`form-control ${errors.phone ? 'error' : ''}`}
-                                            placeholder="e.g. 03001234567"
-                                            {...register('phone', {
-                                                required: 'Phone is required',
-                                                pattern: {
-                                                    value: /^[0-9+\s\-()]{7,15}$/,
-                                                    message: 'Enter a valid phone number',
-                                                },
-                                            })}
-                                        />
-                                        {errors.phone && (
-                                            <span className="form-error">⚠ {errors.phone.message}</span>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="form-group">
-                                    <label className="form-label" htmlFor="email">
-                                        <FiMail size={14} /> Email Address *
-                                    </label>
-                                    <input
-                                        id="email"
-                                        type="email"
-                                        autoComplete="email"
-                                        className={`form-control ${errors.email ? 'error' : ''}`}
-                                        placeholder="e.g. you@example.com"
-                                        {...register('email', {
-                                            required: 'Email is required',
-                                            pattern: {
-                                                value: /^\S+@\S+\.\S+$/,
-                                                message: 'Enter a valid email address',
-                                            },
-                                        })}
-                                    />
-                                    {errors.email && (
-                                        <span className="form-error">⚠ {errors.email.message}</span>
-                                    )}
-                                </div>
-
-                                <div className="form-group">
-                                    <label className="form-label" htmlFor="service">Project Type *</label>
-                                    <select
-                                        id="service"
-                                        className={`form-control ${errors.service ? 'error' : ''}`}
-                                        {...register('service', { required: 'Please select a project type' })}
-                                    >
-                                        {SERVICES.map((s) => (
-                                            <option key={s.value} value={s.value} disabled={s.value === ''}>
-                                                {s.label}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    {errors.service && (
-                                        <span className="form-error">⚠ {errors.service.message}</span>
-                                    )}
-                                </div>
-
-                                <div className="form-group">
-                                    <label className="form-label" htmlFor="message">
-                                        <FiMessageSquare size={14} /> Your Message *
-                                    </label>
-                                    <textarea
-                                        id="message"
-                                        className={`form-control ${errors.message ? 'error' : ''}`}
-                                        rows={4}
-                                        placeholder="Tell me about your business, what you need, and your budget..."
-                                        {...register('message', {
-                                            required: 'Message is required',
-                                            minLength: { value: 10, message: 'Message must be at least 10 characters' },
-                                            maxLength: { value: 1000, message: 'Message too long (max 1000 chars)' },
-                                        })}
-                                    />
-                                    {errors.message && (
-                                        <span className="form-error">⚠ {errors.message.message}</span>
-                                    )}
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary btn-lg contact__submit"
-                                    disabled={loading}
-                                >
-                                    {loading ? (
-                                        <>
-                                            <span className="contact__spinner" /> Sending...
-                                        </>
-                                    ) : (
-                                        <>
-                                            <FiSend /> Send Message
-                                        </>
-                                    )}
-                                </button>
-                            </form>
-                        )}
-                    </motion.div>
+                            <div style={{ marginBottom: '16px' }}>
+                                <FormField label="Business Name" name="business" value={form.business} onChange={handleChange} placeholder="Your Business Name" />
+                            </div>
+                            <div style={{ marginBottom: '16px' }}>
+                                <label style={labelStyle}>Budget Range (PKR)</label>
+                                <select name="budget" value={form.budget} onChange={handleChange}
+                                    style={{ ...inputStyle, appearance: 'none' }}>
+                                    <option value="">Select budget range</option>
+                                    <option value="10,000–20,000">PKR 10,000 – 20,000</option>
+                                    <option value="20,000–40,000">PKR 20,000 – 40,000</option>
+                                    <option value="40,000–80,000">PKR 40,000 – 80,000</option>
+                                    <option value="80,000+">PKR 80,000+</option>
+                                    <option value="Not sure yet">Not sure yet</option>
+                                </select>
+                            </div>
+                            <div style={{ marginBottom: '24px' }}>
+                                <label style={labelStyle}>Tell Me About Your Project *</label>
+                                <textarea name="message" value={form.message} onChange={handleChange} required
+                                    placeholder="Describe your business and what kind of website you need..."
+                                    rows={4} style={{ ...inputStyle, resize: 'vertical', minHeight: '110px' }} />
+                            </div>
+                            <button type="submit" className="btn btn-whatsapp"
+                                style={{ width: '100%', justifyContent: 'center', fontSize: '1rem', padding: '16px' }}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                                </svg>
+                                Send via WhatsApp
+                            </button>
+                            <p style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '12px' }}>
+                                This will open WhatsApp with your message pre-filled
+                            </p>
+                        </form>
+                    )}
                 </div>
             </div>
+
+            <style>{`
+        @media (max-width: 900px) {
+          .contact-grid { grid-template-columns: 1fr !important; }
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent) !important; }
+      `}</style>
         </section>
-    );
+    )
+}
+
+const labelStyle = {
+    display: 'block',
+    fontSize: '0.8rem',
+    fontWeight: '600',
+    color: 'var(--text-secondary)',
+    marginBottom: '6px',
+    letterSpacing: '0.04em',
+}
+
+const inputStyle = {
+    width: '100%',
+    background: 'var(--bg-primary)',
+    border: '1px solid var(--border-subtle)',
+    borderRadius: '8px',
+    padding: '12px 14px',
+    color: 'var(--text-primary)',
+    fontFamily: 'var(--font-body)',
+    fontSize: '0.9rem',
+    transition: 'border-color 0.2s',
+}
+
+function FormField({ label, name, value, onChange, placeholder, required, type = 'text' }) {
+    return (
+        <div>
+            <label style={labelStyle}>{label}</label>
+            <input
+                type={type} name={name} value={value} onChange={onChange}
+                placeholder={placeholder} required={required}
+                style={inputStyle}
+            />
+        </div>
+    )
 }

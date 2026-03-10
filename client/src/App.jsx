@@ -1,46 +1,29 @@
-import ScrollProgress from './components/ScrollProgress/ScrollProgress';
-import Navbar from './components/Navbar/Navbar';
-import HeroSection from './components/HeroSection/HeroSection';
-import TrustedSection from './components/TrustedSection/TrustedSection';
-import PortfolioSection from './components/PortfolioSection/PortfolioSection';
-import ProcessSection from './components/ProcessSection/ProcessSection';
-import SkillsSection from './components/SkillsSection/SkillsSection';
-import TechStackSection from './components/TechStackSection/TechStackSection';
-import CaseStudySection from './components/CaseStudySection/CaseStudySection';
-import TestimonialsSection from './components/TestimonialsSection/TestimonialsSection';
-import WhyMeSection from './components/WhyMeSection/WhyMeSection';
-import CTASection from './components/CTASection/CTASection';
-import PricingSection from './components/PricingSection/PricingSection';
-import ContactSection from './components/ContactSection/ContactSection';
-import StatsSection from './components/StatsSection/StatsSection';
-import TimelineSection from './components/TimelineSection/TimelineSection';
-import Footer from './components/Footer/Footer';
-import WhatsAppFAB from './components/WhatsAppFAB/WhatsAppFAB';
-import PageLoader from './components/PageLoader/PageLoader';
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import Services from './components/Services'
+import Portfolio from './components/Portfolio'
+import Pricing from './components/Pricing'
+import Testimonials from './components/Testimonials'
+import About from './components/About'
+import Contact from './components/Contact'
+import FAQ from './components/FAQ'
+import Footer from './components/Footer'
 
 export default function App() {
   return (
-    <PageLoader>
-      <ScrollProgress />
+    <>
       <Navbar />
       <main>
-        <HeroSection />
-        <TrustedSection />
-        <PortfolioSection />
-        <ProcessSection />
-        <SkillsSection />
-        <TechStackSection />
-        <CaseStudySection />
-        <TestimonialsSection />
-        <WhyMeSection />
-        <CTASection />
-        <StatsSection />
-        <TimelineSection />
-        <PricingSection />
-        <ContactSection />
+        <Hero />
+        <Services />
+        <Portfolio />
+        <Pricing />
+        <Testimonials />
+        <About />
+        <Contact />
+        <FAQ />
       </main>
       <Footer />
-      <WhatsAppFAB />
-    </PageLoader>
-  );
+    </>
+  )
 }
