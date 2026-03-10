@@ -15,7 +15,7 @@ export default function PageLoader({ children }) {
       done();
     } else {
       window.addEventListener('load', done);
-      const timer = setTimeout(done, 2000);
+      const timer = setTimeout(done, 2200);
       return () => {
         window.removeEventListener('load', done);
         clearTimeout(timer);
@@ -29,7 +29,9 @@ export default function PageLoader({ children }) {
         <div className={`page-loader ${fadeOut ? 'page-loader--hidden' : ''}`}>
           <div className="page-loader__logo">
             <span className="page-loader__icon">&lt;/&gt;</span>
-            <span className="page-loader__text">AhmedDev</span>
+            <span className="page-loader__text">
+              Ahmed<span>Dev</span>
+            </span>
           </div>
           <div className="page-loader__spinner" />
         </div>
@@ -38,4 +40,3 @@ export default function PageLoader({ children }) {
     </>
   );
 }
-

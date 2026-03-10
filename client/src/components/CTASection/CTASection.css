@@ -1,6 +1,15 @@
 .cta {
-  background: radial-gradient(circle at top, rgba(129, 140, 248, 0.24), transparent 60%),
-    linear-gradient(145deg, #020617, #020617 40%, #111827 100%);
+  background: var(--color-bg-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200, 245, 60, 0.06), transparent);
+  pointer-events: none;
 }
 
 .cta__inner {
@@ -8,10 +17,12 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-6);
+  position: relative;
+  z-index: 1;
 }
 
 .cta__content {
-  max-width: 520px;
+  max-width: 540px;
 }
 
 .cta__title {
@@ -19,6 +30,8 @@
   font-size: var(--text-3xl);
   font-weight: 800;
   color: var(--color-white);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .cta__subtitle {
@@ -42,4 +55,3 @@
     justify-content: center;
   }
 }
-

@@ -6,10 +6,10 @@ import './Navbar.css';
 
 const NAV_LINKS = [
     { label: 'Services', href: '#services' },
-    { label: 'About Me', href: '#about' },
-    { label: 'Portfolio', href: '#portfolio' },
+    { label: 'Work', href: '#portfolio' },
     { label: 'Pricing', href: '#pricing' },
-    { label: 'Contact Us', href: '#contact' },
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
 ];
 
 const THEME_KEY = 'ahmeddev-theme';
@@ -26,15 +26,12 @@ export default function Navbar() {
     }, []);
 
     useEffect(() => {
-        // Initialize theme from localStorage or system preference
         const stored = typeof window !== 'undefined' ? localStorage.getItem(THEME_KEY) : null;
         let initial = stored || 'dark';
-
         if (!stored && window.matchMedia) {
             const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
             initial = prefersLight ? 'light' : 'dark';
         }
-
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setTheme(initial);
         document.documentElement.setAttribute('data-theme', initial === 'light' ? 'light' : 'dark');
@@ -52,15 +49,11 @@ export default function Navbar() {
         scrollToSection(href);
     };
 
-    const toggleTheme = () => {
-        setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-    };
-
     return (
         <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
             <div className="container navbar__inner">
                 <a href="#hero" className="navbar__logo" onClick={(e) => handleNavClick(e, '#hero')}>
-                    <RiCodeSSlashLine size={24} />
+                    <RiCodeSSlashLine size={22} />
                     <span>Ahmed<span className="navbar__logo-accent">Dev</span></span>
                 </a>
 
@@ -82,10 +75,10 @@ export default function Navbar() {
                     <button
                         type="button"
                         className="navbar__theme-toggle"
-                        onClick={toggleTheme}
-                        aria-label={`Activate ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                        onClick={() => setTheme((p) => (p === 'dark' ? 'light' : 'dark'))}
+                        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
                     >
-                        {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
+                        {theme === 'dark' ? <FiSun size={16} /> : <FiMoon size={16} />}
                     </button>
 
                     <a
@@ -93,13 +86,13 @@ export default function Navbar() {
                         className="btn btn-primary navbar__cta"
                         onClick={(e) => handleNavClick(e, '#contact')}
                     >
-                        Get Started
+                        Get a Quote
                     </a>
 
                     <button
                         className="navbar__hamburger"
-                        onClick={() => setMenuOpen((prev) => !prev)}
-                        aria-label="Toggle navigation menu"
+                        onClick={() => setMenuOpen((p) => !p)}
+                        aria-label="Toggle menu"
                         aria-expanded={menuOpen}
                     >
                         {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -124,7 +117,7 @@ export default function Navbar() {
                     style={{ width: '100%', justifyContent: 'center', marginTop: '8px' }}
                     onClick={(e) => handleNavClick(e, '#contact')}
                 >
-                    Get Started
+                    Get a Quote
                 </a>
             </div>
         </nav>

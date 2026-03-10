@@ -11,8 +11,8 @@
 
 .services__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-6);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
 }
 
 .services__card {
@@ -22,8 +22,8 @@
 }
 
 .services__icon {
-    width: 56px;
-    height: 56px;
+    width: 52px;
+    height: 52px;
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
@@ -36,12 +36,13 @@
     font-size: var(--text-xl);
     font-weight: 700;
     color: var(--color-white);
+    letter-spacing: -0.01em;
 }
 
 .services__desc {
     font-size: var(--text-sm);
     color: var(--color-text-muted);
-    line-height: 1.7;
+    line-height: 1.75;
     flex: 1;
 }
 
@@ -54,21 +55,16 @@
 
 .services__tag {
     font-size: var(--text-xs);
-    font-weight: 500;
+    font-weight: 600;
     padding: 3px 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--color-border);
+    background: rgba(200, 245, 60, 0.05);
+    border: 1px solid rgba(200, 245, 60, 0.12);
     border-radius: var(--radius-full);
     color: var(--color-text-muted);
+    letter-spacing: 0.03em;
 }
 
-@media (max-width: 1024px) {
-    .services__grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .services__grid {
         grid-template-columns: 1fr;
     }

@@ -9,7 +9,7 @@
 }
 
 .testimonials__carousel {
-  max-width: 760px;
+  max-width: 720px;
   margin: 0 auto;
 }
 
@@ -25,15 +25,16 @@
 }
 
 .testimonials__avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 999px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--color-primary);
 }
 
 .testimonials__name {
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 700;
   color: var(--color-white);
 }
 
@@ -45,8 +46,9 @@
 .testimonials__quote {
   font-size: var(--text-base);
   color: var(--color-text-muted);
-  line-height: 1.7;
+  line-height: 1.8;
   margin-bottom: var(--space-6);
+  font-style: italic;
 }
 
 .testimonials__footer {
@@ -57,8 +59,8 @@
 
 .testimonials__stars {
   display: flex;
-  gap: 4px;
-  color: var(--color-accent-light);
+  gap: 3px;
+  color: var(--color-primary);
 }
 
 .testimonials__dots {
@@ -71,15 +73,16 @@
 .testimonials__dot {
   width: 8px;
   height: 8px;
-  border-radius: 999px;
+  border-radius: 50%;
   border: none;
-  background: rgba(148, 163, 184, 0.4);
+  background: rgba(255, 255, 255, 0.12);
   transition: all var(--transition-base);
 }
 
 .testimonials__dot--active {
-  width: 18px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  width: 22px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
 }
 
 @media (max-width: 600px) {
@@ -87,4 +90,3 @@
     padding: var(--space-6);
   }
 }
-

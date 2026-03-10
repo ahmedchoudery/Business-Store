@@ -8,11 +8,11 @@
     position: absolute;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(108, 99, 255, 0.12) 0%, transparent 70%);
-    bottom: -100px;
-    left: -100px;
+    background: radial-gradient(circle, rgba(200, 245, 60, 0.05) 0%, transparent 70%);
+    bottom: -150px;
+    left: -150px;
     border-radius: 50%;
-    filter: blur(80px);
+    filter: blur(100px);
     pointer-events: none;
 }
 
@@ -68,6 +68,7 @@
     font-weight: 700;
     color: var(--color-white);
     margin-bottom: var(--space-6);
+    letter-spacing: -0.01em;
 }
 
 .contact__form {
@@ -93,15 +94,15 @@ textarea.form-control {
 }
 
 .contact__submit:disabled {
-    opacity: 0.7;
+    opacity: 0.6;
     cursor: not-allowed;
 }
 
 .contact__spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
+    width: 17px;
+    height: 17px;
+    border: 2px solid rgba(10, 10, 10, 0.3);
+    border-top-color: #0a0a0a;
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
     display: inline-block;
@@ -123,7 +124,7 @@ textarea.form-control {
 }
 
 .contact__success-icon {
-    font-size: 4rem;
+    font-size: 3.5rem;
     margin-bottom: var(--space-2);
 }
 

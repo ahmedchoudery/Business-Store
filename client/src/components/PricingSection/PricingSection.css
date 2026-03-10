@@ -16,7 +16,7 @@
 .pricing__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-6);
+    gap: var(--space-5);
     align-items: start;
 }
 
@@ -30,20 +30,24 @@
 
 .pricing__card--popular {
     border-color: var(--color-primary) !important;
-    box-shadow: 0 0 40px var(--color-primary-glow), var(--shadow-card);
-    transform: translateY(-8px);
-    padding-top: calc(var(--space-8) + 10px);
+    box-shadow:
+        0 0 0 1px rgba(200, 245, 60, 0.3),
+        0 24px 64px rgba(200, 245, 60, 0.08);
+    transform: translateY(-10px);
+    padding-top: calc(var(--space-8) + 12px);
 }
 
 .pricing__badge {
     position: absolute;
-    top: -13px;
+    top: -14px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-    color: white;
+    background: var(--color-primary);
+    color: #0a0a0a;
+    font-family: var(--font-display);
     font-size: var(--text-xs);
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.08em;
     padding: 5px 18px;
     border-radius: var(--radius-full);
     white-space: nowrap;
@@ -52,10 +56,10 @@
 
 .pricing__plan-name {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
-    font-weight: 700;
+    font-size: var(--text-xs);
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
 }
 
 .pricing__price {
@@ -65,7 +69,7 @@
 }
 
 .pricing__currency {
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
     font-weight: 600;
     color: var(--color-text-muted);
 }
@@ -76,12 +80,13 @@
     font-weight: 900;
     color: var(--color-white);
     line-height: 1;
+    letter-spacing: -0.02em;
 }
 
 .pricing__desc {
     font-size: var(--text-sm);
     color: var(--color-text-muted);
-    line-height: 1.6;
+    line-height: 1.7;
     padding-bottom: var(--space-4);
     border-bottom: 1px solid var(--color-border);
 }
@@ -102,7 +107,7 @@
 }
 
 .pricing__check {
-    color: var(--color-green);
+    color: var(--color-primary);
     flex-shrink: 0;
     font-size: 16px;
 }
