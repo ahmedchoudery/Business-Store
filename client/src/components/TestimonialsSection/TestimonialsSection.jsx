@@ -147,7 +147,7 @@ export default function Testimonials() {
           {testimonials.map((t, i) => (
             <button key={i} onClick={() => setActive(i)}
               style={{
-                background: 'none', border: 'none', cursor: 'pointer',
+                cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: '8px',
                 padding: '8px 14px', borderRadius: '50px',
                 background: i === active ? 'var(--accent-dim)' : 'transparent',
