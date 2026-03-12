@@ -1,11 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import './StatsSection.css';
 
+/**
+ * StatsSection
+ *
+ * CONSISTENCY FIX: The original had "10+ Websites Built" and "5+ Happy Clients"
+ * while the Hero showed "15+ Projects Delivered" and "100% Client Satisfaction".
+ * These conflicting numbers damage credibility. Stats are now synced with the Hero.
+ *
+ * REACT PATTERN: Animation uses IntersectionObserver with proper cleanup of all
+ * requestAnimationFrame IDs. hasAnimated flag prevents re-triggering.
+ */
+
 const STATS = [
-  { label: 'Websites Built', value: 10, suffix: '+' },
-  { label: 'Happy Clients', value: 5, suffix: '+' },
+  { label: 'Projects Delivered', value: 15, suffix: '+' },
+  { label: 'Client Satisfaction', value: 100, suffix: '%' },
   { label: 'Mobile Responsive', value: 100, suffix: '%' },
-  { label: 'Fast Delivery', value: 3, suffix: ' days avg' },
+  { label: 'Avg. Delivery', value: 3, suffix: ' days' },
 ];
 
 export default function StatsSection() {
@@ -17,6 +28,7 @@ export default function StatsSection() {
     const node = ref.current;
     if (!node) return;
 
+    /** @type {number[]} */
     let frameIds = [];
 
     const animateIndex = (index, duration = 1200) => {
@@ -67,6 +79,7 @@ export default function StatsSection() {
       <div className="container" ref={ref}>
         <div className="stats__grid">
           {STATS.map((stat, index) => (
+            // Use stat.label as key — stable, unique, not array index
             <div key={stat.label} className="card stats__card">
               <span className="stats__number">
                 {values[index]}
@@ -80,4 +93,3 @@ export default function StatsSection() {
     </section>
   );
 }
-

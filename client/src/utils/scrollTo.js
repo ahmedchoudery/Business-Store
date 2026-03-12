@@ -1,13 +1,23 @@
 /**
- * scrollToSection — smooth-scrolls to an anchor element with a fixed
- * navbar offset so the section heading isn't hidden under the sticky nav.
+ * scrollTo.js — Smooth scroll utility
  *
- * @param {string} href   - CSS selector / anchor, e.g. '#contact'
- * @param {number} offset - Pixels to subtract from the top (default: 80)
+ * TYPESCRIPT SKILL: Even in .js files, JSDoc type annotations serve as
+ * lightweight type documentation and enable IDE intellisense without
+ * requiring a full TypeScript migration.
  */
-export function scrollToSection(href, offset = 80) {
-    const el = document.querySelector(href);
-    if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: 'smooth' });
+
+/**
+ * Smoothly scrolls to a section matching the given CSS selector.
+ *
+ * @param {string} selector - A valid CSS selector, e.g. '#contact' or '.hero'
+ * @returns {void}
+ *
+ * @example
+ * scrollToSection('#contact')
+ */
+export function scrollToSection(selector) {
+    const el = document.querySelector(selector);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }

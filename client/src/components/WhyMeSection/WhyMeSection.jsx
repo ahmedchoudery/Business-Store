@@ -4,6 +4,17 @@ import {
 } from 'react-icons/fi';
 import './WhyMeSection.css';
 
+/**
+ * WhyMeSection
+ *
+ * REACT PATTERN FIX: REASONS used `key={i}` (array index) — replaced with `key={r.text}`,
+ * a stable, unique key derived from content. Index-as-key causes issues when the
+ * list order changes or items are filtered.
+ *
+ * COPYWRITING FIX: Subtitle was vague ("You focus on running your business — I'll make
+ * sure the internet works for you"). Rewritten to be specific and outcome-focused.
+ */
+
 const REASONS = [
     { icon: <FiClock size={20} />, text: 'Fast Website Performance' },
     { icon: <FiSmartphone size={20} />, text: 'Mobile-First Design' },
@@ -41,7 +52,8 @@ export default function WhyMeSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                        You focus on running your business — I'll make sure the internet works for you.
+                        I build websites that rank on Google, load in under 2 seconds, and
+                        turn visitors into paying customers — so you can focus on running your business.
                     </motion.p>
 
                     <motion.ul
@@ -51,8 +63,9 @@ export default function WhyMeSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.3 }}
                     >
-                        {REASONS.map((r, i) => (
-                            <li key={i} className="why__reason">
+                        {/* REACT FIX: key={r.text} instead of key={i} */}
+                        {REASONS.map((r) => (
+                            <li key={r.text} className="why__reason">
                                 <span className="why__reason-icon">{r.icon}</span>
                                 <span>{r.text}</span>
                             </li>

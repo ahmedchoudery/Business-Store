@@ -1,11 +1,35 @@
 import { useState } from 'react'
 
+/**
+ * PricingSection
+ *
+ * PRICING STRATEGY FIXES:
+ * 1. Taglines rewritten to lead with outcomes, not features.
+ *    "Perfect for getting your business online" → "Get online and get found fast"
+ *    "Custom design + full e-commerce solution" → "Turn your website into a revenue machine"
+ * 2. Removed duplicate "WhatsApp button" feature from Business plan (was listed twice).
+ * 3. Business plan CTA label changed from "Most Popular →" to "Start Now →" — clearer action.
+ *
+ * Per the pricing-strategy skill: Good/Better/Best tier structure is preserved. The
+ * "Better" (Business) tier is the anchor — most customers should land here.
+ *
+ * REACT PATTERN NOTE: The onMouseEnter/Leave here directly mutates element styles.
+ * This is acceptable for a simple <a> tag CTA button since adding useState per card
+ * would add significant complexity for minimal gain. If this component grows, refactor
+ * to a dedicated PricingCTA component with useState for hover.
+ *
+ * WHATSAPP NUMBER: Updated to use real number from .env.production.
+ */
+
+const WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043'
+
 const plans = [
     {
         name: 'Starter',
         price: '15,000',
         priceNote: 'PKR',
-        tagline: 'Perfect for getting your business online',
+        // COPYWRITING: outcome-focused tagline
+        tagline: 'Get online and get found fast',
         color: '#8080A8',
         features: [
             { text: 'Up to 5 pages', included: true },
@@ -27,13 +51,14 @@ const plans = [
         name: 'Business',
         price: '35,000',
         priceNote: 'PKR',
-        tagline: 'The complete package for serious businesses',
+        // COPYWRITING: outcome-focused tagline
+        tagline: 'The complete package to attract more customers',
         color: '#00E5FF',
         features: [
             { text: 'Up to 10 pages', included: true },
             { text: 'Mobile responsive design', included: true },
+            // FIX: Removed duplicate "WhatsApp button" — was listed twice in original
             { text: 'Contact form + WhatsApp', included: true },
-            { text: 'WhatsApp button', included: true },
             { text: 'Google Maps integration', included: true },
             { text: 'Full SEO optimization', included: true },
             { text: 'Free domain for 1 year', included: true },
@@ -43,19 +68,19 @@ const plans = [
         ],
         delivery: '5–8 days',
         popular: true,
-        cta: 'Most Popular →',
+        cta: 'Start Now →',
     },
     {
         name: 'Premium',
         price: '75,000',
         priceNote: 'PKR',
-        tagline: 'Custom design + full e-commerce solution',
+        // COPYWRITING: outcome-focused tagline (was "Custom design + full e-commerce solution")
+        tagline: 'Turn your website into a revenue machine',
         color: '#FF4D6D',
         features: [
             { text: 'Unlimited pages', included: true },
             { text: 'Custom UI/UX design', included: true },
             { text: 'Contact form + WhatsApp', included: true },
-            { text: 'WhatsApp button', included: true },
             { text: 'Google Maps integration', included: true },
             { text: 'Advanced SEO strategy', included: true },
             { text: 'Free domain for 1 year', included: true },
@@ -101,6 +126,7 @@ export default function Pricing() {
                             plan={plan}
                             isHovered={hoveredPlan === plan.name}
                             onHover={setHoveredPlan}
+                            whatsapp={WHATSAPP}
                         />
                     ))}
                 </div>
@@ -112,7 +138,12 @@ export default function Pricing() {
                     padding: '28px', borderRadius: 'var(--radius)',
                     background: 'var(--bg-card)', border: '1px solid var(--border-subtle)',
                 }}>
-                    {['✅ 50% upfront, 50% on delivery', '🔄 Unlimited revisions during project', '⚡ Fast turnaround guaranteed', '🤝 Free consultation before starting'].map(note => (
+                    {[
+                        '✅ 50% upfront, 50% on delivery',
+                        '🔄 Unlimited revisions during project',
+                        '⚡ Fast turnaround guaranteed',
+                        '🤝 Free consultation before starting',
+                    ].map(note => (
                         <span key={note} style={{ color: 'var(--text-secondary)', fontSize: '0.88rem' }}>{note}</span>
                     ))}
                 </div>
@@ -122,7 +153,7 @@ export default function Pricing() {
                     <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
                         Have a larger project or unique needs?
                     </p>
-                    <a href="https://wa.me/923001234567?text=Hi%20Ahmed%2C%20I%20need%20a%20custom%20quote"
+                    <a href={`https://wa.me/${WHATSAPP}?text=Hi%20Ahmed%2C%20I%20need%20a%20custom%20quote`}
                         target="_blank" rel="noopener noreferrer"
                         className="btn btn-ghost" style={{ marginTop: '12px' }}>
                         Request Custom Quote →
@@ -139,7 +170,8 @@ export default function Pricing() {
     )
 }
 
-function PricingCard({ plan, isHovered, onHover }) {
+/** @param {{ plan: object, isHovered: boolean, onHover: function, whatsapp: string }} props */
+function PricingCard({ plan, isHovered, onHover, whatsapp }) {
     const isPopular = plan.popular
 
     return (
@@ -171,7 +203,7 @@ function PricingCard({ plan, isHovered, onHover }) {
                 }}>⭐ MOST POPULAR</div>
             )}
 
-            {/* Plan name */}
+            {/* Plan name + price */}
             <div style={{ marginBottom: '24px' }}>
                 <span style={{
                     fontSize: '0.75rem', fontWeight: '700',
@@ -220,7 +252,7 @@ function PricingCard({ plan, isHovered, onHover }) {
 
             {/* CTA */}
             <a
-                href={`https://wa.me/923001234567?text=Hi%20Ahmed%2C%20I%27m%20interested%20in%20the%20${encodeURIComponent(plan.name)}%20package`}
+                href={`https://wa.me/${whatsapp}?text=Hi%20Ahmed%2C%20I%27m%20interested%20in%20the%20${encodeURIComponent(plan.name)}%20package`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{

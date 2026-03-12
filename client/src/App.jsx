@@ -1,3 +1,4 @@
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import CustomCursor from './components/CustomCursor/CustomCursor';
 import PageLoader from './components/PageLoader/PageLoader';
@@ -20,31 +21,44 @@ import CTASection from './components/CTASection/CTASection';
 import ContactSection from './components/ContactSection/ContactSection';
 import Footer from './components/Footer/Footer';
 
+/**
+ * App
+ *
+ * Root component. Wraps the entire tree in an ErrorBoundary so a crash in
+ * any section degrades gracefully instead of showing a blank white page.
+ *
+ * REACT PATTERN: Error boundaries at the root level catch unexpected runtime
+ * errors. For a single-page site like this, one root boundary is sufficient.
+ * If any section becomes complex (e.g. the 3D canvas), wrap it in its own
+ * boundary with a section-specific fallback.
+ */
 export default function App() {
   return (
-    <PageLoader>
-      <ScrollProgress />
-      <CustomCursor />
-      <WhatsAppFAB />
-      <Navbar />
-      <main>
-        <HeroSection />
-        <TrustedSection />
-        <ServicesSection />
-        <ProcessSection />
-        <PortfolioSection />
-        <CaseStudySection />
-        <SkillsSection />
-        <TechStackSection />
-        <StatsSection />
-        <WhyMeSection />
-        <TimelineSection />
-        <PricingSection />
-        <TestimonialsSection />
-        <CTASection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </PageLoader>
+    <ErrorBoundary>
+      <PageLoader>
+        <ScrollProgress />
+        <CustomCursor />
+        <WhatsAppFAB />
+        <Navbar />
+        <main>
+          <HeroSection />
+          <TrustedSection />
+          <ServicesSection />
+          <ProcessSection />
+          <PortfolioSection />
+          <CaseStudySection />
+          <SkillsSection />
+          <TechStackSection />
+          <StatsSection />
+          <WhyMeSection />
+          <TimelineSection />
+          <PricingSection />
+          <TestimonialsSection />
+          <CTASection />
+          <ContactSection />
+        </main>
+        <Footer />
+      </PageLoader>
+    </ErrorBoundary>
   );
 }

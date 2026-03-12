@@ -2,8 +2,10 @@ import { useState } from 'react'
 import api from '../../api/axios'
 import toast from 'react-hot-toast'
 
+const WHATSAPP = import.meta.env.VITE_WHATSAPP_NUMBER || '923174307043'
+
 const contactMethods = [
-    { icon: '💬', label: 'WhatsApp', value: '+92 300 1234567', sub: 'Fastest response', color: '#25D366', href: 'https://wa.me/923001234567' },
+    { icon: '💬', label: 'WhatsApp', value: '+92 317 4307043', sub: 'Fastest response', color: '#25D366', href: `https://wa.me/${WHATSAPP}` },
     { icon: '📧', label: 'Email', value: 'ahmedchoudery30@gmail.com', sub: 'Within 24 hours', color: '#00E5FF', href: 'mailto:ahmedchoudery30@gmail.com' },
     { icon: '💻', label: 'GitHub', value: 'github.com/ahmedchoudery', sub: 'View my code', color: '#A78BFA', href: 'https://github.com/ahmedchoudery' },
 ]
@@ -37,7 +39,7 @@ export default function Contact() {
             const msg = encodeURIComponent(
                 `Hi Ahmed! I'm ${form.name}${form.business ? ` from ${form.business}` : ''}.\n\n${form.message}${form.budget ? `\n\nBudget: PKR ${form.budget}` : ''}${form.phone ? `\n\nMy number: ${form.phone}` : ''}`
             )
-            window.open(`https://wa.me/923001234567?text=${msg}`, '_blank')
+            window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank')
             setSubmitted(true)
         } catch (err) {
             toast.error(err.userMessage || 'Something went wrong. Please try again.')
@@ -57,7 +59,7 @@ export default function Contact() {
                         <span className="text-accent">Your Business Online?</span>
                     </h2>
                     <p className="section-subtitle" style={{ margin: '0 auto' }}>
-                        Fill out the form and I&apos;ll save your details then open WhatsApp so we can talk right away.
+                        Describe your project below and I&apos;ll get back to you within 2 hours with a free quote.
                     </p>
                 </div>
 

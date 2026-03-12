@@ -121,11 +121,11 @@ export default function Testimonials() {
 
         {/* Navigation */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginBottom: '40px' }}>
-          <button onClick={prev} className="btn btn-ghost" style={{ padding: '10px 16px', fontSize: '1rem' }}>←</button>
+          <button onClick={prev} className="btn btn-ghost" aria-label="Previous testimonial" style={{ padding: '10px 16px', fontSize: '1rem' }}>←</button>
 
           <div style={{ display: 'flex', gap: '8px' }}>
-            {testimonials.map((_, i) => (
-              <button key={i} onClick={() => setActive(i)}
+            {testimonials.map((t, i) => (
+              <button key={`dot-${t.name}`} onClick={() => setActive(i)}
                 style={{
                   width: i === active ? '24px' : '8px',
                   height: '8px', borderRadius: '4px',
@@ -137,7 +137,7 @@ export default function Testimonials() {
             ))}
           </div>
 
-          <button onClick={next} className="btn btn-ghost" style={{ padding: '10px 16px', fontSize: '1rem' }}>→</button>
+          <button onClick={next} className="btn btn-ghost" aria-label="Next testimonial" style={{ padding: '10px 16px', fontSize: '1rem' }}>→</button>
         </div>
 
         {/* Mini thumbnails */}
@@ -145,7 +145,7 @@ export default function Testimonials() {
           display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap',
         }}>
           {testimonials.map((t, i) => (
-            <button key={i} onClick={() => setActive(i)}
+            <button key={`thumb-${t.name}`} onClick={() => setActive(i)}
               style={{
                 cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: '8px',
