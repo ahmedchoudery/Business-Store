@@ -18,22 +18,21 @@ const contactValidationRules = [
         .notEmpty().withMessage('Phone is required')
         .matches(/^[0-9+\s\-()]{7,15}$/).withMessage('Enter a valid phone number (7–15 digits)'),
 
-    body('service')
-        .notEmpty().withMessage('Please select a service')
-        .isIn([
-            'bug-fixes',
-            'responsive-design',
-            'landing-pages',
-            'small-business',
-            'portfolio',
-            'other',
-        ]).withMessage('Invalid service selected'),
+    body('business')
+        .optional()
+        .trim()
+        .isLength({ max: 100 }).withMessage('Business name cannot exceed 100 characters'),
 
     body('message')
         .trim()
         .notEmpty().withMessage('Message is required')
         .isLength({ min: 10 }).withMessage('Message must be at least 10 characters')
         .isLength({ max: 1000 }).withMessage('Message cannot exceed 1000 characters'),
+
+    body('budget')
+        .optional()
+        .trim()
+        .isLength({ max: 50 }).withMessage('Budget value is too long'),
 ];
 
 const validate = (req, res, next) => {

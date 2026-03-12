@@ -1,19 +1,22 @@
+# Dependencies
 node_modules/
+
+# Build output
+client/dist/
+.vercel/
+
+# Environment variables — never commit these
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-dist/
-build/
+.env.production
+client/.env
+client/.env.local
+client/.env.production
+
+# Skill tooling — not part of the deployed site
+skill-creator/
+
+# OS / editor
 .DS_Store
-*.log
-client/dist/
-client/node_modules/
-backend/node_modules/
-server/node_modules/
-api/node_modules/
-# Static assets copied to root
-assets/
-vite.svg
-index.html
+Thumbs.db
+*.swp

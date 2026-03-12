@@ -4,6 +4,7 @@
    ============================================================ */
 
 :root {
+  /* ── Core palette ─────────────────────────────────────── */
   --bg-primary: #06060E;
   --bg-secondary: #0C0C1C;
   --bg-card: #0F0F20;
@@ -27,6 +28,63 @@
   --font-body: 'Outfit', sans-serif;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --max-width: 1200px;
+
+  /* ── Compatibility aliases (global.css → index.css) ───── */
+  /* Color */
+  --color-bg: var(--bg-primary);
+  --color-bg-2: var(--bg-secondary);
+  --color-surface: var(--bg-card);
+  --color-surface-2: var(--bg-card);
+  --color-border: var(--border-subtle);
+  --color-primary: var(--accent);
+  --color-primary-light: var(--accent);
+  --color-primary-dark: var(--accent);
+  --color-primary-glow: var(--accent-glow);
+  --color-accent: var(--green);
+  --color-accent-light: var(--green);
+  --color-accent-glow: rgba(0, 255, 163, 0.25);
+  --color-white: var(--text-primary);
+  --color-text: var(--text-primary);
+  --color-text-muted: var(--text-secondary);
+  --color-text-faint: var(--text-muted);
+  /* Font */
+  --font-display: var(--font-head);
+  --font-main: var(--font-body);
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: var(--transition);
+  --transition-slow: 0.4s ease;
+  /* Layout */
+  --nav-height: 72px;
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  /* Typography scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.625rem;
+  --text-4xl: 3.5rem;
+  /* Extended radius */
+  --radius-sm: 6px;
+  --radius-md: var(--radius);
+  --radius-xl: var(--radius-lg);
+  --radius-full: 9999px;
+  /* Shadow aliases */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 *,
@@ -164,6 +222,13 @@ h4 {
 
 .text-hot {
   color: var(--hot);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ============================================================

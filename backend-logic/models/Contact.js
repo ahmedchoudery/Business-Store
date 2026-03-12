@@ -21,23 +21,23 @@ const contactSchema = new mongoose.Schema(
             trim: true,
             match: [/^[0-9+\s\-()]{7,15}$/, 'Please enter a valid phone number'],
         },
-        service: {
+        business: {
             type: String,
-            required: [true, 'Please select a service'],
-            enum: [
-                'bug-fixes',
-                'responsive-design',
-                'landing-pages',
-                'small-business',
-                'portfolio',
-                'other',
-            ],
+            trim: true,
+            maxlength: [100, 'Business name cannot exceed 100 characters'],
+            default: '',
         },
         message: {
             type: String,
             required: [true, 'Message is required'],
             trim: true,
             maxlength: [1000, 'Message cannot exceed 1000 characters'],
+        },
+        budget: {
+            type: String,
+            trim: true,
+            maxlength: [50, 'Budget value is too long'],
+            default: '',
         },
         status: {
             type: String,

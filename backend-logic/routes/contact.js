@@ -5,20 +5,8 @@ const { contactValidationRules, validate } = require('../logic/validate');
 
 const router = express.Router();
 
-/**
- * requireDb — Database readiness middleware for serverless/cold starts.
- * 
- * Ensures the database is connected before processing any requests.
- * This is especially critical for Serverless Functions (Vercel) which 
- * may spin up new instances (cold starts) that aren't yet connected.
- * 
- * @param {Express.Request} req - The incoming request
- * @param {Express.Response} res - The response object
- * @param {Function} next - The next middleware function
- */
 const requireDb = async (req, res, next) => {
     if (mongoose.connection.readyState !== 1) {
-        // Only require and call connectDB if we aren't already connected
         const connectDB = require('../config/db');
         try {
             await connectDB();
@@ -38,20 +26,18 @@ const requireDb = async (req, res, next) => {
  * @route   POST /api/contact
  * @desc    Submit a contact/lead form
  * @access  Public
- * 
- * Handles incoming leads from the website frontend.
  */
 router.post('/', contactValidationRules, validate, requireDb, async (req, res) => {
     try {
-        const { name, email, phone, service, message } = req.body;
+        const { name, email, phone, business, message, budget } = req.body;
 
-        // Use Contact.create() for a cleaner, more readable creation flow
         const contact = await Contact.create({
             name,
             email,
             phone,
-            service,
-            message
+            business: business || '',
+            message,
+            budget: budget || '',
         });
 
         res.status(201).json({
@@ -64,10 +50,8 @@ router.post('/', contactValidationRules, validate, requireDb, async (req, res) =
             },
         });
     } catch (error) {
-        // Detailed error logging for internal debugging
         console.error('[API_ERROR] Contact submission failed:', error);
 
-        // Mongoose validation errors (already caught by express-validator, but here as safety)
         if (error.name === 'ValidationError') {
             return res.status(400).json({
                 success: false,
@@ -88,7 +72,6 @@ router.post('/', contactValidationRules, validate, requireDb, async (req, res) =
  * @access  Private (Requires x-admin-secret header)
  */
 router.get('/', requireDb, async (req, res) => {
-    // Simple header-based protection for admin endpoints
     const secret = req.headers['x-admin-secret'];
     if (!secret || secret !== process.env.ADMIN_SECRET) {
         return res.status(401).json({ success: false, message: 'Unauthorized' });
@@ -99,7 +82,7 @@ router.get('/', requireDb, async (req, res) => {
         res.json({
             success: true,
             count: contacts.length,
-            data: contacts
+            data: contacts,
         });
     } catch (error) {
         console.error('[API_ERROR] Failed to fetch contacts:', error);

@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import './SkillsSection.css';
@@ -13,8 +12,7 @@ const SKILLS = [
 ];
 
 export default function SkillsSection() {
-  const ref = useRef(null);
-  const { visible } = useScrollReveal({ threshold: 0.25 });
+  const { ref, visible } = useScrollReveal({ threshold: 0.25 });
 
   return (
     <section id="skills" className="section skills">
@@ -55,4 +53,3 @@ export default function SkillsSection() {
     </section>
   );
 }
-
