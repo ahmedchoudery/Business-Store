@@ -1,44 +1,42 @@
-// client/src/components/HeroSection/HeroSection.jsx
-import { useState, useEffect, Suspense, lazy } from 'react'
-import ErrorBoundary from '../Errorboundary/Errorboundary'
-import './HeroSection.css'
+// FILE: client/src/components/HeroSection/HeroSection.jsx
+// Direct import (no lazy) — same pattern as original to avoid module errors.
 
-const Hero3DCanvas = lazy(() => import('./Hero3DCanvas'))
+import { useState, useEffect } from 'react';
+import Hero3DCanvas from './Hero3DCanvas';
+import './HeroSection.css';
 
-const roles = ['YOUR BUSINESS', 'RESTAURANTS', 'BOUTIQUES', 'CLINICS', 'WEDDING HALLS', 'REAL ESTATE']
+const roles = ['YOUR BUSINESS', 'RESTAURANTS', 'BOUTIQUES', 'CLINICS', 'WEDDING HALLS', 'REAL ESTATE'];
 
 const stats = [
     { value: '15+', label: 'Projects' },
     { value: '100%', label: 'Satisfaction' },
     { value: '3d', label: 'Avg. Delivery' },
     { value: '24/7', label: 'Support' },
-]
+];
 
-export default function Hero() {
-    const [roleIndex, setRoleIndex] = useState(0)
-    const [fade, setFade] = useState(true)
+export default function HeroSection() {
+    const [roleIndex, setRoleIndex] = useState(0);
+    const [fade, setFade] = useState(true);
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setFade(false)
-            setTimeout(() => { setRoleIndex(i => (i + 1) % roles.length); setFade(true) }, 380)
-        }, 2800)
-        return () => clearInterval(timer)
-    }, [])
+            setFade(false);
+            setTimeout(() => {
+                setRoleIndex(i => (i + 1) % roles.length);
+                setFade(true);
+            }, 380);
+        }, 2800);
+        return () => clearInterval(timer);
+    }, []);
 
     return (
         <section id="hero" className="hero">
-            {/* 3D canvas — isolated so a crash here never blanks the page */}
-            <ErrorBoundary fallback={null}>
-                <Suspense fallback={null}>
-                    <Hero3DCanvas />
-                </Suspense>
-            </ErrorBoundary>
+            <Hero3DCanvas />
 
             <div className="container">
                 <div className="hero__inner">
 
-                    {/* LEFT — copy */}
+                    {/* LEFT */}
                     <div className="hero__left">
                         <div className="hero__badge animate-fade-up animate-delay-1">
                             <span className="hero__badge-dot" />
@@ -48,16 +46,13 @@ export default function Hero() {
                         <h1 className="hero__h1 animate-fade-up animate-delay-2">
                             <span className="hero__line1">WEBSITES</span>
                             <span className="hero__line2">THAT GROW</span>
-                            {/* SEO-stable text — always readable by crawlers */}
-                            <span className="hero__cycle-static">Pakistani Businesses</span>
+                            {/* Static text for SEO — always present in DOM */}
+                            <span className="hero__line-static">Pakistani Businesses</span>
                             {/* Animated overlay */}
                             <span
                                 aria-hidden="true"
                                 className="hero__cycle"
-                                style={{
-                                    opacity: fade ? 1 : 0,
-                                    transform: fade ? 'translateY(0)' : 'translateY(-16px)',
-                                }}
+                                style={{ opacity: fade ? 1 : 0, transform: fade ? 'translateY(0)' : 'translateY(-14px)' }}
                             >
                                 {roles[roleIndex]}
                             </span>
@@ -98,7 +93,7 @@ export default function Hero() {
                         </div>
                     </div>
 
-                    {/* RIGHT — floating metric card */}
+                    {/* RIGHT — metric card */}
                     <div className="hero__right animate-fade-up animate-delay-3">
                         <div className="hero__card">
                             <div className="hero__card-top">
@@ -131,11 +126,10 @@ export default function Hero() {
                 </div>
             </div>
 
-            {/* Scroll indicator */}
             <div aria-hidden="true" className="hero__scroll-indicator">
                 <span>SCROLL</span>
                 <div className="hero__scroll-line" />
             </div>
         </section>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-/* client/src/components/HeroSection/HeroSection.css */
+/* FILE: client/src/components/HeroSection/HeroSection.css */
 
 .hero {
     position: relative;
@@ -10,7 +10,6 @@
     padding-top: var(--nav-height);
 }
 
-/* ── 3D canvas fills the section background ── */
 .hero__canvas {
     position: absolute;
     inset: 0;
@@ -23,7 +22,6 @@
     display: block;
 }
 
-/* ── Two-column layout ── */
 .hero__inner {
     position: relative;
     z-index: 3;
@@ -68,7 +66,7 @@
     height: 8px;
     border-radius: 50%;
     background: #10B981;
-    animation: pulse 2s infinite;
+    animation: pulse-glow 2s infinite;
 }
 
 /* ── H1 ── */
@@ -94,20 +92,21 @@
     background-clip: text;
 }
 
-/* SEO-stable line — always in DOM for crawlers, hidden visually */
-.hero__cycle-static {
+/* Invisible SEO text — takes up space but is overdrawn by .hero__cycle */
+.hero__line-static {
     display: block;
     color: var(--text-primary);
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
+    opacity: 0;
     pointer-events: none;
+    user-select: none;
 }
 
-/* Animated overlay — absolutely positioned over the static line's space */
+/* Animated word sits on top of the static one */
 .hero__cycle {
     display: block;
     color: var(--text-primary);
+    position: absolute;
+    left: 0;
     transition: opacity 0.38s ease, transform 0.38s ease;
 }
 
@@ -140,7 +139,7 @@
 }
 
 .hero__stat {
-    background: var(--surface);
+    background: var(--surface, #0E0C25);
     padding: 18px 12px;
     text-align: center;
 }
@@ -164,7 +163,7 @@
     letter-spacing: 0.06em;
 }
 
-/* ── Right card ── */
+/* ── Right metric card ── */
 .hero__right {
     display: flex;
     justify-content: center;
@@ -184,7 +183,7 @@
 }
 
 .hero__card:hover {
-    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+    transform: perspective(1000px) rotateY(0) rotateX(0);
 }
 
 .hero__card::before {
@@ -301,7 +300,6 @@
     background: linear-gradient(to bottom, var(--text-muted), transparent);
 }
 
-/* ── Responsive ── */
 @media (max-width: 900px) {
     .hero__inner {
         grid-template-columns: 1fr;
