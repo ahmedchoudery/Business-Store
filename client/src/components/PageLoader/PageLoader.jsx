@@ -51,12 +51,30 @@ export default function PageLoader({ children }) {
         <div className="loader-content">
           {/* Logo mark */}
           <div className="loader-logo">
-            <svg width="52" height="52" viewBox="0 0 100 100">
-              <rect width="100" height="100" rx="18" fill="rgba(56,189,248,0.08)" stroke="rgba(56,189,248,0.2)" strokeWidth="1.5" />
-              <line x1="14" y1="85" x2="50" y2="14" stroke="#38BDF8" strokeWidth="8" strokeLinecap="round" />
-              <line x1="86" y1="85" x2="50" y2="14" stroke="#38BDF8" strokeWidth="8" strokeLinecap="round" />
-              <circle cx="50" cy="14" r="5.5" fill="#FBBF24" />
-              <line x1="28" y1="68" x2="72" y2="50" stroke="#FBBF24" strokeWidth="7" strokeLinecap="round" />
+            <svg width="52" height="52" viewBox="0 0 512 512" fill="none">
+              <defs>
+                <linearGradient id="ldBlue" x1="256" y1="32" x2="256" y2="480" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#7DD3FC"/>
+                  <stop offset="50%" stopColor="#38BDF8"/>
+                  <stop offset="100%" stopColor="#0369A1"/>
+                </linearGradient>
+                <linearGradient id="ldGold" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#FCD34D"/>
+                  <stop offset="100%" stopColor="#F59E0B"/>
+                </linearGradient>
+                <mask id="ldMask">
+                  <rect width="512" height="512" fill="white"/>
+                  <polygon points="256,164 206,288 306,288" fill="black"/>
+                </mask>
+              </defs>
+              <g mask="url(#ldMask)">
+                <path d="M 256 42 Q 260 42 262 46 L 428 450 Q 432 458 425 464 L 369 464 Q 363 464 360 458 L 324 378 L 188 378 L 152 458 Q 149 464 143 464 L 87 464 Q 80 458 84 450 L 250 46 Q 252 42 256 42 Z" fill="url(#ldBlue)"/>
+              </g>
+              <g strokeLinecap="round" strokeLinejoin="round" fill="none">
+                <polyline points="245,204 221,240 245,276" stroke="#FBBF24" strokeWidth="13"/>
+                <polyline points="267,204 291,240 267,276" stroke="#FBBF24" strokeWidth="13"/>
+              </g>
+              <rect x="174" y="340" width="164" height="16" rx="8" fill="url(#ldGold)"/>
             </svg>
           </div>
 
