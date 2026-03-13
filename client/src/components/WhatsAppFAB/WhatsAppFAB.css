@@ -1,41 +1,48 @@
-.wa-fab {
+.whatsapp-fab {
     position: fixed;
-    bottom: 32px;
-    right: 32px;
-    z-index: 700;
-    width: 52px;
-    height: 52px;
+    bottom: 28px;
+    right: 28px;
+    z-index: 998;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: #25D366;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
     box-shadow: 0 4px 24px rgba(37, 211, 102, 0.4);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform .3s cubic-bezier(.4, 0, .2, 1), box-shadow .3s;
 }
 
-.wa-fab:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 36px rgba(37, 211, 102, 0.55);
+.whatsapp-fab:hover {
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 10px 40px rgba(37, 211, 102, 0.55);
 }
 
-.wa-fab__pulse {
+/* Pulse ring */
+.whatsapp-fab__pulse {
     position: absolute;
     inset: 0;
     border-radius: 50%;
     border: 2px solid rgba(37, 211, 102, 0.5);
-    animation: wa-pulse 2.5s ease-out infinite;
+    animation: waPulse 2.5s ease infinite;
 }
 
-@keyframes wa-pulse {
+@keyframes waPulse {
     0% {
         transform: scale(1);
-        opacity: 0.8;
+        opacity: .6;
+    }
+
+    70% {
+        transform: scale(1.55);
+        opacity: 0;
     }
 
     100% {
-        transform: scale(1.7);
+        transform: scale(1.55);
         opacity: 0;
     }
 }

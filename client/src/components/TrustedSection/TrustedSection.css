@@ -1,88 +1,59 @@
-/* FILE: client/src/components/TrustedSection/TrustedSection.css */
-
 .trusted {
-  padding: 60px 0 !important;
-  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, .06));
-  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, .06));
+  padding: 48px 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
   overflow: hidden;
 }
 
 .trusted__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .68rem;
+  letter-spacing: .1em;
+  color: rgba(255, 255, 255, .2);
   text-align: center;
-  font-family: var(--font-mono, monospace);
-  font-size: .7rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--text-muted, #6B67A3);
   margin-bottom: 28px;
 }
 
-/* Carousel bleeds full viewport */
 .trusted__carousel {
-  position: relative;
-  width: 100vw;
-  left: 50%;
-  transform: translateX(-50%);
   overflow: hidden;
-  /* Fade edges */
-  -webkit-mask: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
-  mask: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
 .trusted__track {
   display: flex;
+  align-items: center;
   gap: 0;
   width: max-content;
-  animation: marquee 28s linear infinite;
+  animation: marqueeL 32s linear infinite;
 }
 
-.trusted__track:hover {
+.trusted__carousel:hover .trusted__track {
   animation-play-state: paused;
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
 }
 
 .trusted__item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 36px;
+  padding: 0 36px;
   white-space: nowrap;
-  cursor: default;
-  border-right: 1px solid var(--border-subtle, rgba(255, 255, 255, .05));
-  transition: opacity .25s;
-}
-
-.trusted__item:hover {
-  opacity: 1 !important;
+  border-right: 1px solid rgba(255, 255, 255, .05);
 }
 
 .trusted__icon {
-  font-size: 1.1rem;
-  filter: grayscale(1) opacity(.4);
-  transition: filter .25s;
-}
-
-.trusted__item:hover .trusted__icon {
-  filter: none;
+  font-size: 1.3rem;
 }
 
 .trusted__name {
-  font-family: var(--font-head, 'Bebas Neue', sans-serif);
-  font-size: 1rem;
-  letter-spacing: .12em;
-  color: rgba(255, 255, 255, .18);
-  transition: color .25s;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8rem;
+  letter-spacing: .04em;
+  color: rgba(255, 255, 255, .3);
+  transition: color .2s;
 }
 
 .trusted__item:hover .trusted__name {
-  color: rgba(255, 255, 255, .55);
+  color: rgba(255, 255, 255, .7);
 }

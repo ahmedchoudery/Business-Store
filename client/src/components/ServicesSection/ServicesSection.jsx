@@ -1,54 +1,84 @@
-// FILE: client/src/components/ServicesSection/ServicesSection.jsx
-
-import { useRef, useEffect } from 'react';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
-import './ServicesSection.css';
+import { useRef } from 'react'
+import { useScrollReveal } from '../../hooks/useScrollReveal'
+import './ServicesSection.css'
 
 const SERVICES = [
-    { icon: '🖥️', title: 'Business Website', desc: 'A professional site that keeps your business open 24/7 and builds trust with every visitor.', tags: ['5–8 Pages', 'Mobile-First', 'Contact Form'], color: '#7C3AED' },
-    { icon: '🛒', title: 'E-Commerce Store', desc: 'Sell your products online with a secure, easy-to-manage store. Accept payments and track orders.', tags: ['Product Catalog', 'Cart & Checkout', 'Inventory'], color: '#F43F5E' },
-    { icon: '🚀', title: 'Landing Page', desc: 'High-converting single pages built for ads and lead gen. More clicks = more sales.', tags: ['1-Page Design', 'CTA Focused', 'Fast Load'], color: '#10B981' },
-    { icon: '🔍', title: 'SEO Optimization', desc: 'Rank higher on Google Pakistan. Get found by local customers searching for your services.', tags: ['Keyword Research', 'On-Page SEO', 'Analytics'], color: '#F59E0B' },
-    { icon: '📱', title: 'Mobile-First Design', desc: 'Over 80% of Pakistani users browse on mobile. Your site will look perfect on every screen.', tags: ['Responsive', 'Touch-Friendly', 'Fast on 4G'], color: '#A78BFA' },
-    { icon: '🔧', title: 'Website Maintenance', desc: 'Keep your site updated, secure, and fast. Monthly care plans so you never worry again.', tags: ['Monthly Updates', 'Security', 'Support'], color: '#38BDF8' },
-];
+    {
+        icon: '⚡', num: '01',
+        title: 'Business Website',
+        desc: 'Fast, SEO-optimized business sites that convert visitors into customers. Mobile-first, Google-ready.',
+        tags: ['React', 'SEO', 'Responsive'],
+        color: '#38BDF8',
+    },
+    {
+        icon: '🛒', num: '02',
+        title: 'E-Commerce Store',
+        desc: 'Full-featured online stores with product catalog, cart, WhatsApp checkout, and order management.',
+        tags: ['Next.js', 'Stripe', 'WhatsApp'],
+        color: '#10B981',
+    },
+    {
+        icon: '🚀', num: '03',
+        title: 'Landing Page',
+        desc: 'High-converting landing pages built for campaigns, launches, and lead generation.',
+        tags: ['React', 'Animation', 'CRO'],
+        color: '#A78BFA',
+    },
+    {
+        icon: '📈', num: '04',
+        title: 'SEO Optimization',
+        desc: 'Rank higher on Google. Technical SEO, keyword research, on-page optimization, and speed improvements.',
+        tags: ['Google', 'Core Web Vitals', 'Analytics'],
+        color: '#FBBF24',
+    },
+    {
+        icon: '🎨', num: '05',
+        title: 'UI/UX Design',
+        desc: 'Beautiful, intuitive interfaces designed with users in mind. Figma design to pixel-perfect code.',
+        tags: ['Figma', 'Tailwind', 'Animations'],
+        color: '#F43F5E',
+    },
+    {
+        icon: '🔧', num: '06',
+        title: 'Maintenance & Support',
+        desc: 'Keep your site fast, secure, and up-to-date. Monthly retainer or one-time fixes.',
+        tags: ['Updates', 'Security', 'Hosting'],
+        color: '#38BDF8',
+    },
+]
 
-function ServiceCard({ service, index }) {
-    const cardRef = useRef(null);
-    const { ref: revealRef, visible } = useScrollReveal({ threshold: 0.12 });
+function ServiceCard({ service, delay }) {
+    const cardRef = useRef(null)
+    const { ref, visible } = useScrollReveal({ threshold: 0.2 })
 
-    // Magnetic tilt on hover
-    useEffect(() => {
-        const card = cardRef.current;
-        if (!card || window.matchMedia('(pointer: coarse)').matches) return;
+    const onMove = (e) => {
+        const card = cardRef.current
+        if (!card) return
+        const rect = card.getBoundingClientRect()
+        const cx = rect.left + rect.width / 2
+        const cy = rect.top + rect.height / 2
+        const dx = (e.clientX - cx) / (rect.width / 2)
+        const dy = (e.clientY - cy) / (rect.height / 2)
+        card.style.transform = `perspective(900px) rotateX(${-dy * 8}deg) rotateY(${dx * 8}deg) translateZ(8px)`
+        card.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`)
+        card.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`)
+    }
+    const onLeave = () => {
+        if (cardRef.current) cardRef.current.style.transform = ''
+    }
 
-        const onMove = (e) => {
-            const rect = card.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const cy = rect.top + rect.height / 2;
-            const rx = ((e.clientY - cy) / (rect.height / 2)) * -10;
-            const ry = ((e.clientX - cx) / (rect.width / 2)) * 10;
-            card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
-        };
-        const onLeave = () => { card.style.transform = ''; };
-
-        card.addEventListener('mousemove', onMove);
-        card.addEventListener('mouseleave', onLeave);
-        return () => {
-            card.removeEventListener('mousemove', onMove);
-            card.removeEventListener('mouseleave', onLeave);
-        };
-    }, []);
-
-    const delay = (index % 3) * 0.1;
+    const setRefs = (el) => { cardRef.current = el; ref.current = el }
 
     return (
         <div
-            ref={(el) => { cardRef.current = el; revealRef.current = el; }}
-            className={`svc-card ${visible ? 'svc-card--visible' : ''}`}
-            style={{ '--color': service.color, '--delay': `${delay}s` }}
+            ref={setRefs}
+            className={`svc-card reveal${visible ? ' visible' : ''}`}
+            style={{ animationDelay: `${delay}s`, '--accent-color': service.color }}
+            onMouseMove={onMove}
+            onMouseLeave={onLeave}
         >
             <div className="svc-card__glow" />
+            <div className="svc-card__num">{service.num}</div>
             <div className="svc-card__icon">{service.icon}</div>
             <h3 className="svc-card__title">{service.title}</h3>
             <p className="svc-card__desc">{service.desc}</p>
@@ -57,27 +87,30 @@ function ServiceCard({ service, index }) {
             </div>
             <div className="svc-card__arrow">→</div>
         </div>
-    );
+    )
 }
 
 export default function ServicesSection() {
-    const { ref: headRef, visible: headVisible } = useScrollReveal({ threshold: 0.3 });
+    const { ref, visible } = useScrollReveal({ threshold: 0.1 })
 
     return (
         <section id="services" className="services">
             <div className="container">
-                <div ref={headRef} className={`services__head ${headVisible ? 'reveal visible' : 'reveal'}`}>
-                    <span className="section-label">What I Build</span>
-                    <h2 className="section-title">Services That <span className="gradient-text">Drive Growth</span></h2>
+                <div className={`services__header reveal${visible ? ' visible' : ''}`} ref={ref}>
+                    <div className="section-label">services</div>
+                    <h2 className="section-title">
+                        What I <span className="gradient-text">Build</span>
+                    </h2>
                     <p className="section-subtitle">
-                        Every service is designed to attract customers, build trust, and make your business stand out in the Pakistani market.
+                        End-to-end web solutions for Pakistani businesses — from concept to launch.
                     </p>
                 </div>
-
                 <div className="services__grid">
-                    {SERVICES.map((s, i) => <ServiceCard key={s.title} service={s} index={i} />)}
+                    {SERVICES.map((s, i) => (
+                        <ServiceCard key={s.num} service={s} delay={i * 0.08} />
+                    ))}
                 </div>
             </div>
         </section>
-    );
+    )
 }

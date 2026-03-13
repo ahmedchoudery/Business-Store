@@ -1,86 +1,161 @@
-/* FILE: client/src/components/CTASection/CTASection.css */
-
 .cta {
-  background: var(--bg-secondary, #080618);
   position: relative;
   overflow: hidden;
-  text-align: center;
+  background: var(--bg-primary);
+  padding: 120px 0;
 }
 
-/* Parallax orb */
+/* Scanline texture */
+.cta__scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 3px,
+      rgba(56, 189, 248, 0.015) 3px,
+      rgba(56, 189, 248, 0.015) 4px);
+  animation: scanlines 6s linear infinite;
+  z-index: 0;
+}
+
+/* Grid lines */
+.cta__grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  z-index: 0;
+}
+
+/* Parallax glowing orb */
 .cta__orb {
   position: absolute;
-  top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
   width: 700px;
   height: 700px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124, 58, 237, .12) 0%, rgba(245, 158, 11, .06) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(16, 185, 129, 0.06) 35%, transparent 70%);
   pointer-events: none;
+  z-index: 0;
   will-change: transform;
-}
-
-/* Subtle grid lines overlay */
-.cta__grid-lines {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(124, 58, 237, .04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124, 58, 237, .04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
 }
 
 /* Content */
 .cta__inner {
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  text-align: center;
   max-width: 680px;
   margin: 0 auto;
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity .8s ease, transform .8s cubic-bezier(.4, 0, .2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
 }
 
-.cta__inner--visible {
-  opacity: 1;
-  transform: none;
+.cta__mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  color: rgba(56, 189, 248, .4);
+  margin-bottom: 20px;
+  text-transform: lowercase;
 }
 
 .cta__title {
-  font-family: var(--font-head, 'Bebas Neue', sans-serif);
-  font-size: clamp(2.8rem, 5.5vw, 5rem);
-  letter-spacing: .02em;
-  line-height: .92;
-  margin: 14px 0 24px;
-  color: var(--text-primary, #F8F7FF);
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: .04em;
+  line-height: .9;
+  color: var(--text-primary);
+  margin-bottom: 24px;
 }
 
-.cta__body {
+.cta__title-accent {
+  display: block;
+  background: linear-gradient(120deg, #38BDF8, #10B981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cta__sub {
   font-size: 1.05rem;
-  line-height: 1.76;
-  color: var(--text-secondary, #8B87C4);
-  max-width: 520px;
-  margin: 0 auto 40px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin-bottom: 40px;
 }
 
 .cta__actions {
   display: flex;
   gap: 16px;
-  justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 32px;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
-.cta__trust {
+.cta__btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta__btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, .15) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform .6s ease;
+}
+
+.cta__btn-primary:hover::after {
+  transform: translateX(100%);
+}
+
+.cta__features {
   display: flex;
-  gap: 16px;
-  justify-content: center;
+  gap: 28px;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cta__feature {
+  display: flex;
   align-items: center;
-  font-family: var(--font-mono, monospace);
-  font-size: .7rem;
-  letter-spacing: .08em;
-  color: var(--text-muted, #6B67A3);
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+}
+
+.cta__feature-check {
+  color: #10B981;
+  font-size: .8rem;
+}
+
+@media (max-width: 560px) {
+  .cta__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cta__features {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
 }

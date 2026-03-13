@@ -1,34 +1,29 @@
-/* FILE: client/src/components/ScrollProgress/ScrollProgress.css */
-
-.sp {
+.scroll-track {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 2px;
-  z-index: 9998;
+  z-index: 9999;
   background: transparent;
-  pointer-events: none;
 }
 
-.sp__bar {
+.scroll-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7C3AED 0%, #A78BFA 40%, #F59E0B 80%, #F43F5E 100%);
-  border-radius: 0 2px 2px 0;
-  box-shadow: 0 0 14px rgba(124, 58, 237, .7);
+  background: linear-gradient(90deg, #38BDF8 0%, #10B981 60%, #FBBF24 100%);
   transition: width .1s linear;
   position: relative;
+  box-shadow: 0 0 6px rgba(56, 189, 248, .5);
 }
 
-.sp__bar::after {
-  content: '';
+.scroll-glow-dot {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #F59E0B;
-  box-shadow: 0 0 10px #F59E0B, 0 0 20px rgba(245, 158, 11, .5);
+  background: #38BDF8;
+  box-shadow: 0 0 10px 3px rgba(56, 189, 248, .7);
 }

@@ -1,6 +1,3 @@
-// FILE: client/src/App.jsx
-// ErrorBoundary wraps every section so one crash never blanks the entire page.
-
 import ErrorBoundary from './components/Errorboundary/Errorboundary';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import CustomCursor from './components/CustomCursor/CustomCursor';
@@ -24,37 +21,35 @@ import CTASection from './components/CTASection/CTASection';
 import ContactSection from './components/ContactSection/ContactSection';
 import Footer from './components/Footer/Footer';
 
-const safe = (Component) => (
-  <ErrorBoundary>
-    <Component />
-  </ErrorBoundary>
-);
+const S = (C) => <ErrorBoundary><C /></ErrorBoundary>;
 
 export default function App() {
   return (
-    <PageLoader>
-      <ErrorBoundary fallback={null}><ScrollProgress /></ErrorBoundary>
-      <ErrorBoundary fallback={null}><CustomCursor /></ErrorBoundary>
-      <ErrorBoundary fallback={null}><WhatsAppFAB /></ErrorBoundary>
-      <ErrorBoundary fallback={null}><Navbar /></ErrorBoundary>
-      <main>
-        {safe(HeroSection)}
-        {safe(TrustedSection)}
-        {safe(ServicesSection)}
-        {safe(ProcessSection)}
-        {safe(PortfolioSection)}
-        {safe(CaseStudySection)}
-        {safe(SkillsSection)}
-        {safe(TechStackSection)}
-        {safe(StatsSection)}
-        {safe(WhyMeSection)}
-        {safe(TimelineSection)}
-        {safe(PricingSection)}
-        {safe(TestimonialsSection)}
-        {safe(CTASection)}
-        {safe(ContactSection)}
-      </main>
-      <ErrorBoundary><Footer /></ErrorBoundary>
-    </PageLoader>
+    <ErrorBoundary>
+      <PageLoader>
+        <ScrollProgress />
+        <CustomCursor />
+        <WhatsAppFAB />
+        <Navbar />
+        <main>
+          {S(HeroSection)}
+          {S(TrustedSection)}
+          {S(ServicesSection)}
+          {S(ProcessSection)}
+          {S(PortfolioSection)}
+          {S(CaseStudySection)}
+          {S(SkillsSection)}
+          {S(TechStackSection)}
+          {S(StatsSection)}
+          {S(WhyMeSection)}
+          {S(TimelineSection)}
+          {S(PricingSection)}
+          {S(TestimonialsSection)}
+          {S(CTASection)}
+          {S(ContactSection)}
+        </main>
+        <Footer />
+      </PageLoader>
+    </ErrorBoundary>
   );
 }

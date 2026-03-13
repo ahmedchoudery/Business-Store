@@ -1,176 +1,172 @@
-// FILE: client/src/components/HeroSection/HeroSection.jsx
+import { useState, useEffect, useRef, Suspense, lazy } from 'react'
+import './HeroSection.css'
 
-import { useState, useEffect, useRef } from 'react';
-import Hero3DCanvas from './Hero3DCanvas';
-import './HeroSection.css';
+const Hero3DCanvas = lazy(() => import('./Hero3DCanvas'))
 
-const ROLES = ['YOUR BUSINESS', 'RESTAURANTS', 'BOUTIQUES', 'CLINICS', 'WEDDING HALLS', 'REAL ESTATE'];
-const STATS = [
-    { val: '15+', label: 'Projects' },
-    { val: '100%', label: 'Satisfaction' },
-    { val: '3d', label: 'Delivery' },
-    { val: '24/7', label: 'Support' },
-];
+const ROLES = [
+    'Full-Stack Developer',
+    'React / Next.js Expert',
+    'SEO Specialist',
+    'UI/UX Engineer',
+    'Node.js Developer',
+]
 
 export default function HeroSection() {
-    const [roleIdx, setRoleIdx] = useState(0);
-    const [fade, setFade] = useState(true);
-    const sectionRef = useRef(null);
+    const [roleIdx, setRoleIdx] = useState(0)
+    const [typed, setTyped] = useState('')
+    const [deleting, setDeleting] = useState(false)
+    const sectionRef = useRef(null)
+    const parallaxRef = useRef([])
 
-    // Cycle roles
+    /* ── Typewriter ── */
     useEffect(() => {
-        const id = setInterval(() => {
-            setFade(false);
-            setTimeout(() => {
-                setRoleIdx(i => (i + 1) % ROLES.length);
-                setFade(true);
-            }, 380);
-        }, 2800);
-        return () => clearInterval(id);
-    }, []);
+        const current = ROLES[roleIdx]
+        let t
+        if (!deleting && typed.length < current.length) {
+            t = setTimeout(() => setTyped(current.slice(0, typed.length + 1)), 65)
+        } else if (!deleting && typed.length === current.length) {
+            t = setTimeout(() => setDeleting(true), 1800)
+        } else if (deleting && typed.length > 0) {
+            t = setTimeout(() => setTyped(current.slice(0, typed.length - 1)), 30)
+        } else if (deleting && typed.length === 0) {
+            setDeleting(false)
+            setRoleIdx(i => (i + 1) % ROLES.length)
+        }
+        return () => clearTimeout(t)
+    }, [typed, deleting, roleIdx])
 
-    // Parallax on mouse move (desktop only)
+    /* ── Mouse parallax ── */
     useEffect(() => {
-        if (window.matchMedia('(pointer: coarse)').matches) return;
-        const section = sectionRef.current;
-        if (!section) return;
-
-        let raf;
-        let tx = 0, ty = 0;
-
+        let raf
         const onMove = (e) => {
-            const cx = window.innerWidth / 2;
-            const cy = window.innerHeight / 2;
-            tx = (e.clientX - cx) / cx;
-            ty = (e.clientY - cy) / cy;
-        };
+            cancelAnimationFrame(raf)
+            raf = requestAnimationFrame(() => {
+                const hw = window.innerWidth / 2
+                const hh = window.innerHeight / 2
+                const dx = (e.clientX - hw) / hw
+                const dy = (e.clientY - hh) / hh
+                parallaxRef.current.forEach((el, i) => {
+                    if (!el) return
+                    const depth = (i + 1) * 12
+                    el.style.transform = `translate(${dx * depth}px, ${dy * depth}px)`
+                })
+            })
+        }
+        window.addEventListener('mousemove', onMove, { passive: true })
+        return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(raf) }
+    }, [])
 
-        const loop = () => {
-            const layers = section.querySelectorAll('[data-parallax]');
-            layers.forEach(el => {
-                const depth = parseFloat(el.dataset.parallax);
-                el.style.transform = `translate(${tx * depth}px, ${ty * depth}px)`;
-            });
-            raf = requestAnimationFrame(loop);
-        };
-
-        raf = requestAnimationFrame(loop);
-        window.addEventListener('mousemove', onMove, { passive: true });
-        return () => { cancelAnimationFrame(raf); window.removeEventListener('mousemove', onMove); };
-    }, []);
+    const nav = (href) => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 
     return (
-        <section id="hero" className="hero" ref={sectionRef}>
-            {/* ── 3D Canvas fills the full right side and background ── */}
-            <Hero3DCanvas />
+        <section className="hero" ref={sectionRef} id="home">
+            {/* 3D Background */}
+            <div className="hero__canvas">
+                <Suspense fallback={<div className="hero__canvas-fallback" />}>
+                    <Hero3DCanvas />
+                </Suspense>
+            </div>
 
-            {/* Gradient overlays */}
-            <div className="hero__grad hero__grad--l" />
-            <div className="hero__grad hero__grad--b" />
+            {/* Dark overlay gradient */}
+            <div className="hero__overlay" />
 
-            {/* Floating bg orbs */}
-            <div className="hero__orb hero__orb--1" data-parallax="-18" />
-            <div className="hero__orb hero__orb--2" data-parallax="12" />
+            {/* Parallax orbs */}
+            <div className="hero__orb hero__orb--1" ref={el => parallaxRef.current[0] = el} />
+            <div className="hero__orb hero__orb--2" ref={el => parallaxRef.current[1] = el} />
+            <div className="hero__orb hero__orb--3" ref={el => parallaxRef.current[2] = el} />
 
-            <div className="container">
-                <div className="hero__content">
+            {/* Content */}
+            <div className="container hero__content">
+                <div className="hero__left">
 
-                    {/* ── LEFT ── */}
-                    <div className="hero__left">
-
-                        <div className="hero__badge animate-fade-up animate-delay-1">
-                            <span className="hero__badge-pulse" />
-                            <span>Available for projects · 🇵🇰 Pakistan</span>
-                        </div>
-
-                        <h1 className="hero__h1 animate-fade-up animate-delay-2">
-                            <span className="hero__line1">WEBSITES</span>
-                            <span className="hero__line2">THAT GROW</span>
-                            <span className="hero__line-wrap">
-                                {/* Invisible spacer keeps layout stable */}
-                                <span className="hero__line-spacer" aria-hidden="true">{ROLES[0]}</span>
-                                <span
-                                    className="hero__cycle"
-                                    style={{ opacity: fade ? 1 : 0, transform: fade ? 'translateY(0)' : 'translateY(-16px)' }}
-                                >
-                                    {ROLES[roleIdx]}
-                                </span>
-                            </span>
-                        </h1>
-
-                        <p className="hero__body animate-fade-up animate-delay-3">
-                            I craft fast, modern, SEO-optimized websites for Pakistani businesses.
-                            From Karachi to Lahore — your brand deserves a powerful digital presence.
-                        </p>
-
-                        <div className="hero__actions animate-fade-up animate-delay-4">
-                            <button
-                                className="btn btn-primary btn-lg"
-                                onClick={() => document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' })}
-                            >
-                                See Real Results →
-                            </button>
-                            <a
-                                href="https://wa.me/923174307043?text=Hi%20Ahmed%2C%20I%20need%20a%20website"
-                                target="_blank" rel="noopener noreferrer"
-                                className="btn btn-whatsapp btn-lg"
-                            >
-                                💬 WhatsApp Me
-                            </a>
-                        </div>
-
-                        <div className="hero__stats animate-fade-up animate-delay-5">
-                            {STATS.map(s => (
-                                <div key={s.val} className="hero__stat">
-                                    <div className="hero__stat-val">{s.val}</div>
-                                    <div className="hero__stat-label">{s.label}</div>
-                                </div>
-                            ))}
-                        </div>
+                    {/* Status badge */}
+                    <div className="hero__badge animate-fade-up animate-delay-1">
+                        <span className="hero__badge-dot" />
+                        <span className="hero__badge-mono">available for projects · Pakistan</span>
                     </div>
 
-                    {/* ── RIGHT metric card ── */}
-                    <div className="hero__right animate-fade-up animate-delay-3" data-parallax="10">
-                        <div className="hero__card">
-                            <div className="hero__card-glow" />
-                            <div className="hero__card-top">
-                                <div className="hero__card-avatar">A</div>
-                                <div>
-                                    <div className="hero__card-name">Ahmed · Dev</div>
-                                    <div className="hero__card-role">Full-Stack Web Developer</div>
-                                </div>
-                                <div className="hero__card-online">
-                                    <span className="hero__card-dot" />
-                                    Online
-                                </div>
-                            </div>
-                            <div className="hero__card-divider" />
-                            {[
-                                ['Projects Delivered', '15+'],
-                                ['Avg. Page Speed', '96 / 100'],
-                                ['Client Satisfaction', '100%'],
-                                ['Response Time', '< 2 hrs'],
-                            ].map(([l, v]) => (
-                                <div key={l} className="hero__card-row">
-                                    <span className="hero__card-row-label">{l}</span>
-                                    <span className="hero__card-row-val">{v}</span>
-                                </div>
-                            ))}
-                            <div className="hero__card-tags">
-                                {['React', 'Next.js', 'Node.js', 'SEO', 'Tailwind'].map(t => (
-                                    <span key={t} className="hero__card-tag">{t}</span>
-                                ))}
-                            </div>
-                        </div>
+                    {/* Headline */}
+                    <h1 className="hero__title animate-fade-up animate-delay-2">
+                        <span className="hero__title-line hero__title-dim">Ahmed</span>
+                        <span className="hero__title-line">Code</span>
+                        <span className="hero__title-line hero__title-accent">Studio.</span>
+                    </h1>
+
+                    {/* Typewriter role */}
+                    <div className="hero__typewriter animate-fade-up animate-delay-3">
+                        <span className="hero__typewriter-prompt">$</span>
+                        <span className="hero__typewriter-text">{typed}</span>
+                        <span className="hero__typewriter-cursor">_</span>
                     </div>
 
+                    {/* Sub */}
+                    <p className="hero__sub animate-fade-up animate-delay-4">
+                        Building fast, modern, SEO-optimized websites for businesses across Pakistan.
+                        From concept to deployment — clean code, pixel-perfect design.
+                    </p>
+
+                    {/* CTAs */}
+                    <div className="hero__ctas animate-fade-up animate-delay-5">
+                        <button className="btn btn-primary btn-lg" onClick={() => nav('#portfolio')}>
+                            View Projects
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17l9.2-9.2M17 17V7H7" /></svg>
+                        </button>
+                        <button className="btn btn-ghost btn-lg" onClick={() => nav('#contact')}>
+                            $ start.project()
+                        </button>
+                    </div>
+
+                    {/* Tech stack quick pills */}
+                    <div className="hero__stack animate-fade-up" style={{ animationDelay: '.72s' }}>
+                        {['React', 'Next.js', 'Node.js', 'TypeScript', 'MongoDB', 'SEO'].map(t => (
+                            <span key={t} className="hero__stack-tag">{t}</span>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Right side — code snippet decoration */}
+                <div className="hero__right animate-fade-up animate-delay-3">
+                    <div className="hero__code-card">
+                        <div className="hero__code-bar">
+                            <span className="hero__code-dot" style={{ background: '#F43F5E' }} />
+                            <span className="hero__code-dot" style={{ background: '#FBBF24' }} />
+                            <span className="hero__code-dot" style={{ background: '#10B981' }} />
+                            <span className="hero__code-filename">portfolio.config.js</span>
+                        </div>
+                        <pre className="hero__code-body"><code>{`const studio = {
+  name: "Ahmed Code Studio",
+  stack: ["React", "Next.js",
+          "Node.js", "MongoDB"],
+  location: "Gujrat, Pakistan",
+  available: true,
+  delivery: "3–7 days",
+  quality: "pixel-perfect"
+};
+
+export default studio;`}</code></pre>
+                    </div>
+
+                    {/* Stats mini row */}
+                    <div className="hero__mini-stats">
+                        {[
+                            { val: '15+', label: 'Projects' },
+                            { val: '100%', label: 'Satisfaction' },
+                            { val: '3d', label: 'Avg Delivery' },
+                        ].map(s => (
+                            <div key={s.label} className="hero__mini-stat">
+                                <span className="hero__mini-val">{s.val}</span>
+                                <span className="hero__mini-label">{s.label}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
-            <div className="hero__scroll" aria-hidden="true">
-                <span>SCROLL</span>
-                <div className="hero__scroll-line" />
+            {/* Scroll hint */}
+            <div className="hero__scroll-hint">
+                <span className="hero__scroll-line" />
+                <span className="hero__scroll-label">scroll</span>
             </div>
         </section>
-    );
+    )
 }

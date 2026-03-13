@@ -1,17 +1,9 @@
-/* FILE: client/src/components/ServicesSection/ServicesSection.css */
-
 .services {
-    background: var(--bg-secondary, #080618);
+    background: var(--bg-primary);
 }
 
-.services__head {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto 64px;
-}
-
-.services__head .section-subtitle {
-    margin: 0 auto;
+.services__header {
+    margin-bottom: 60px;
 }
 
 .services__grid {
@@ -20,125 +12,118 @@
     gap: 20px;
 }
 
-/* ── Card ────────────────────────────────────────────── */
 .svc-card {
     position: relative;
-    background: var(--bg-card, #130F2D);
-    border: 1px solid var(--border-subtle, rgba(255, 255, 255, .06));
-    border-radius: 20px;
-    padding: 36px 32px;
     overflow: hidden;
-    cursor: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 32px 28px;
+    transition: border-color .35s, box-shadow .35s;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
 
-    /* Entrance animation */
+/* Shimmer from mouse pos */
+.svc-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .04) 0%, transparent 55%);
     opacity: 0;
-    transform: translateY(32px);
-    transition:
-        opacity .65s ease calc(var(--delay, 0s)),
-        transform .65s cubic-bezier(.4, 0, .2, 1) calc(var(--delay, 0s)),
-        box-shadow .35s ease,
-        border-color .3s ease;
-    will-change: transform, opacity;
+    transition: opacity .4s;
 }
 
-.svc-card--visible {
+.svc-card:hover::before {
     opacity: 1;
-    transform: translateY(0);
 }
 
-/* Radial glow that follows color */
+.svc-card:hover {
+    border-color: var(--accent-color, var(--accent));
+    box-shadow: 0 0 40px rgba(var(--accent-rgb, 56, 189, 248), 0.12), 0 8px 40px rgba(0, 0, 0, .5);
+}
+
+/* Color glow */
 .svc-card__glow {
     position: absolute;
-    top: -40px;
-    left: -40px;
-    width: 180px;
-    height: 180px;
+    top: -60px;
+    right: -60px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    background: radial-gradient(circle, color-mix(in srgb, var(--color, #7C3AED) 30%, transparent) 0%, transparent 70%);
-    pointer-events: none;
+    background: radial-gradient(circle, var(--accent-color, #38BDF8) 0%, transparent 70%);
     opacity: 0;
-    transition: opacity .4s ease;
+    transition: opacity .4s;
 }
 
 .svc-card:hover .svc-card__glow {
-    opacity: 1;
+    opacity: 0.06;
 }
 
-/* On hover — border lights up with card's color */
-.svc-card:hover {
-    border-color: var(--color, #7C3AED);
-    box-shadow: 0 16px 50px rgba(0, 0, 0, .5), 0 0 40px color-mix(in srgb, var(--color, #7C3AED) 18%, transparent);
+.svc-card__num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    color: var(--accent-color, var(--accent));
+    margin-bottom: 14px;
+    opacity: .6;
 }
 
-/* Icon */
 .svc-card__icon {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
+    font-size: 1.8rem;
+    margin-bottom: 16px;
     display: block;
-    width: 56px;
-    height: 56px;
-    line-height: 56px;
-    text-align: center;
-    border-radius: 14px;
-    background: color-mix(in srgb, var(--color, #7C3AED) 12%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color, #7C3AED) 22%, transparent);
-    transition: transform .3s ease, background .3s ease;
 }
 
-.svc-card:hover .svc-card__icon {
-    transform: scale(1.12) rotate(-4deg);
-}
-
-/* Title */
 .svc-card__title {
-    font-family: var(--font-head, 'Bebas Neue', sans-serif);
-    font-size: 1.45rem;
-    letter-spacing: .04em;
+    font-family: 'Orbitron', monospace;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    color: var(--text-primary);
     margin-bottom: 12px;
-    color: var(--text-primary, #F8F7FF);
-    transition: color .2s;
 }
 
-.svc-card:hover .svc-card__title {
-    color: var(--color, #7C3AED);
-}
-
-/* Desc */
 .svc-card__desc {
     font-size: .88rem;
-    line-height: 1.72;
-    color: var(--text-secondary, #8B87C4);
+    line-height: 1.7;
+    color: var(--text-secondary);
     margin-bottom: 20px;
 }
 
-/* Tags */
 .svc-card__tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
-    margin-bottom: 24px;
+    gap: 6px;
+    margin-bottom: 20px;
 }
 
 .svc-card__tag {
-    font-family: var(--font-mono, monospace);
-    font-size: .64rem;
-    padding: 4px 11px;
-    border-radius: 6px;
-    background: color-mix(in srgb, var(--color, #7C3AED) 10%, transparent);
-    border: 1px solid color-mix(in srgb, var(--color, #7C3AED) 20%, transparent);
-    color: var(--color, #7C3AED);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .05em;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    transition: .2s;
 }
 
-/* Arrow */
+.svc-card:hover .svc-card__tag {
+    border-color: color-mix(in srgb, var(--accent-color, #38BDF8) 30%, transparent);
+    color: var(--accent-color, var(--accent));
+}
+
 .svc-card__arrow {
     position: absolute;
-    bottom: 28px;
-    right: 28px;
-    font-size: 1.2rem;
-    color: var(--color, #7C3AED);
+    bottom: 24px;
+    right: 24px;
+    font-size: 1.1rem;
+    color: var(--accent-color, var(--accent));
     opacity: 0;
-    transform: translateX(-8px);
-    transition: opacity .3s ease, transform .3s ease;
+    transform: translate(-4px, 4px);
+    transition: opacity .25s, transform .25s;
 }
 
 .svc-card:hover .svc-card__arrow {
@@ -146,7 +131,6 @@
     transform: none;
 }
 
-/* ── Responsive ─────────────────────────────────────── */
 @media (max-width: 900px) {
     .services__grid {
         grid-template-columns: repeat(2, 1fr);

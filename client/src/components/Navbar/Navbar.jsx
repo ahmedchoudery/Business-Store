@@ -1,123 +1,120 @@
-// FILE: client/src/components/Navbar/Navbar.jsx
+import { useState, useEffect } from 'react'
+import './Navbar.css'
 
-import { useState, useEffect } from 'react';
-import './Navbar.css';
-
-const NAV = [
-    { label: 'Services', href: '#services' },
-    { label: 'Work', href: '#portfolio' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Contact', href: '#contact' },
-];
+const NAV_LINKS = [
+    { label: 'services', href: '#services' },
+    { label: 'portfolio', href: '#portfolio' },
+    { label: 'process', href: '#process' },
+    { label: 'pricing', href: '#pricing' },
+    { label: 'testimonials', href: '#testimonials' },
+    { label: 'contact', href: '#contact' },
+]
 
 export default function Navbar() {
-    const [scrolled, setScrolled] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [activeHref, setActive] = useState('');
+    const [scrolled, setScrolled] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false)
+    const [active, setActive] = useState('')
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 50);
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
+        const onScroll = () => setScrolled(window.scrollY > 40)
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
 
-    // Close drawer on resize to desktop
     useEffect(() => {
-        const onResize = () => { if (window.innerWidth > 768) setMenuOpen(false); };
-        window.addEventListener('resize', onResize);
-        return () => window.removeEventListener('resize', onResize);
-    }, []);
+        document.body.style.overflow = menuOpen ? 'hidden' : ''
+        return () => { document.body.style.overflow = '' }
+    }, [menuOpen])
 
-    // Lock body scroll when mobile menu open
-    useEffect(() => {
-        document.body.style.overflow = menuOpen ? 'hidden' : '';
-        return () => { document.body.style.overflow = ''; };
-    }, [menuOpen]);
-
-    const go = (href) => {
-        setMenuOpen(false);
-        setActive(href);
-        setTimeout(() => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' }), 50);
-    };
+    const nav = (href) => {
+        const el = document.querySelector(href)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+        setMenuOpen(false)
+        setActive(href)
+    }
 
     return (
         <>
-            <nav className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
-                {/* Logo */}
-                <button className="nav__logo" onClick={() => go('#hero')}>
-                    AHMED.
-                </button>
+            <header className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
+                <div className="navbar__inner container">
 
-                {/* Desktop links */}
-                <ul className="nav__links">
-                    {NAV.map((n, i) => (
-                        <li key={n.href} style={{ '--i': i }}>
-                            <button
-                                onClick={() => go(n.href)}
-                                className={`nav__link ${activeHref === n.href ? 'nav__link--active' : ''}`}
-                            >
-                                {n.label}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-
-                {/* Right side */}
-                <div className="nav__right">
-                    <a
-                        href="https://wa.me/923174307043?text=Hi%20Ahmed%2C%20I%20need%20a%20website"
-                        target="_blank" rel="noopener noreferrer"
-                        className="nav__cta"
-                    >
-                        Get a Quote
-                    </a>
-                    <button
-                        className={`nav__burger ${menuOpen ? 'nav__burger--open' : ''}`}
-                        onClick={() => setMenuOpen(o => !o)}
-                        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                        aria-expanded={menuOpen}
-                    >
-                        <span /><span /><span />
+                    {/* Brand */}
+                    <button className="navbar__brand" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                        <svg width="30" height="30" viewBox="0 0 100 100" className="navbar__logo-icon">
+                            <rect width="100" height="100" rx="16" fill="rgba(56,189,248,0.1)" stroke="rgba(56,189,248,0.25)" strokeWidth="2" />
+                            <line x1="14" y1="85" x2="50" y2="14" stroke="#38BDF8" strokeWidth="9" strokeLinecap="round" />
+                            <line x1="86" y1="85" x2="50" y2="14" stroke="#38BDF8" strokeWidth="9" strokeLinecap="round" />
+                            <circle cx="50" cy="14" r="5.5" fill="#FBBF24" />
+                            <line x1="28" y1="68" x2="72" y2="50" stroke="#FBBF24" strokeWidth="7.5" strokeLinecap="round" />
+                        </svg>
+                        <span className="navbar__brand-text">
+                            Ahmed <span className="navbar__brand-accent">Code</span><span className="navbar__brand-studio"> Studio</span>
+                        </span>
                     </button>
-                </div>
-            </nav>
 
-            {/* Mobile drawer overlay */}
-            <div
-                className={`nav__overlay ${menuOpen ? 'nav__overlay--open' : ''}`}
-                onClick={() => setMenuOpen(false)}
-                aria-hidden="true"
-            />
+                    {/* Desktop links */}
+                    <nav className="navbar__links">
+                        {NAV_LINKS.map(l => (
+                            <button
+                                key={l.href}
+                                className={`navbar__link${active === l.href ? ' navbar__link--active' : ''}`}
+                                onClick={() => nav(l.href)}
+                            >
+                                <span className="navbar__link-slash">/</span>{l.label}
+                            </button>
+                        ))}
+                    </nav>
+
+                    {/* CTA + Hamburger */}
+                    <div className="navbar__actions">
+                        <button className="btn btn-primary navbar__cta" onClick={() => nav('#contact')}>
+                            $ hire.me()
+                        </button>
+                        <button
+                            className={`navbar__hamburger${menuOpen ? ' is-open' : ''}`}
+                            onClick={() => setMenuOpen(m => !m)}
+                            aria-label="Toggle menu"
+                        >
+                            <span /><span /><span />
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            {/* Mobile overlay */}
+            <div className={`navbar__drawer-overlay${menuOpen ? ' is-open' : ''}`} onClick={() => setMenuOpen(false)} />
 
             {/* Mobile drawer */}
-            <div className={`nav__drawer ${menuOpen ? 'nav__drawer--open' : ''}`} role="dialog" aria-modal="true">
-                <div className="nav__drawer-header">
-                    <span className="nav__drawer-logo">AHMED.</span>
-                    <button className="nav__drawer-close" onClick={() => setMenuOpen(false)} aria-label="Close menu">✕</button>
+            <div className={`navbar__drawer${menuOpen ? ' is-open' : ''}`}>
+                <div className="navbar__drawer-header">
+                    <span className="navbar__drawer-brand">
+                        <span style={{ color: '#38BDF8' }}>Ahmed</span>
+                        <span style={{ color: '#FBBF24' }}> Code</span>
+                        <span style={{ color: 'rgba(255,255,255,0.5)' }}> Studio</span>
+                    </span>
+                    <button className="navbar__drawer-close" onClick={() => setMenuOpen(false)}>✕</button>
                 </div>
-
-                <ul className="nav__drawer-links">
-                    {NAV.map((n, i) => (
-                        <li key={n.href} style={{ '--i': i }} className={menuOpen ? 'nav__drawer-item--in' : ''}>
-                            <button onClick={() => go(n.href)} className="nav__drawer-link">
-                                <span className="nav__drawer-num">0{i + 1}</span>
-                                {n.label}
-                                <span className="nav__drawer-arrow">→</span>
-                            </button>
-                        </li>
+                <div className="navbar__drawer-mono">// navigation</div>
+                <nav className="navbar__drawer-links">
+                    {NAV_LINKS.map((l, i) => (
+                        <button
+                            key={l.href}
+                            className="navbar__drawer-link"
+                            style={{ animationDelay: `${i * 0.06}s` }}
+                            onClick={() => nav(l.href)}
+                        >
+                            <span className="navbar__drawer-num">0{i + 1}.</span>
+                            {l.label}
+                            <span className="navbar__drawer-arrow">→</span>
+                        </button>
                     ))}
-                </ul>
-
-                <a
-                    href="https://wa.me/923174307043?text=Hi%20Ahmed%2C%20I%20need%20a%20website"
-                    target="_blank" rel="noopener noreferrer"
-                    className="nav__drawer-cta"
-                    onClick={() => setMenuOpen(false)}
-                >
-                    💬 Chat on WhatsApp
-                </a>
+                </nav>
+                <div className="navbar__drawer-footer">
+                    <button className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} onClick={() => nav('#contact')}>
+                        $ get.started()
+                    </button>
+                </div>
             </div>
         </>
-    );
+    )
 }

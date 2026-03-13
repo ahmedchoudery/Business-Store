@@ -1,33 +1,29 @@
-// FILE: client/src/components/TrustedSection/TrustedSection.jsx
-
-import './TrustedSection.css';
+import './TrustedSection.css'
 
 const BRANDS = [
   { name: 'Falak Halls', icon: '🏛️' },
-  { name: 'Noor Boutique', icon: '✨' },
-  { name: 'CityMed Clinic', icon: '🏥' },
   { name: 'Spice Route', icon: '🍽️' },
-  { name: 'Raza Properties', icon: '🏡' },
-  { name: 'Lahore Eats', icon: '🍜' },
-  { name: 'Star Coaching', icon: '⭐' },
-  { name: 'Premier Estate', icon: '🏢' },
-];
-
-// Duplicate for seamless infinite loop
-const TRACK = [...BRANDS, ...BRANDS];
+  { name: 'Noor Boutique', icon: '👗' },
+  { name: 'MediCare Clinic', icon: '🏥' },
+  { name: 'Green Valley', icon: '🏡' },
+  { name: 'Royal Catering', icon: '👨‍🍳' },
+  { name: 'TechStart PK', icon: '💻' },
+  { name: 'Star Motors', icon: '🚗' },
+  { name: 'AlAmir Foods', icon: '🥘' },
+  { name: 'Bloom Salon', icon: '💅' },
+]
 
 export default function TrustedSection() {
+  const track = [...BRANDS, ...BRANDS]
   return (
-    <section id="trusted" className="trusted">
+    <section className="trusted">
       <div className="container">
-        <p className="trusted__label">Trusted by businesses across Pakistan</p>
+        <p className="trusted__label">// trusted by local businesses across Pakistan</p>
       </div>
-
-      {/* Carousel — no container constraint, bleeds full width */}
-      <div className="trusted__carousel" aria-hidden="true">
-        <div className="trusted__track">
-          {TRACK.map((b, i) => (
-            <div key={`${b.name}-${i}`} className="trusted__item">
+      <div className="trusted__carousel trusted__carousel--l">
+        <div className="trusted__track trusted__track--l">
+          {track.map((b, i) => (
+            <div key={i} className="trusted__item">
               <span className="trusted__icon">{b.icon}</span>
               <span className="trusted__name">{b.name}</span>
             </div>
@@ -35,5 +31,5 @@ export default function TrustedSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,63 +1,83 @@
-/* FILE: client/src/components/CustomCursor/CustomCursor.css */
-
 @media (pointer: coarse) {
-
-  .cursor-dot,
-  .cursor-ring,
-  .cursor-trail {
+  .cursor {
     display: none !important;
   }
 }
 
-.cursor-dot,
-.cursor-ring,
-.cursor-trail {
+.cursor {
   position: fixed;
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 9999;
-  border-radius: 50%;
+  z-index: 99999;
   will-change: transform;
+  border-radius: 50%;
 }
 
-/* Dot — snaps immediately */
+/* Inner dot — crosshair pixel */
 .cursor-dot {
   width: 6px;
   height: 6px;
-  background: #fff;
-  mix-blend-mode: difference;
+  background: #38BDF8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.9);
+  transition: width .15s, height .15s, background .15s;
 }
 
-/* Ring — spring follows */
+.cursor-dot.cursor-hover {
+  width: 10px;
+  height: 10px;
+  background: #FBBF24;
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.9);
+}
+
+.cursor-dot.cursor-click {
+  width: 4px;
+  height: 4px;
+  background: #F43F5E;
+  box-shadow: 0 0 10px rgba(244, 63, 94, .9);
+}
+
+/* Ring — follows with spring lag */
 .cursor-ring {
   width: 32px;
   height: 32px;
-  border: 1.5px solid rgba(124, 58, 237, 0.7);
-  transition:
-    width .25s ease,
-    height .25s ease,
-    border-color .25s ease,
-    opacity .2s ease;
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
+  transition: width .2s, height .2s, border-color .2s, background .2s;
 }
 
-/* Hover state — ring expands and turns amber */
-.cursor-ring--hover {
-  width: 52px;
-  height: 52px;
-  border-color: rgba(245, 158, 11, 0.8);
+/* Terminal crosshair lines on the ring */
+.cursor-ring::before,
+.cursor-ring::after {
+  content: '';
+  position: absolute;
+  background: rgba(56, 189, 248, 0.25);
 }
 
-/* Click state — ring compresses */
-.cursor-ring--click {
-  width: 22px;
-  height: 22px;
-  border-color: rgba(244, 63, 94, 0.9);
+.cursor-ring::before {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
 }
 
-/* Ghost trail — slowest, most transparent */
-.cursor-trail {
-  width: 64px;
-  height: 64px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+.cursor-ring::after {
+  height: 1px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+}
+
+.cursor-ring.cursor-hover {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(251, 191, 36, 0.5);
+  background: rgba(251, 191, 36, 0.04);
+}
+
+/* Ghost trail — very large, very faint */
+.cursor-ghost {
+  width: 72px;
+  height: 72px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.06) 0%, transparent 70%);
+  transition: background .3s;
 }
