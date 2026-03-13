@@ -10,30 +10,23 @@ export default function PageLoader({ children }) {
       setFadeOut(true);
       setTimeout(() => setLoading(false), 500);
     };
-
-    if (document.readyState === 'complete') {
-      done();
-    } else {
+    if (document.readyState === 'complete') { done(); }
+    else {
       window.addEventListener('load', done);
-      const timer = setTimeout(done, 2200);
-      return () => {
-        window.removeEventListener('load', done);
-        clearTimeout(timer);
-      };
+      const t = setTimeout(done, 2400);
+      return () => { window.removeEventListener('load', done); clearTimeout(t); };
     }
   }, []);
 
   return (
     <>
       {loading && (
-        <div className={`page-loader ${fadeOut ? 'page-loader--hidden' : ''}`}>
-          <div className="page-loader__logo">
-            <span className="page-loader__icon">&lt;/&gt;</span>
-            <span className="page-loader__text">
-              Ahmed<span>Dev</span>
-            </span>
+        <div className={`page-loader ${fadeOut ? 'page-loader--out' : ''}`}>
+          <div className="page-loader__inner">
+            <div className="page-loader__logo">AHMED.</div>
+            <div className="page-loader__bar"><div className="page-loader__fill" /></div>
+            <div className="page-loader__sub">Loading experience...</div>
           </div>
-          <div className="page-loader__spinner" />
         </div>
       )}
       {children}

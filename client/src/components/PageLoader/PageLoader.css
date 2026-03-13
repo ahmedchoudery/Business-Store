@@ -1,60 +1,82 @@
 .page-loader {
   position: fixed;
   inset: 0;
-  background: #070707;
+  z-index: 10000;
+  background: #04030C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+}
+
+.page-loader--out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-loader__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  z-index: 2000;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-.page-loader--hidden {
-  opacity: 0;
-  visibility: hidden;
+  gap: 24px;
 }
 
 .page-loader__logo {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  color: #f0ede4;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #7C3AED, #F59E0B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse-glow 1.8s ease-in-out infinite;
 }
 
-.page-loader__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(200, 245, 60, 0.08);
-  border: 1px solid rgba(200, 245, 60, 0.25);
-  font-size: 0.85rem;
-  color: #c8f53c;
+.page-loader__bar {
+  width: 160px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
 }
 
-.page-loader__text span:last-child {
-  color: #c8f53c;
+.page-loader__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #7C3AED, #F59E0B);
+  animation: loader-fill 2s ease forwards;
 }
 
-.page-loader__spinner {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 2px solid rgba(200, 245, 60, 0.15);
-  border-top-color: #c8f53c;
-  animation: loaderSpin 0.75s linear infinite;
+.page-loader__sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6B67A3;
 }
 
-@keyframes loaderSpin {
-  to {
-    transform: rotate(360deg);
+@keyframes loader-fill {
+  0% {
+    width: 0%;
+  }
+
+  60% {
+    width: 75%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
   }
 }

@@ -1,62 +1,75 @@
 /* ============================================================
-   GLOBAL DESIGN SYSTEM — AhmedDev
-   Dark Tech Agency Theme
+   DESIGN SYSTEM — AhmedDev Redesign
+   Deep Space / Violet + Amber theme
    ============================================================ */
 
 :root {
   /* ── Core palette ─────────────────────────────────────── */
-  --bg-primary: #06060E;
-  --bg-secondary: #0C0C1C;
-  --bg-card: #0F0F20;
-  --bg-card-hover: #141428;
-  --accent: #00E5FF;
-  --accent-dim: rgba(0, 229, 255, 0.12);
-  --accent-glow: rgba(0, 229, 255, 0.25);
-  --hot: #FF4D6D;
-  --hot-dim: rgba(255, 77, 109, 0.15);
-  --green: #00FFA3;
-  --text-primary: #F0F0FF;
-  --text-secondary: #8080A8;
-  --text-muted: #50507A;
-  --border: rgba(0, 229, 255, 0.1);
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 60px rgba(0, 229, 255, 0.12);
-  --radius: 12px;
-  --radius-lg: 20px;
-  --font-head: 'Syne', sans-serif;
-  --font-body: 'Outfit', sans-serif;
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --max-width: 1200px;
+  --bg-primary: #04030C;
+  --bg-secondary: #080618;
+  --bg-card: #130F2D;
+  --bg-card-hover: #19153A;
+  --surface: #0E0C25;
 
-  /* ── Compatibility aliases (global.css → index.css) ───── */
-  /* Color */
-  --color-bg: var(--bg-primary);
-  --color-bg-2: var(--bg-secondary);
-  --color-surface: var(--bg-card);
-  --color-surface-2: var(--bg-card);
-  --color-border: var(--border-subtle);
-  --color-primary: var(--accent);
-  --color-primary-light: var(--accent);
-  --color-primary-dark: var(--accent);
-  --color-primary-glow: var(--accent-glow);
-  --color-accent: var(--green);
-  --color-accent-light: var(--green);
-  --color-accent-glow: rgba(0, 255, 163, 0.25);
-  --color-white: var(--text-primary);
-  --color-text: var(--text-primary);
-  --color-text-muted: var(--text-secondary);
-  --color-text-faint: var(--text-muted);
-  /* Font */
-  --font-display: var(--font-head);
-  --font-main: var(--font-body);
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-base: var(--transition);
-  --transition-slow: 0.4s ease;
-  /* Layout */
+  /* ── Accent colors ────────────────────────────────────── */
+  --accent: #7C3AED;
+  --accent-dim: rgba(124, 58, 237, 0.12);
+  --accent-glow: rgba(124, 58, 237, 0.25);
+  --amber: #F59E0B;
+  --amber-dim: rgba(245, 158, 11, 0.12);
+  --amber-glow: rgba(245, 158, 11, 0.2);
+  --rose: #F43F5E;
+  --mint: #10B981;
+
+  /* ── Text ─────────────────────────────────────────────── */
+  --text-primary: #F8F7FF;
+  --text-secondary: #8B87C4;
+  --text-muted: #6B67A3;
+
+  /* ── Borders ──────────────────────────────────────────── */
+  --border: rgba(124, 58, 237, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+
+  /* ── Shadows ──────────────────────────────────────────── */
+  --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 60px rgba(124, 58, 237, 0.15);
+
+  /* ── Typography ───────────────────────────────────────── */
+  --font-head: 'Bebas Neue', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* ── Layout ───────────────────────────────────────────── */
+  --radius: 14px;
+  --radius-lg: 22px;
+  --max-width: 1180px;
   --nav-height: 72px;
-  /* Spacing scale */
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Legacy aliases (keep existing components working) ── */
+  --bg-primary: #04030C;
+  --bg-secondary: #080618;
+  --color-bg: #04030C;
+  --color-bg-2: #080618;
+  --color-surface: #130F2D;
+  --color-surface-2: #130F2D;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-primary: #7C3AED;
+  --color-primary-light: #A78BFA;
+  --color-primary-dark: #5B21B6;
+  --color-primary-glow: rgba(124, 58, 237, 0.25);
+  --color-accent: #F59E0B;
+  --color-accent-light: #FCD34D;
+  --color-accent-glow: rgba(245, 158, 11, 0.2);
+  --color-white: #F8F7FF;
+  --color-text: #F8F7FF;
+  --color-text-muted: #8B87C4;
+  --color-text-faint: #6B67A3;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-main: 'Outfit', sans-serif;
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s ease;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -69,7 +82,6 @@
   --space-16: 4rem;
   --space-20: 5rem;
   --space-24: 6rem;
-  /* Typography scale */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1.125rem;
@@ -78,13 +90,14 @@
   --text-2xl: 1.75rem;
   --text-3xl: 2.625rem;
   --text-4xl: 3.5rem;
-  /* Extended radius */
   --radius-sm: 6px;
-  --radius-md: var(--radius);
-  --radius-xl: var(--radius-lg);
+  --radius-md: 14px;
+  --radius-xl: 22px;
   --radius-full: 9999px;
-  /* Shadow aliases */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --hot: #F43F5E;
+  --hot-dim: rgba(244, 63, 94, 0.15);
+  --green: #10B981;
 }
 
 *,
@@ -107,30 +120,30 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  cursor: none;
 }
 
-/* Background grid pattern */
+/* Noise overlay */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
   z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px;
+  opacity: 0.45;
 }
 
-/* Ambient glow orbs */
+/* Ambient top-right glow */
 body::after {
   content: '';
   position: fixed;
-  top: -20%;
-  right: -10%;
+  top: -15%;
+  right: -5%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.06) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -146,25 +159,25 @@ img {
 }
 
 button {
-  cursor: pointer;
+  cursor: none;
   font-family: var(--font-body);
   border: none;
   background: none;
 }
 
 /* ============================================================
-   LAYOUT UTILITIES
+   LAYOUT
    ============================================================ */
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 28px;
   position: relative;
   z-index: 1;
 }
 
 section {
-  padding: 100px 0;
+  padding: 110px 0;
   position: relative;
   z-index: 1;
 }
@@ -177,43 +190,45 @@ h2,
 h3,
 h4 {
   font-family: var(--font-head);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: 1.0;
+  letter-spacing: 0.02em;
 }
 
 .section-label {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--amber);
   margin-bottom: 16px;
 }
 
 .section-label::before {
   content: '';
   display: block;
-  width: 24px;
+  width: 20px;
   height: 1px;
-  background: var(--accent);
+  background: var(--amber);
 }
 
 .section-title {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800;
+  font-family: var(--font-head);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  letter-spacing: 0.02em;
   color: var(--text-primary);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  line-height: 0.95;
 }
 
 .section-subtitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--text-secondary);
-  max-width: 560px;
-  line-height: 1.7;
+  max-width: 520px;
+  line-height: 1.75;
 }
 
 .text-accent {
@@ -221,11 +236,11 @@ h4 {
 }
 
 .text-hot {
-  color: var(--hot);
+  color: var(--rose);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent), var(--green));
+  background: linear-gradient(135deg, var(--accent), var(--amber));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -238,25 +253,31 @@ h4 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 28px;
-  border-radius: 8px;
+  padding: 13px 28px;
+  border-radius: 10px;
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   transition: var(--transition);
   position: relative;
   white-space: nowrap;
+  cursor: none;
+}
+
+.btn-lg {
+  padding: 16px 36px;
+  font-size: 1rem;
 }
 
 .btn-primary {
-  background: var(--accent);
-  color: #06060E;
+  background: linear-gradient(135deg, var(--accent), #5B21B6);
+  color: #fff;
+  box-shadow: 0 4px 24px var(--accent-glow);
 }
 
 .btn-primary:hover {
-  background: #33ECFF;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 229, 255, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 40px var(--accent-glow);
 }
 
 .btn-ghost {
@@ -278,7 +299,7 @@ h4 {
 
 .btn-whatsapp:hover {
   background: #20BD5A;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: 0 8px 32px rgba(37, 211, 102, 0.35);
 }
 
@@ -302,10 +323,10 @@ h4 {
 /* ============================================================
    ANIMATIONS
    ============================================================ */
-@keyframes fadeUp {
+@keyframes animate-fade-up {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(30px);
   }
 
   to {
@@ -314,25 +335,17 @@ h4 {
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes pulse-glow {
 
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4);
+    opacity: 1;
+    transform: scale(1);
   }
 
   50% {
-    box-shadow: 0 0 0 12px rgba(0, 229, 255, 0);
+    opacity: 0.6;
+    transform: scale(1.3);
   }
 }
 
@@ -340,111 +353,54 @@ h4 {
 
   0%,
   100% {
-    transform: translateY(0px);
+    transform: translateX(-50%) translateY(0);
   }
 
   50% {
-    transform: translateY(-12px);
+    transform: translateX(-50%) translateY(-10px);
   }
 }
 
 @keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-
   to {
     transform: rotate(360deg);
   }
 }
 
-@keyframes typing {
+@keyframes pulse {
 
   0%,
   100% {
     opacity: 1;
+    transform: scale(1);
   }
 
   50% {
-    opacity: 0;
+    opacity: 0.6;
+    transform: scale(1.4);
   }
 }
 
 .animate-fade-up {
-  animation: fadeUp 0.7s ease forwards;
+  animation: animate-fade-up 0.7s both;
 }
 
 .animate-delay-1 {
   animation-delay: 0.1s;
-  opacity: 0;
 }
 
 .animate-delay-2 {
   animation-delay: 0.2s;
-  opacity: 0;
 }
 
 .animate-delay-3 {
-  animation-delay: 0.3s;
-  opacity: 0;
+  animation-delay: 0.35s;
 }
 
 .animate-delay-4 {
-  animation-delay: 0.4s;
-  opacity: 0;
+  animation-delay: 0.45s;
 }
 
 .animate-delay-5 {
-  animation-delay: 0.5s;
-  opacity: 0;
-}
-
-.animate-delay-6 {
-  animation-delay: 0.6s;
-  opacity: 0;
-}
-
-/* ============================================================
-   SCROLLBAR
-   ============================================================ */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
-
-/* ============================================================
-   SELECTION
-   ============================================================ */
-::selection {
-  background: var(--accent);
-  color: #06060E;
-}
-
-/* ============================================================
-   RESPONSIVE HELPERS
-   ============================================================ */
-@media (max-width: 768px) {
-  section {
-    padding: 72px 0;
-  }
-
-  .section-title {
-    font-size: clamp(1.7rem, 5vw, 2.2rem);
-  }
-
-  .container {
-    padding: 0 20px;
-  }
+  animation-delay: 0.55s;
 }

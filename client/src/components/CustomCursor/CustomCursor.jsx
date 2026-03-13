@@ -1,51 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import './CustomCursor.css';
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [hoveringInteractive, setHoveringInteractive] = useState(false);
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+  const mx = useRef(0), my = useRef(0);
+  const rx = useRef(0), ry = useRef(0);
 
   useEffect(() => {
-    const handleMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-    };
+    const onMove = (e) => { mx.current = e.clientX; my.current = e.clientY; };
+    window.addEventListener('mousemove', onMove);
 
-    const handleOver = (e) => {
-      const target = e.target;
-      if (target.closest('a, button, [role="button"]')) {
-        setHoveringInteractive(true);
-      }
+    let raf;
+    const track = () => {
+      rx.current += (mx.current - rx.current) * 0.12;
+      ry.current += (my.current - ry.current) * 0.12;
+      if (dotRef.current)
+        dotRef.current.style.transform = `translate(${mx.current}px,${my.current}px) translate(-50%,-50%)`;
+      if (ringRef.current)
+        ringRef.current.style.transform = `translate(${rx.current}px,${ry.current}px) translate(-50%,-50%)`;
+      raf = requestAnimationFrame(track);
     };
+    raf = requestAnimationFrame(track);
 
-    const handleOut = (e) => {
-      const target = e.target;
-      if (target.closest('a, button, [role="button"]')) {
-        setHoveringInteractive(false);
-      }
+    const onOver = (e) => {
+      if (e.target.closest('a,button,[role="button"]'))
+        ringRef.current?.classList.add('cursor-ring--hover');
     };
-
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('mouseover', handleOver);
-    window.addEventListener('mouseout', handleOut);
+    const onOut = (e) => {
+      if (e.target.closest('a,button,[role="button"]'))
+        ringRef.current?.classList.remove('cursor-ring--hover');
+    };
+    window.addEventListener('mouseover', onOver);
+    window.addEventListener('mouseout', onOut);
 
     return () => {
-      window.removeEventListener('mousemove', handleMove);
-      window.removeEventListener('mouseover', handleOver);
-      window.removeEventListener('mouseout', handleOut);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseover', onOver);
+      window.removeEventListener('mouseout', onOut);
+      cancelAnimationFrame(raf);
     };
   }, []);
 
   return (
     <>
-      <div
-        className="cursor-dot"
-        style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)` }}
-      />
-      <div
-        className={`cursor-circle ${hoveringInteractive ? 'cursor-circle--active' : ''}`}
-        style={{ transform: `translate3d(${position.x}px, ${position.y}px, 0)` }}
-      />
+      <div ref={dotRef} className="cursor-dot" />
+      <div ref={ringRef} className="cursor-ring" />
     </>
   );
 }
-

@@ -1,21 +1,19 @@
 import './TrustedSection.css';
 
-const BRANDS = ['Falak Halls', 'Star Coaching', 'Premier Estate', 'City Bakery'];
+const brands = [
+  'FALAK HALLS', 'NOOR BOUTIQUE', 'CITYMED CLINIC',
+  'SPICE ROUTE', 'AL-NOOR REALTY', 'LAHORE EATS',
+];
 
 export default function TrustedSection() {
   return (
-    <section id="trusted" className="section trusted">
-      <div className="container trusted__inner">
-        <p className="trusted__title">Trusted by local businesses and founders</p>
-        <div className="trusted__logos">
-          {BRANDS.map((name) => (
-            <div key={name} className="trusted__logo">
-              <span>{name}</span>
-            </div>
-          ))}
+    <section id="trusted" className="trusted">
+      <div className="container">
+        <p className="trusted__label">Trusted by businesses across Pakistan</p>
+        <div className="trusted__row">
+          {brands.map(b => <span key={b} className="trusted__brand">{b}</span>)}
         </div>
       </div>
     </section>
   );
 }
-

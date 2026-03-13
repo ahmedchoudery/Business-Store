@@ -2,159 +2,169 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
     z-index: 1000;
-    padding: 18px 0;
-    transition: all 0.35s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: var(--nav-height);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navbar--scrolled {
-    padding: 12px 0;
-    background: rgba(7, 7, 7, 0.92);
+    background: rgba(4, 3, 12, 0.88);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    border-bottom-color: var(--border-subtle);
 }
 
-.navbar__inner {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-/* Logo */
 .navbar__logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--color-white);
-    flex-shrink: 0;
-    letter-spacing: -0.01em;
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, var(--accent), var(--amber));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    cursor: none;
+    border: none;
+    background-color: transparent;
+    padding: 0;
 }
 
-.navbar__logo svg {
-    color: var(--color-primary);
-}
-
-.navbar__logo-accent {
-    color: var(--color-primary);
-}
-
-/* Centered nav links */
 .navbar__links {
     display: flex;
-    align-items: center;
-    gap: 0.125rem;
-    flex: 1;
-    justify-content: center;
+    gap: 4px;
+    list-style: none;
 }
 
 .navbar__link {
-    padding: 7px 16px;
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: var(--color-text-muted);
-    border-radius: var(--radius-full);
-    transition: all var(--transition-base);
-    letter-spacing: 0.01em;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+    cursor: none;
 }
 
 .navbar__link:hover {
-    color: var(--color-white);
+    color: var(--text-primary);
     background: rgba(255, 255, 255, 0.05);
 }
 
-/* Actions */
-.navbar__actions {
+.navbar__right {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
-    margin-left: auto;
-}
-
-.navbar__theme-toggle {
-    width: 34px;
-    height: 34px;
-    border-radius: var(--radius-full);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-muted);
-    transition: all var(--transition-base);
-}
-
-.navbar__theme-toggle:hover {
-    background: rgba(200, 245, 60, 0.08);
-    color: var(--color-primary);
-    border-color: rgba(200, 245, 60, 0.25);
+    gap: 12px;
 }
 
 .navbar__cta {
-    flex-shrink: 0;
-    padding: 8px var(--space-5);
-    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
+    padding: 9px 22px;
+    border-radius: 50px;
+    background: var(--accent);
+    color: #fff;
+    transition: box-shadow 0.3s, transform 0.2s;
 }
 
-/* Hamburger */
+.navbar__cta:hover {
+    box-shadow: 0 0 24px var(--accent-glow);
+    transform: translateY(-1px);
+}
+
 .navbar__hamburger {
-    display: none;
-    color: var(--color-text);
-    padding: 4px;
-    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    cursor: none;
 }
 
-/* Mobile nav */
-.navbar__mobile {
+.navbar__hamburger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+}
+
+.navbar__hamburger span:last-child {
+    width: 14px;
+    align-self: flex-start;
+    margin-left: 2px;
+}
+
+.hamburger-close {
+    color: var(--accent);
+    font-size: 18px;
+    line-height: 1;
+}
+
+.navbar__drawer {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(4, 3, 12, 0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 24px;
     display: none;
     flex-direction: column;
-    gap: 2px;
-    padding: 10px 20px 20px;
-    background: rgba(7, 7, 7, 0.97);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid var(--color-border);
+    gap: 8px;
 }
 
-.navbar__mobile-link {
-    padding: 12px 16px;
-    font-size: var(--text-base);
+.navbar__drawer--open {
+    display: flex;
+}
+
+.navbar__drawer-link {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
     font-weight: 500;
-    color: var(--color-text-muted);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-base);
+    padding: 14px 16px;
+    border-radius: 8px;
+    text-align: left;
+    transition: color 0.2s, background 0.2s;
+    cursor: none;
 }
 
-.navbar__mobile-link:hover {
-    color: var(--color-white);
-    background: rgba(255, 255, 255, 0.04);
+.navbar__drawer-link:hover {
+    color: var(--accent);
+    background: var(--accent-dim);
+}
+
+.desktop-only {
+    display: flex;
+}
+
+.mobile-only {
+    display: none;
 }
 
 @media (max-width: 768px) {
-
-    .navbar__links,
-    .navbar__cta,
-    .navbar__theme-toggle {
-        display: none;
+    .desktop-only {
+        display: none !important;
     }
 
-    .navbar__hamburger {
-        display: flex;
+    .mobile-only {
+        display: flex !important;
     }
 
-    .navbar__mobile {
-        display: flex;
-    }
-
-    .navbar__mobile--open {
-        display: flex;
-    }
-
-    .navbar__mobile:not(.navbar__mobile--open) {
-        display: none;
+    .navbar {
+        padding: 0 20px;
     }
 }

@@ -1,38 +1,31 @@
-import { scrollToSection } from '../../utils/scrollTo';
 import './CTASection.css';
+import { scrollToSection } from '../../utils/scrollTo';
 
-/**
- * CTASection
- *
- * COPYWRITING FIXES:
- * - Headline: "Let's Build Your Next Website" (feature) →
- *   "More Customers. More Revenue. Starting Today." (outcome)
- * - Subheadline: Connects the action to a specific, credible result.
- * - CTA: "Start a Project" kept — action-oriented and clear.
- *
- * Per the copywriting skill: benefits before features, outcomes not adjectives,
- * specificity beats vagueness.
- */
 export default function CTASection() {
   return (
-    <section id="cta" className="section cta">
-      <div className="container cta__inner">
-        <div className="cta__content">
+    <section id="cta" className="cta-section">
+      <div className="container">
+        <div className="cta__inner">
           <h2 className="cta__title">
-            More Customers.&nbsp;More Revenue.&nbsp;Starting Today.
+            MORE CUSTOMERS.<br />MORE REVENUE.<br />STARTING TODAY.
           </h2>
-          <p className="cta__subtitle">
-            Share your business with me and I&apos;ll show you exactly how a new
-            website can bring in more leads — before you spend a rupee.
+          <p className="cta__sub">
+            Share your business with me and I'll show you exactly how a new website
+            can bring in more leads — before you spend a rupee.
           </p>
+          <div className="cta__actions">
+            <button className="btn btn-primary btn-lg" onClick={() => scrollToSection('#contact')}>
+              Get a Free Consultation →
+            </button>
+            <a
+              href="https://wa.me/923174307043?text=Hi%20Ahmed%2C%20I%20want%20to%20discuss%20a%20website"
+              target="_blank" rel="noopener noreferrer"
+              className="btn btn-whatsapp btn-lg"
+            >
+              Start on WhatsApp
+            </a>
+          </div>
         </div>
-        <button
-          type="button"
-          className="btn btn-primary btn-lg cta__button"
-          onClick={() => scrollToSection('#contact')}
-        >
-          Get a Free Consultation →
-        </button>
       </div>
     </section>
   );

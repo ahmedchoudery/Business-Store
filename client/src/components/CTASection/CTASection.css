@@ -1,57 +1,58 @@
-.cta {
-  background: var(--color-bg-2);
+.cta-section {
+  padding: 80px 0 !important;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cta__inner {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(245, 158, 11, 0.07));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 64px;
+  text-align: center;
   position: relative;
   overflow: hidden;
 }
 
-.cta::before {
+.cta__inner::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200, 245, 60, 0.06), transparent);
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 200px;
+  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
   pointer-events: none;
 }
 
-.cta__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-6);
-  position: relative;
-  z-index: 1;
-}
-
-.cta__content {
-  max-width: 540px;
-}
-
 .cta__title {
-  font-family: var(--font-display);
-  font-size: var(--text-3xl);
-  font-weight: 800;
-  color: var(--color-white);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-family: var(--font-head);
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+  line-height: 0.97;
 }
 
-.cta__subtitle {
-  margin-top: var(--space-2);
-  font-size: var(--text-base);
-  color: var(--color-text-muted);
+.cta__sub {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.cta__button {
-  flex-shrink: 0;
+.cta__actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .cta__inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .cta__button {
-    width: 100%;
-    justify-content: center;
+    padding: 40px 24px;
   }
 }
