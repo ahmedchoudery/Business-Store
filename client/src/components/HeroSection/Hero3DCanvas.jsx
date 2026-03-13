@@ -1,7 +1,9 @@
+// client/src/components/HeroSection/Hero3DCanvas.jsx
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 
+/* ── Core rotating dodecahedron + orbit rings ───────── */
 function FloatingCore() {
   const coreRef = useRef();
   const wireRef = useRef();
@@ -9,15 +11,16 @@ function FloatingCore() {
   const ring2Ref = useRef();
   const ring3Ref = useRef();
 
-  useFrame(({ clock, camera, pointer }) => {
+  useFrame(({ clock, pointer }) => {
     const t = clock.getElapsedTime();
+
     if (coreRef.current) {
       coreRef.current.rotation.x = Math.sin(t * 0.35) * 0.3 + pointer.y * 0.15;
       coreRef.current.rotation.y = t * 0.28 + pointer.x * 0.15;
     }
     if (wireRef.current) {
-      wireRef.current.rotation.x = coreRef.current.rotation.x;
-      wireRef.current.rotation.y = coreRef.current.rotation.y;
+      wireRef.current.rotation.x = coreRef.current?.rotation.x ?? 0;
+      wireRef.current.rotation.y = coreRef.current?.rotation.y ?? 0;
     }
     if (ring1Ref.current) {
       ring1Ref.current.rotation.x += 0.008;
@@ -31,10 +34,6 @@ function FloatingCore() {
       ring3Ref.current.rotation.x += 0.005;
       ring3Ref.current.rotation.y += 0.006;
     }
-    // Smooth camera drift following mouse
-    camera.position.x += (pointer.x * 0.35 - camera.position.x) * 0.04;
-    camera.position.y += (-pointer.y * 0.2 - camera.position.y) * 0.04;
-    camera.lookAt(0, 0, 0);
   });
 
   return (
@@ -48,7 +47,7 @@ function FloatingCore() {
         />
       </mesh>
 
-      {/* Wireframe overlay */}
+      {/* Wireframe overlay — own geometry instance */}
       <mesh ref={wireRef}>
         <dodecahedronGeometry args={[1.19, 0]} />
         <meshBasicMaterial color="#A78BFA" wireframe transparent opacity={0.15} />
@@ -75,8 +74,10 @@ function FloatingCore() {
   );
 }
 
+/* ── Particle field ─────────────────────────────────── */
 function Particles({ count = 380 }) {
   const ref = useRef();
+
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -100,48 +101,72 @@ function Particles({ count = 380 }) {
   return (
     <points ref={ref}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+        <bufferAttribute
+          attach="attributes-position"
+          count={count}
+          array={positions}
+          itemSize={3}
+        />
       </bufferGeometry>
       <pointsMaterial size={0.03} color="#A78BFA" transparent opacity={0.55} sizeAttenuation />
     </points>
   );
 }
 
-function Floaters() {
-  const meshRefs = useRef([]);
-  const geo = useMemo(() => new THREE.TetrahedronGeometry(0.17, 0), []);
-  const data = useMemo(() => Array.from({ length: 8 }, (_, i) => {
-    const angle = (i / 8) * Math.PI * 2;
-    const dist = 2.7 + Math.random() * 0.9;
-    return {
-      pos: [Math.cos(angle) * dist, (Math.random() - 0.5) * 1.8, Math.sin(angle) * dist],
-      speed: 0.28 + Math.random() * 0.4,
-      offset: Math.random() * Math.PI * 2,
-      color: i % 2 === 0 ? '#7C3AED' : '#F59E0B',
-    };
-  }), []);
+/* ── 8 floating tetrahedra — each with its OWN geometry ─ */
+function FloaterMesh({ position, speed, offset, color }) {
+  const ref = useRef();
+  const initY = position[1];
 
   useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    meshRefs.current.forEach((mesh, i) => {
-      if (!mesh) return;
-      mesh.rotation.x = t * data[i].speed;
-      mesh.rotation.y = t * data[i].speed * 0.7;
-      mesh.position.y = data[i].pos[1] + Math.sin(t * 0.6 + data[i].offset) * 0.45;
-    });
+    if (ref.current) {
+      const t = clock.getElapsedTime();
+      ref.current.rotation.x = t * speed;
+      ref.current.rotation.y = t * speed * 0.7;
+      ref.current.position.y = initY + Math.sin(t * 0.6 + offset) * 0.45;
+    }
   });
 
   return (
+    <mesh ref={ref} position={position}>
+      {/* Each instance gets its own geometry — no sharing */}
+      <tetrahedronGeometry args={[0.17, 0]} />
+      <meshStandardMaterial
+        color={color} emissive={color}
+        emissiveIntensity={0.4} transparent opacity={0.72}
+      />
+    </mesh>
+  );
+}
+
+function Floaters() {
+  const floaterData = useMemo(() => (
+    Array.from({ length: 8 }, (_, i) => {
+      const angle = (i / 8) * Math.PI * 2;
+      const dist = 2.7 + Math.random() * 0.9;
+      return {
+        position: [
+          Math.cos(angle) * dist,
+          (Math.random() - 0.5) * 1.8,
+          Math.sin(angle) * dist,
+        ],
+        speed: 0.28 + Math.random() * 0.4,
+        offset: Math.random() * Math.PI * 2,
+        color: i % 2 === 0 ? '#7C3AED' : '#F59E0B',
+      };
+    })
+  ), []);
+
+  return (
     <>
-      {data.map((d, i) => (
-        <mesh key={i} ref={el => meshRefs.current[i] = el} geometry={geo} position={d.pos}>
-          <meshStandardMaterial color={d.color} emissive={d.color} emissiveIntensity={0.4} transparent opacity={0.72} />
-        </mesh>
+      {floaterData.map((d, i) => (
+        <FloaterMesh key={i} {...d} />
       ))}
     </>
   );
 }
 
+/* ── Canvas export ──────────────────────────────────── */
 export default function Hero3DCanvas() {
   return (
     <div className="hero__canvas">
@@ -151,10 +176,12 @@ export default function Hero3DCanvas() {
         gl={{ antialias: true, alpha: false }}
       >
         <color attach="background" args={['#04030C']} />
+
         <ambientLight intensity={0.15} />
         <pointLight position={[3, 3, 4]} intensity={9} color="#7C3AED" />
         <pointLight position={[-4, -2, 2]} intensity={6} color="#F59E0B" />
         <pointLight position={[0, 5, -3]} intensity={2.5} color="#ffffff" />
+
         <FloatingCore />
         <Particles />
         <Floaters />

@@ -1,4 +1,6 @@
+// client/src/components/HeroSection/HeroSection.jsx
 import { useState, useEffect, Suspense, lazy } from 'react'
+import ErrorBoundary from '../Errorboundary/Errorboundary'
 import './HeroSection.css'
 
 const Hero3DCanvas = lazy(() => import('./Hero3DCanvas'))
@@ -26,13 +28,17 @@ export default function Hero() {
 
     return (
         <section id="hero" className="hero">
-            <Suspense fallback={null}>
-                <Hero3DCanvas />
-            </Suspense>
+            {/* 3D canvas — isolated so a crash here never blanks the page */}
+            <ErrorBoundary fallback={null}>
+                <Suspense fallback={null}>
+                    <Hero3DCanvas />
+                </Suspense>
+            </ErrorBoundary>
 
             <div className="container">
                 <div className="hero__inner">
-                    {/* LEFT */}
+
+                    {/* LEFT — copy */}
                     <div className="hero__left">
                         <div className="hero__badge animate-fade-up animate-delay-1">
                             <span className="hero__badge-dot" />
@@ -42,16 +48,20 @@ export default function Hero() {
                         <h1 className="hero__h1 animate-fade-up animate-delay-2">
                             <span className="hero__line1">WEBSITES</span>
                             <span className="hero__line2">THAT GROW</span>
+                            {/* SEO-stable text — always readable by crawlers */}
+                            <span className="hero__cycle-static">Pakistani Businesses</span>
+                            {/* Animated overlay */}
                             <span
                                 aria-hidden="true"
                                 className="hero__cycle"
-                                style={{ opacity: fade ? 1 : 0, transform: fade ? 'translateY(0)' : 'translateY(-16px)' }}
+                                style={{
+                                    opacity: fade ? 1 : 0,
+                                    transform: fade ? 'translateY(0)' : 'translateY(-16px)',
+                                }}
                             >
                                 {roles[roleIndex]}
                             </span>
                         </h1>
-                        {/* SEO-stable h1 text */}
-                        <span className="sr-only">Pakistani Businesses</span>
 
                         <p className="hero__body animate-fade-up animate-delay-3">
                             I craft fast, modern, SEO-optimized websites for Pakistani businesses.
@@ -67,7 +77,8 @@ export default function Hero() {
                             </button>
                             <a
                                 href="https://wa.me/923174307043?text=Hi%20Ahmed%2C%20I%20need%20a%20website%20for%20my%20business"
-                                target="_blank" rel="noopener noreferrer"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="btn btn-whatsapp"
                             >
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -87,7 +98,7 @@ export default function Hero() {
                         </div>
                     </div>
 
-                    {/* RIGHT — floating card */}
+                    {/* RIGHT — floating metric card */}
                     <div className="hero__right animate-fade-up animate-delay-3">
                         <div className="hero__card">
                             <div className="hero__card-top">
@@ -116,6 +127,7 @@ export default function Hero() {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
