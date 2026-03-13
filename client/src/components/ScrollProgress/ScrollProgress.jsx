@@ -1,31 +1,29 @@
+// FILE: client/src/components/ScrollProgress/ScrollProgress.jsx
+
 import { useEffect, useState } from 'react';
 import './ScrollProgress.css';
 
 export default function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
+  const [pct, setPct] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const update = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      setProgress(value);
+      setPct(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
     };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
     };
   }, []);
 
   return (
-    <div className="scroll-progress">
-      <div className="scroll-progress__bar" style={{ width: `${progress}%` }} />
+    <div className="sp" aria-hidden="true">
+      <div className="sp__bar" style={{ width: `${pct}%` }} />
     </div>
   );
 }
-

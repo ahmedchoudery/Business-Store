@@ -1,29 +1,64 @@
+// FILE: client/src/components/CTASection/CTASection.jsx
+
+import { useRef, useEffect } from 'react';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import './CTASection.css';
-import { scrollToSection } from '../../utils/scrollTo';
 
 export default function CTASection() {
+  const { ref, visible } = useScrollReveal({ threshold: 0.3 });
+  const bgRef = useRef(null);
+
+  // Parallax scroll effect on bg orb
+  useEffect(() => {
+    const onScroll = () => {
+      if (!bgRef.current) return;
+      const rect = bgRef.current.closest('section')?.getBoundingClientRect();
+      if (!rect) return;
+      const pct = 1 - (rect.top / window.innerHeight);
+      bgRef.current.style.transform = `translate(-50%, calc(-50% + ${pct * 40}px))`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <section id="cta" className="cta-section">
+    <section id="cta" className="cta">
+      {/* Parallax bg orb */}
+      <div ref={bgRef} className="cta__orb" />
+      <div className="cta__grid-lines" />
+
       <div className="container">
-        <div className="cta__inner">
+        <div ref={ref} className={`cta__inner ${visible ? 'cta__inner--visible' : ''}`}>
+          <span className="section-label">Ready to Start?</span>
           <h2 className="cta__title">
-            MORE CUSTOMERS.<br />MORE REVENUE.<br />STARTING TODAY.
+            Let's Build Something<br />
+            <span className="gradient-text">Incredible Together</span>
           </h2>
-          <p className="cta__sub">
-            Share your business with me and I'll show you exactly how a new website
-            can bring in more leads — before you spend a rupee.
+          <p className="cta__body">
+            From idea to launch in days. Get a fast, beautiful, SEO-powered website that
+            wins customers and grows your business across Pakistan.
           </p>
           <div className="cta__actions">
-            <button className="btn btn-primary btn-lg" onClick={() => scrollToSection('#contact')}>
-              Get a Free Consultation →
-            </button>
             <a
-              href="https://wa.me/923174307043?text=Hi%20Ahmed%2C%20I%20want%20to%20discuss%20a%20website"
+              href="https://wa.me/923174307043?text=Hi%20Ahmed%2C%20I%20want%20to%20start%20a%20project"
               target="_blank" rel="noopener noreferrer"
               className="btn btn-whatsapp btn-lg"
             >
-              Start on WhatsApp
+              💬 Start on WhatsApp
             </a>
+            <a
+              href="mailto:ahmedchoudery30@gmail.com"
+              className="btn btn-ghost btn-lg"
+            >
+              ✉️ Send an Email
+            </a>
+          </div>
+          <div className="cta__trust">
+            <span>🚀 Fast delivery</span>
+            <span>·</span>
+            <span>✅ 100% satisfaction</span>
+            <span>·</span>
+            <span>🔒 Secure & reliable</span>
           </div>
         </div>
       </div>

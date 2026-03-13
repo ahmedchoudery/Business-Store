@@ -1,58 +1,86 @@
-.cta-section {
-  padding: 80px 0 !important;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
-}
+/* FILE: client/src/components/CTASection/CTASection.css */
 
-.cta__inner {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(245, 158, 11, 0.07));
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 64px;
-  text-align: center;
+.cta {
+  background: var(--bg-secondary, #080618);
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
-.cta__inner::before {
-  content: '';
+/* Parallax orb */
+.cta__orb {
   position: absolute;
-  top: -80px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 400px;
-  height: 200px;
-  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, .12) 0%, rgba(245, 158, 11, .06) 40%, transparent 70%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Subtle grid lines overlay */
+.cta__grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 58, 237, .04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, .04) 1px, transparent 1px);
+  background-size: 60px 60px;
   pointer-events: none;
 }
 
-.cta__title {
-  font-family: var(--font-head);
-  font-size: clamp(2.4rem, 4vw, 3.6rem);
-  letter-spacing: 0.04em;
-  margin-bottom: 16px;
-  line-height: 0.97;
+/* Content */
+.cta__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.4, 0, .2, 1);
 }
 
-.cta__sub {
-  font-size: 1rem;
-  color: var(--text-muted);
-  margin-bottom: 40px;
+.cta__inner--visible {
+  opacity: 1;
+  transform: none;
+}
+
+.cta__title {
+  font-family: var(--font-head, 'Bebas Neue', sans-serif);
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  letter-spacing: .02em;
+  line-height: .92;
+  margin: 14px 0 24px;
+  color: var(--text-primary, #F8F7FF);
+}
+
+.cta__body {
+  font-size: 1.05rem;
+  line-height: 1.76;
+  color: var(--text-secondary, #8B87C4);
   max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 40px;
 }
 
 .cta__actions {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 32px;
 }
 
-@media (max-width: 600px) {
-  .cta__inner {
-    padding: 40px 24px;
-  }
+.cta__trust {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  font-family: var(--font-mono, monospace);
+  font-size: .7rem;
+  letter-spacing: .08em;
+  color: var(--text-muted, #6B67A3);
 }

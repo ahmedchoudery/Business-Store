@@ -1,4 +1,6 @@
-.page-loader {
+/* FILE: client/src/components/PageLoader/PageLoader.css */
+
+.pl {
   position: fixed;
   inset: 0;
   z-index: 10000;
@@ -6,70 +8,48 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.page-loader--out {
+.pl--out {
   opacity: 0;
+  transform: scale(1.04);
   pointer-events: none;
 }
 
-.page-loader__inner {
+.pl__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 22px;
+  animation: pl-enter .5s cubic-bezier(.4, 0, .2, 1) both;
 }
 
-.page-loader__logo {
+@keyframes pl-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pl__logo {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 3.5rem;
-  letter-spacing: 0.1em;
+  font-size: 3.8rem;
+  letter-spacing: 0.12em;
   background: linear-gradient(135deg, #7C3AED, #F59E0B);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: pulse-glow 1.8s ease-in-out infinite;
+  animation: pl-pulse 1.6s ease-in-out infinite;
 }
 
-.page-loader__bar {
-  width: 160px;
-  height: 2px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-}
-
-.page-loader__fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #7C3AED, #F59E0B);
-  animation: loader-fill 2s ease forwards;
-}
-
-.page-loader__sub {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #6B67A3;
-}
-
-@keyframes loader-fill {
-  0% {
-    width: 0%;
-  }
-
-  60% {
-    width: 75%;
-  }
-
-  100% {
-    width: 100%;
-  }
-}
-
-@keyframes pulse-glow {
+@keyframes pl-pulse {
 
   0%,
   100% {
@@ -77,6 +57,50 @@
   }
 
   50% {
-    opacity: 0.6;
+    opacity: .55;
   }
+}
+
+.pl__bar {
+  width: 180px;
+  height: 2px;
+  background: rgba(255, 255, 255, .07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.pl__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7C3AED, #F59E0B);
+  border-radius: 2px;
+  transition: width 0.12s ease;
+  box-shadow: 0 0 12px rgba(124, 58, 237, .5);
+}
+
+.pl__pct {
+  font-family: 'DM Mono', monospace;
+  font-size: .7rem;
+  letter-spacing: .14em;
+  color: rgba(255, 255, 255, .3);
+}
+
+/* Corner accents */
+.pl__corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(124, 58, 237, .25);
+  border-style: solid;
+}
+
+.pl__corner--tl {
+  top: 32px;
+  left: 32px;
+  border-width: 1px 0 0 1px;
+}
+
+.pl__corner--br {
+  bottom: 32px;
+  right: 32px;
+  border-width: 0 1px 1px 0;
 }

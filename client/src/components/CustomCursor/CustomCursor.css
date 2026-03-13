@@ -1,29 +1,63 @@
+/* FILE: client/src/components/CustomCursor/CustomCursor.css */
+
+@media (pointer: coarse) {
+
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-trail {
+    display: none !important;
+  }
+}
+
 .cursor-dot,
-.cursor-ring {
+.cursor-ring,
+.cursor-trail {
   position: fixed;
   top: 0;
   left: 0;
   pointer-events: none;
   z-index: 9999;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* Dot — snaps immediately */
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #fff;
   mix-blend-mode: difference;
 }
 
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #fff;
-}
-
+/* Ring — spring follows */
 .cursor-ring {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  transition: width 0.25s ease, height 0.25s ease;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(124, 58, 237, 0.7);
+  transition:
+    width .25s ease,
+    height .25s ease,
+    border-color .25s ease,
+    opacity .2s ease;
 }
 
+/* Hover state — ring expands and turns amber */
 .cursor-ring--hover {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
+  border-color: rgba(245, 158, 11, 0.8);
+}
+
+/* Click state — ring compresses */
+.cursor-ring--click {
+  width: 22px;
+  height: 22px;
+  border-color: rgba(244, 63, 94, 0.9);
+}
+
+/* Ghost trail — slowest, most transparent */
+.cursor-trail {
+  width: 64px;
+  height: 64px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
 }

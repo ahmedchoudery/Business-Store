@@ -1,36 +1,88 @@
+/* FILE: client/src/components/TrustedSection/TrustedSection.css */
+
 .trusted {
-  padding: 56px 0 !important;
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
+  padding: 60px 0 !important;
+  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, .06));
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, .06));
+  overflow: hidden;
 }
 
 .trusted__label {
   text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono, monospace);
+  font-size: .7rem;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-muted, #6B67A3);
   margin-bottom: 28px;
 }
 
-.trusted__row {
+/* Carousel bleeds full viewport */
+.trusted__carousel {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  /* Fade edges */
+  -webkit-mask: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+}
+
+.trusted__track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.trusted__track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.trusted__item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 36px;
-  flex-wrap: wrap;
-}
-
-.trusted__brand {
-  font-family: var(--font-head);
-  font-size: 1.05rem;
-  letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.15);
-  transition: color 0.3s;
+  gap: 10px;
+  padding: 10px 36px;
+  white-space: nowrap;
   cursor: default;
+  border-right: 1px solid var(--border-subtle, rgba(255, 255, 255, .05));
+  transition: opacity .25s;
 }
 
-.trusted__brand:hover {
-  color: rgba(255, 255, 255, 0.45);
+.trusted__item:hover {
+  opacity: 1 !important;
+}
+
+.trusted__icon {
+  font-size: 1.1rem;
+  filter: grayscale(1) opacity(.4);
+  transition: filter .25s;
+}
+
+.trusted__item:hover .trusted__icon {
+  filter: none;
+}
+
+.trusted__name {
+  font-family: var(--font-head, 'Bebas Neue', sans-serif);
+  font-size: 1rem;
+  letter-spacing: .12em;
+  color: rgba(255, 255, 255, .18);
+  transition: color .25s;
+}
+
+.trusted__item:hover .trusted__name {
+  color: rgba(255, 255, 255, .55);
 }

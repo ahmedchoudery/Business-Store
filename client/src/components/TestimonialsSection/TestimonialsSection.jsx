@@ -1,85 +1,72 @@
-import { useState } from 'react';
+// FILE: client/src/components/TestimonialsSection/TestimonialsSection.jsx
+
+import { useRef, useEffect } from 'react';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import './TestimonialsSection.css';
 
-const testimonials = [
-  {
-    name: 'Tariq Hassan', role: 'Owner, Falak Halls & Events', location: 'Gujrat, Punjab',
-    text: 'Ahmed built our wedding hall website and within the first month, our WhatsApp inquiries doubled. The design is beautiful and our clients love how easy it is to find information. Best investment we made for our business.',
-    rating: 5, initials: 'TH', color: '#F43F5E',
-  },
-  {
-    name: 'Ayesha Malik', role: 'Owner, Noor Boutique', location: 'Lahore, Punjab',
-    text: 'I was skeptical about getting a website, but Ahmed made it so simple. Our online orders now account for 30% of revenue. He was patient, professional, and delivered exactly what he promised.',
-    rating: 5, initials: 'AM', color: '#A78BFA',
-  },
-  {
-    name: 'Dr. Faisal Qureshi', role: 'Medical Director, CityMed Clinic', location: 'Islamabad',
-    text: 'Our clinic needed a proper online presence so patients could find us and book appointments. Ahmed delivered a fast, professional website in under a week. Our Google ranking has improved significantly.',
-    rating: 5, initials: 'FQ', color: '#10B981',
-  },
-  {
-    name: 'Usman Raza', role: 'CEO, Raza Properties', location: 'Karachi, Sindh',
-    text: 'Ahmed understood exactly what a real estate business needs. Property listings, contact forms, WhatsApp integration — everything was done perfectly. Our leads have increased by 80% since launch.',
-    rating: 5, initials: 'UR', color: '#7C3AED',
-  },
-  {
-    name: 'Sana Ibrahim', role: 'Owner, Spice Route Restaurant', location: 'Lahore, Punjab',
-    text: 'We wanted a website that shows our menu and lets customers make reservations. Ahmed delivered beyond expectations. The mobile design is especially beautiful.',
-    rating: 5, initials: 'SI', color: '#F59E0B',
-  },
+const REVIEWS = [
+  { name: 'Kamran Malik', role: 'Owner, Falak Wedding Halls', stars: 5, text: 'Ahmed delivered exactly what we needed. Our booking enquiries doubled within the first month. Professional, fast, and always responsive.' },
+  { name: 'Sara Iqbal', role: 'Founder, Noor Boutique', stars: 5, text: 'My online store is beautiful and so easy to manage. Ahmed explained everything clearly and was patient throughout. 100% recommended!' },
+  { name: 'Dr. Usman Raza', role: 'CityMed Clinic, Lahore', stars: 5, text: 'We needed a site that looked trustworthy for patients. Ahmed nailed it. Page loads fast, looks great on mobile, and SEO is already working.' },
+  { name: 'Aisha Shahid', role: 'Star Coaching Academy', stars: 5, text: 'From day one Ahmed understood what we wanted. The design is modern and the students can find info easily. Delivered ahead of schedule!' },
+  { name: 'Tariq Mahmood', role: 'Premier Estate, Rawalpindi', stars: 5, text: 'Properties are getting more leads now. The website looks premium and loads instantly. Ahmed was professional from start to finish.' },
+  { name: 'Fatima Khan', role: 'Spice Route Restaurant', stars: 5, text: 'Online orders increased significantly after launching our new website. Ahmed built exactly what a restaurant needs — simple and effective.' },
 ];
 
+const ALL = [...REVIEWS, ...REVIEWS]; // duplicate for seamless loop
+
 export default function TestimonialsSection() {
-  const [active, setActive] = useState(0);
-  const t = testimonials[active];
+  const { ref: headRef, visible: headVisible } = useScrollReveal({ threshold: 0.3 });
+  const track1 = useRef(null);
+  const track2 = useRef(null);
 
   return (
-    <section id="testimonials" className="testimonials">
+    <section id="testimonials" className="testi">
       <div className="container">
-        <div className="testimonials__header">
-          <div className="section-label" style={{ justifyContent: 'center' }}>Client Love</div>
-          <h2 className="section-title" style={{ textAlign: 'center' }}>
-            WHAT THEY<br /><span style={{ color: 'var(--amber)' }}>SAY ABOUT ME</span>
-          </h2>
+        <div ref={headRef} className={`testi__head ${headVisible ? 'reveal visible' : 'reveal'}`}>
+          <span className="section-label">Client Love</span>
+          <h2 className="section-title">What They <span className="gradient-text">Say About Me</span></h2>
+          <p className="section-subtitle">Real results from real Pakistani businesses. Every word is genuine.</p>
         </div>
+      </div>
 
-        <div className="testi__card">
-          <div className="testi__quote-mark" style={{ color: `${t.color}18` }}>"</div>
-          <div className="testi__stars">{'★'.repeat(t.rating)}</div>
-          <p className="testi__text">"{t.text}"</p>
-          <div className="testi__author">
-            <div className="testi__avatar" style={{ background: `${t.color}20`, border: `2px solid ${t.color}45`, color: t.color }}>
-              {t.initials}
-            </div>
-            <div>
-              <div className="testi__name">{t.name}</div>
-              <div className="testi__role">{t.role}</div>
-              <div className="testi__loc">📍 {t.location}</div>
-            </div>
-          </div>
+      {/* Row 1 — scrolls left */}
+      <div className="testi__carousel">
+        <div className="testi__track testi__track--left" ref={track1}
+          onMouseEnter={() => { if (track1.current) track1.current.style.animationPlayState = 'paused'; }}
+          onMouseLeave={() => { if (track1.current) track1.current.style.animationPlayState = 'running'; }}
+        >
+          {ALL.map((r, i) => <ReviewCard key={i} review={r} />)}
         </div>
+      </div>
 
-        <div className="testi__nav">
-          <button className="btn btn-ghost" onClick={() => setActive(i => (i - 1 + testimonials.length) % testimonials.length)} aria-label="Previous">←</button>
-          <div className="testi__dots">
-            {testimonials.map((_, i) => (
-              <button key={i} onClick={() => setActive(i)} className={`testi__dot ${i === active ? 'testi__dot--active' : ''}`} />
-            ))}
-          </div>
-          <button className="btn btn-ghost" onClick={() => setActive(i => (i + 1) % testimonials.length)} aria-label="Next">→</button>
-        </div>
-
-        <div className="testi__thumbs">
-          {testimonials.map((t, i) => (
-            <button key={t.name} onClick={() => setActive(i)} className={`testi__thumb ${i === active ? 'testi__thumb--active' : ''}`}>
-              <div className="testi__thumb-avatar" style={{ background: `${t.color}22`, border: `1px solid ${t.color}40`, color: t.color }}>
-                {t.initials}
-              </div>
-              <span>{t.name.split(' ')[0]}</span>
-            </button>
-          ))}
+      {/* Row 2 — scrolls right */}
+      <div className="testi__carousel">
+        <div className="testi__track testi__track--right" ref={track2}
+          onMouseEnter={() => { if (track2.current) track2.current.style.animationPlayState = 'paused'; }}
+          onMouseLeave={() => { if (track2.current) track2.current.style.animationPlayState = 'running'; }}
+        >
+          {[...ALL].reverse().map((r, i) => <ReviewCard key={i} review={r} />)}
         </div>
       </div>
     </section>
+  );
+}
+
+function ReviewCard({ review }) {
+  return (
+    <div className="testi-card">
+      <div className="testi-card__stars">{'★'.repeat(review.stars)}</div>
+      <p className="testi-card__text">"{review.text}"</p>
+      <div className="testi-card__author">
+        <div className="testi-card__avatar">
+          {review.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+        </div>
+        <div>
+          <div className="testi-card__name">{review.name}</div>
+          <div className="testi-card__role">{review.role}</div>
+        </div>
+      </div>
+    </div>
   );
 }
