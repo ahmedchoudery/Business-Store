@@ -1,4 +1,3 @@
-
 // FILE: client/src/App.jsx
 // ErrorBoundary wraps every section so one crash never blanks the entire page.
 
