@@ -1,0 +1,212 @@
+.footer {
+    background: #070B14;
+    border-top: 1px solid rgba(56, 189, 248, 0.08);
+    padding: 80px 0 36px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Grid layout */
+.footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 60px;
+}
+
+/* Brand column */
+.footer__logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.footer__logo-text {
+    font-family: 'Orbitron', monospace;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+}
+
+.footer__logo-ahmed {
+    color: #E2EEFF;
+}
+
+.footer__logo-code {
+    color: #38BDF8;
+}
+
+.footer__logo-studio {
+    color: rgba(255, 255, 255, .35);
+    font-weight: 400;
+}
+
+.footer__code-comment {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, .2);
+    margin-bottom: 24px;
+    white-space: pre-line;
+}
+
+.footer__socials {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer__social {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .05em;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, .45);
+    text-decoration: none;
+    transition: .25s;
+}
+
+.footer__social:hover {
+    border-color: rgba(56, 189, 248, .3);
+    color: #38BDF8;
+}
+
+.footer__social--green:hover {
+    border-color: rgba(16, 185, 129, .3);
+    color: #10B981;
+}
+
+.footer__social--blue:hover {
+    border-color: rgba(56, 189, 248, .3);
+    color: #38BDF8;
+}
+
+/* Link columns */
+.footer__link-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer__col-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    color: rgba(255, 255, 255, .2);
+    margin-bottom: 18px;
+    text-transform: lowercase;
+}
+
+.footer__col-slash {
+    color: rgba(56, 189, 248, .3);
+}
+
+.footer__links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer__link {
+    background: none;
+    border: none;
+    cursor: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .03em;
+    color: rgba(255, 255, 255, .3);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0;
+    text-align: left;
+    transition: color .2s, gap .2s;
+}
+
+.footer__link:hover {
+    color: rgba(255, 255, 255, .7);
+    gap: 10px;
+}
+
+.footer__link-arrow {
+    color: rgba(56, 189, 248, .3);
+    font-size: .85rem;
+    transition: color .2s;
+}
+
+.footer__link:hover .footer__link-arrow {
+    color: #38BDF8;
+}
+
+/* Bottom bar */
+.footer__divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(56, 189, 248, .12) 30%, rgba(56, 189, 248, .12) 70%, transparent);
+    margin-bottom: 28px;
+}
+
+.footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer__copy {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem;
+    color: rgba(255, 255, 255, .2);
+}
+
+.footer__copy-comment {
+    color: rgba(56, 189, 248, .25);
+}
+
+.footer__stack {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.footer__stack-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .05em;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: rgba(56, 189, 248, .05);
+    border: 1px solid rgba(56, 189, 248, .1);
+    color: rgba(56, 189, 248, .4);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+    .footer__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+    }
+
+    .footer__brand-col {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 560px) {
+    .footer__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+    .footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

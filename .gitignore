@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+client/dist/
+.vercel/
+
+# Environment variables — never commit these
+.env
+.env.local
+.env.production
+client/.env
+client/.env.local
+client/.env.production
+
+# Skill tooling — not part of the deployed site
+skill-creator/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp

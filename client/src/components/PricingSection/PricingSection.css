@@ -1,0 +1,153 @@
+.pricing {
+    background: var(--bg-secondary);
+}
+
+.pricing__header {
+    margin-bottom: 52px;
+}
+
+.pricing__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.price__card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 34px 28px;
+    position: relative;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.price__card:hover {
+    transform: translateY(-6px);
+}
+
+.price__card--featured {
+    border-color: var(--accent);
+    box-shadow: 0 0 60px var(--accent-glow);
+}
+
+.price__badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), var(--amber));
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    border-radius: 50px;
+    white-space: nowrap;
+}
+
+.price__tier {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.price__amount {
+    font-family: var(--font-head);
+    font-size: 3rem;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.price__amount span {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.price__tagline {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.price__divider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin-bottom: 24px;
+}
+
+.price__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-bottom: 32px;
+}
+
+.price__features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.price__features li::before {
+    content: '✓';
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    background: rgba(16, 185, 129, 0.14);
+    color: #10B981;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+.price__btn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    background: transparent;
+    transition: all 0.25s;
+}
+
+.price__btn:hover {
+    background: var(--surface);
+}
+
+.price__btn--featured {
+    background: linear-gradient(135deg, var(--accent), #5B21B6);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 24px var(--accent-glow);
+}
+
+.price__btn--featured:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px var(--accent-glow);
+}
+
+@media (max-width: 900px) {
+    .pricing__grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+}

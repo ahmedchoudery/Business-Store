@@ -1,0 +1,103 @@
+/* FILE: client/src/components/StatsSection/StatsSection.css */
+
+.stats-sec {
+  background: var(--bg-primary, #04030C);
+  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, .06));
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, .06));
+}
+
+.stats-sec__head {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.stats-sec__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-subtle, rgba(255, 255, 255, .06));
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.stats-item {
+  background: var(--bg-secondary, #080618);
+  padding: 44px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity .7s ease calc(var(--delay, 0s)),
+    transform .7s cubic-bezier(.4, 0, .2, 1) calc(var(--delay, 0s));
+}
+
+.stats-item--visible {
+  opacity: 1;
+  transform: none;
+}
+
+.stats-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, .08) 0%, transparent 65%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.stats-item:hover {
+  background: var(--surface, #0E0C25);
+}
+
+.stats-item:hover::before {
+  opacity: 1;
+}
+
+.stats-item__icon {
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.stats-item__val {
+  font-family: var(--font-head, 'Bebas Neue', sans-serif);
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  letter-spacing: .04em;
+  line-height: 1;
+  background: linear-gradient(135deg, #7C3AED, #F59E0B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+
+.stats-item__label {
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--text-primary, #F8F7FF);
+  margin-bottom: 5px;
+}
+
+.stats-item__sub {
+  font-family: var(--font-mono, monospace);
+  font-size: .68rem;
+  color: var(--text-muted, #6B67A3);
+  letter-spacing: .06em;
+}
+
+@media (max-width: 800px) {
+  .stats-sec__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .stats-sec__grid {
+    grid-template-columns: 1fr;
+  }
+}

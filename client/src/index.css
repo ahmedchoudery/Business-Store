@@ -1,0 +1,500 @@
+/* ═══════════════════════════════════════════════════════
+   AHMED CODE STUDIO — Design System
+   Theme: Terminal Meets Studio · Navy + Sky Blue + Mono
+═══════════════════════════════════════════════════════ */
+
+/* ── TOKENS ──────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg-primary: #070B14;
+  --bg-secondary: #0C1220;
+  --bg-card: #0F1829;
+  --bg-card-hover: #162038;
+  --surface: #0D1525;
+
+  /* Accents */
+  --accent: #38BDF8;
+  --accent-dim: rgba(56, 189, 248, 0.10);
+  --accent-glow: rgba(56, 189, 248, 0.22);
+  --green: #10B981;
+  --green-dim: rgba(16, 185, 129, 0.12);
+  --green-glow: rgba(16, 185, 129, 0.22);
+  --amber: #FBBF24;
+  --amber-dim: rgba(251, 191, 36, 0.12);
+  --purple: #A78BFA;
+  --purple-dim: rgba(167, 139, 250, 0.12);
+  --rose: #F43F5E;
+
+  /* Text */
+  --text-primary: #E2EEFF;
+  --text-secondary: #7E9BBF;
+  --text-muted: #4A6080;
+  --text-code: #38BDF8;
+
+  /* Borders */
+  --border: rgba(56, 189, 248, 0.14);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-green: rgba(16, 185, 129, 0.18);
+
+  /* Typography */
+  --font-head: 'Orbitron', monospace;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  /* Legacy aliases */
+  --font-display: 'Orbitron', monospace;
+  --font-main: 'DM Sans', sans-serif;
+
+  /* Layout */
+  --nav-height: 72px;
+  --max-width: 1200px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-sm: 6px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.15s ease;
+  --transition-slow: 0.55s ease;
+
+  /* Shadows */
+  --shadow-card: 0 4px 40px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 60px rgba(56, 189, 248, 0.12);
+
+  /* Space scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Legacy color aliases — keeps untouched components working */
+  --color-bg: #070B14;
+  --color-bg-2: #0C1220;
+  --color-surface: #0F1829;
+  --color-surface-2: #0F1829;
+  --color-border: rgba(255, 255, 255, 0.05);
+  --color-primary: #38BDF8;
+  --color-primary-light: #7DD3FC;
+  --color-primary-dark: #0284C7;
+  --color-primary-glow: rgba(56, 189, 248, 0.22);
+  --color-accent: #FBBF24;
+  --color-accent-light: #FDE68A;
+  --color-accent-glow: rgba(251, 191, 36, 0.2);
+  --color-white: #E2EEFF;
+  --color-text: #E2EEFF;
+  --color-text-muted: #7E9BBF;
+  --color-text-faint: #4A6080;
+  --hot: #F43F5E;
+  --hot-dim: rgba(244, 63, 94, 0.15);
+  --radius-md: 12px;
+  --radius-xl: 20px;
+}
+
+/* ── RESET ───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* Dot-grid background texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Atmospheric glow */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.04) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: none;
+  font-family: var(--font-body);
+  border: none;
+  background: none;
+}
+
+@media (pointer: coarse) {
+  button {
+    cursor: auto;
+  }
+}
+
+/* ── LAYOUT ──────────────────────────────────────────── */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  padding: 100px 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── TYPOGRAPHY ──────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-head);
+  line-height: 1.0;
+  letter-spacing: 0.04em;
+}
+
+/* Section label — uses // comment syntax */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: lowercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.section-label::before {
+  content: '//';
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.section-title {
+  font-family: var(--font-head);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: .04em;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  line-height: 1.0;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+  line-height: 1.75;
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, var(--accent), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-green {
+  color: var(--green);
+}
+
+.text-amber {
+  color: var(--amber);
+}
+
+/* ── BUTTONS ─────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: none;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .12) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn-lg {
+  padding: 15px 34px;
+  font-size: .88rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #070B14;
+  font-weight: 700;
+  box-shadow: 0 4px 24px rgba(56, 189, 248, 0.28);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(56, 189, 248, 0.4);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.btn-green {
+  background: var(--green);
+  color: #070B14;
+  font-weight: 700;
+  box-shadow: 0 4px 24px rgba(16, 185, 129, 0.28);
+}
+
+.btn-green:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: #fff;
+}
+
+.btn-whatsapp:hover {
+  background: #1db954;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(37, 211, 102, .4);
+}
+
+/* ── CARDS ───────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  transition: var(--transition);
+}
+
+.card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-4px);
+}
+
+/* ── ANIMATIONS ──────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px)
+  }
+
+  to {
+    opacity: 1;
+    transform: none
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1
+  }
+
+  50% {
+    opacity: 0
+  }
+}
+
+@keyframes scanlines {
+  0% {
+    background-position: 0 0
+  }
+
+  100% {
+    background-position: 0 8px
+  }
+}
+
+@keyframes pulseRing {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1)
+  }
+
+  50% {
+    opacity: .5;
+    transform: scale(1.35)
+  }
+}
+
+@keyframes floatY {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0)
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-12px)
+  }
+}
+
+@keyframes marqueeL {
+  from {
+    transform: translateX(0)
+  }
+
+  to {
+    transform: translateX(-50%)
+  }
+}
+
+@keyframes marqueeR {
+  from {
+    transform: translateX(-50%)
+  }
+
+  to {
+    transform: translateX(0)
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes typeIn {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp .7s both;
+}
+
+.animate-fade-in {
+  animation: fadeIn .6s both;
+}
+
+.animate-delay-1 {
+  animation-delay: .1s;
+}
+
+.animate-delay-2 {
+  animation-delay: .22s;
+}
+
+.animate-delay-3 {
+  animation-delay: .36s;
+}
+
+.animate-delay-4 {
+  animation-delay: .5s;
+}
+
+.animate-delay-5 {
+  animation-delay: .64s;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}

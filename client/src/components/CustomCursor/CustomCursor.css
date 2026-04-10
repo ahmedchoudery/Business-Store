@@ -1,0 +1,83 @@
+@media (pointer: coarse) {
+  .cursor {
+    display: none !important;
+  }
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  border-radius: 50%;
+}
+
+/* Inner dot — crosshair pixel */
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #38BDF8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.9);
+  transition: width .15s, height .15s, background .15s;
+}
+
+.cursor-dot.cursor-hover {
+  width: 10px;
+  height: 10px;
+  background: #FBBF24;
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.9);
+}
+
+.cursor-dot.cursor-click {
+  width: 4px;
+  height: 4px;
+  background: #F43F5E;
+  box-shadow: 0 0 10px rgba(244, 63, 94, .9);
+}
+
+/* Ring — follows with spring lag */
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
+  transition: width .2s, height .2s, border-color .2s, background .2s;
+}
+
+/* Terminal crosshair lines on the ring */
+.cursor-ring::before,
+.cursor-ring::after {
+  content: '';
+  position: absolute;
+  background: rgba(56, 189, 248, 0.25);
+}
+
+.cursor-ring::before {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+}
+
+.cursor-ring::after {
+  height: 1px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+}
+
+.cursor-ring.cursor-hover {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(251, 191, 36, 0.5);
+  background: rgba(251, 191, 36, 0.04);
+}
+
+/* Ghost trail — very large, very faint */
+.cursor-ghost {
+  width: 72px;
+  height: 72px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.06) 0%, transparent 70%);
+  transition: background .3s;
+}

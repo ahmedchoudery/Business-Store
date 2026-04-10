@@ -1,0 +1,48 @@
+.rskills__highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 28px 0 34px;
+}
+
+.rskills__highlight-card {
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.rskills__highlight-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.rskills__highlight-name {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.rskills__highlight-score,
+.rskills__group-copy {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.rskills__group-copy {
+  margin-bottom: 18px;
+}
+
+.rskills__fill--highlighted {
+  box-shadow: 0 0 22px rgba(56, 189, 248, 0.32);
+}
+
+.rskills__chip {
+  border-color: rgba(56, 189, 248, 0.16);
+}

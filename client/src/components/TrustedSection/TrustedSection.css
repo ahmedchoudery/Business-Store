@@ -1,0 +1,59 @@
+.trusted {
+  padding: 48px 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.trusted__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .68rem;
+  letter-spacing: .1em;
+  color: rgba(255, 255, 255, .2);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.trusted__carousel {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.trusted__track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+  animation: marqueeL 32s linear infinite;
+}
+
+.trusted__carousel:hover .trusted__track {
+  animation-play-state: paused;
+}
+
+.trusted__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 36px;
+  white-space: nowrap;
+  border-right: 1px solid rgba(255, 255, 255, .05);
+}
+
+.trusted__icon {
+  font-size: 1.3rem;
+}
+
+.trusted__name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8rem;
+  letter-spacing: .04em;
+  color: rgba(255, 255, 255, .3);
+  transition: color .2s;
+}
+
+.trusted__item:hover .trusted__name {
+  color: rgba(255, 255, 255, .7);
+}

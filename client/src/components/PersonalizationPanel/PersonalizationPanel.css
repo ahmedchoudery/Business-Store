@@ -1,0 +1,131 @@
+.personalize {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+.personalize__shell {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.95fr) minmax(0, 1.35fr);
+  gap: 28px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(145deg, rgba(12, 18, 32, 0.94), rgba(7, 11, 20, 0.98)),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 48%);
+  box-shadow: var(--shadow-card);
+}
+
+.personalize__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.personalize__status {
+  padding: 18px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.personalize__status-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.personalize__status-value {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
+.personalize__status-meta {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.personalize__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.personalize__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.personalize__field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.personalize__field--wide {
+  grid-column: 1 / -1;
+}
+
+.personalize__field span {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.personalize__field input,
+.personalize__field select,
+.personalize__field textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  background: rgba(7, 11, 20, 0.88);
+  color: var(--text-primary);
+  padding: 14px 16px;
+  font: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.personalize__field textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.personalize__field input:focus,
+.personalize__field select:focus,
+.personalize__field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+.personalize__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .personalize__shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .personalize__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .personalize__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

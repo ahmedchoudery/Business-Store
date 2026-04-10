@@ -1,0 +1,96 @@
+.testimonials {
+  background: var(--bg-secondary);
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.testimonials__carousel {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+
+.testimonials__track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+}
+
+.testimonials__track--l {
+  animation: marqueeL 38s linear infinite;
+}
+
+.testimonials__track--r {
+  animation: marqueeR 44s linear infinite;
+}
+
+.testimonials__carousel:hover .testimonials__track {
+  animation-play-state: paused;
+}
+
+/* Card */
+.tcard {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 26px 24px;
+  transition: border-color .3s, transform .3s;
+}
+
+.tcard:hover {
+  border-color: var(--border);
+  transform: translateY(-4px);
+}
+
+.tcard__stars {
+  color: #FBBF24;
+  font-size: .9rem;
+  letter-spacing: .12em;
+  margin-bottom: 14px;
+}
+
+.tcard__text {
+  font-size: .875rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.tcard__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tcard__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #38BDF8, #10B981);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-size: .75rem;
+  font-weight: 700;
+  color: #070B14;
+  flex-shrink: 0;
+}
+
+.tcard__name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tcard__role {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
